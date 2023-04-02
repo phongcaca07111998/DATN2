@@ -4,11 +4,11 @@ import './Home.scss'
 
 import { SuggestionProduct } from "../../Components/suggertionProduct/suggertionProduct";
 import { commerce } from "../../lib/commerce";
-import Home1 from "../../Components/MainPage/Home1";
+
 import { Category } from "../../Components/category/category";
 import Categories from "../../Components/MainPage/Categories";
 
-export const Home = () => {
+export const Home = (prop) => {
 
   useEffect(()=>{
     fetchData()
@@ -28,7 +28,16 @@ export const Home = () => {
          
         </div>
         <div className="Content Content_2">
-          <SuggestionProduct />
+          <SuggestionProduct tieude="Gợi Ý CHO BẠN"/>
+        </div>
+        <div className="Content Content_2">
+          <SuggestionProduct tieude="MẶC HÀNG BÁN CHẠY"/>
+        </div>
+        <div className="Content Content_2">
+          <SuggestionProduct tieude="MẶC HÀNG GIẢM GIÁ"/>
+        </div>
+        <div className="Content Content_2">
+          <SuggestionProduct tieude="SẢN PHẨM YÊU THÍCH"/>
         </div>
         
       </div>

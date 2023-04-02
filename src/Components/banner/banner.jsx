@@ -13,7 +13,7 @@ export const Banner = () => {
     autoplay: true,
     infinite: true,
     initialSlide: 0,
-    speed: 120,
+    speed: 1,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
@@ -22,6 +22,19 @@ export const Banner = () => {
         <div className="slide-banner">
           <img src={banner1} alt="" />
         </div>
+        <div className="slide-banner">
+          <img src={banner2} alt="" />
+        </div>
+        <div className="slide-banner">
+          <img src={banner3} alt="" />
+        </div>
+        <div className="slide-banner">
+          <img src={banner4} alt="" />
+        </div>
+        <div className="slide-banner">
+          <img src={banner5} alt="" />
+        </div>
+        
       </Slider>
     );
   };

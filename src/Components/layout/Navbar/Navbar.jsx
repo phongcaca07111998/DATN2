@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { Register } from '../../register/register';
 import { Login } from "../../login/login";
 import Head from "./header_navbar/Head";
+
+
 export const Navbar = (prop) => {
   const [checkRegister, setCheckRegister] = useState(false);
   const [checkLogin, setCheckLogin] = useState(false);
@@ -63,7 +65,7 @@ export const Navbar = (prop) => {
       <div className="navbar_container">
         <div className="header">
           <Head/>
-          {/* <HeaderNavbar  
+          {/* <HeaderNavbar 
           passCheckRegister={passCheckRegister}
           passCheckLogin={passCheckLogin}
           checkLogout={checkLogout}/> */}
@@ -77,7 +79,10 @@ export const Navbar = (prop) => {
               <Search />
             </div>
             <div className="option">
-              <Option />
+              <Option 
+              passCheckRegister={passCheckRegister}
+              passCheckLogin={passCheckLogin}
+              checkLogout={checkLogout}/> 
             </div>
           </div>
         </div>

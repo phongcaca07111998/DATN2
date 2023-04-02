@@ -97,7 +97,7 @@ export const Register=(prop) => {
             className="intro"
             style={{ backgroundImage: `url(${auth_background})` }}
           >
-            <img src={logo} alt="" />
+            <img src="./images/logo1.png" alt="" />
           </div>
           <div className="form__register">
             <div className="form__header">

@@ -6,9 +6,9 @@ import { CircularProgress } from "@mui/material";
 import { LoadingSuggest } from "../loading/loadingSuggest";
 
 
-export const SuggestionProduct = () => {
+export const SuggestionProduct = (prop) => {
   const [data, setData] = useState([]);
-  const [nowAvailable, setNowAvailable] = useState(10);
+  const [nowAvailable, setNowAvailable] = useState(7);
   const [loading, setLoading] = useState(false);
   const [firstLoading, setFirstLoading] = useState(true);
   const fetchData = () => {
@@ -30,12 +30,12 @@ export const SuggestionProduct = () => {
   }, [nowAvailable]);
   const seeMore = () => {
     setLoading(true);
-    setNowAvailable(nowAvailable + 10);
+    setNowAvailable(nowAvailable + 7);
   };
   return (
     <div className="suggestionProduct">
       <div className="suggestionProduct_header">
-        <h3>GỢI Ý CHO BẠN</h3>
+        <h3>{prop.tieude}</h3>
       </div>
       <div className="suggestionProduct_content">
         {firstLoading ? (
