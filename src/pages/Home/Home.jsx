@@ -7,23 +7,27 @@ import { commerce } from "../../lib/commerce";
 
 import { Category } from "../../Components/category/category";
 import Categories from "../../Components/MainPage/Categories";
+import useGetData from "../../custom-hooks/useGetData";
 
-export const Home = (prop) => {
 
-  useEffect(()=>{
-    fetchData()
-  },[])
-  const fetchData = () => {
-    commerce.products.list().then((product) => {
-      console.log(product);
-    });
-  };
+export const Home = () => {
+  const { data: productsData, loading } = useGetData("product");
+  // useEffect(()=>{
+  //   fetchData()
+  // },[])
+  // const fetchData = () => {
+  //   commerce.products.list().then((product) => {
+  //     console.log(product);
+  //   });
+  // };
+  // console.log(productsData);
   return (
     <div className="container">
       <div className="Home_content">
         <div className="banner">
           <div className="ct1">  <Categories/></div>
           <div className="bn1"> <Banner/></div>
+         
         
          
         </div>

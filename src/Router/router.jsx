@@ -10,8 +10,10 @@ import { Home } from "../pages/Home/Home";
 import { HomeSearch } from "../pages/HomeSearch/homeSearch";
 import { StoreProvider } from "../store";
 import { Footer } from "../Components/layout/footer";
-// import { Admin } from "../pages/admin/admin";
-// import { Donhang } from "../pages/admin/donhang";
+import { Admin } from "../pages/admin/admin";
+import { Donhang } from "../pages/admin/donhang";
+import { FormDetailOrder } from "../Components/admin/content/formDetailOrder";
+import { TableOrder } from "../Components/admin/content/tableOrder";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   const admin = localStorage.getItem("isAdmin");
@@ -26,8 +28,8 @@ export const Routerr = (prop) => {
         {admin === 'true' ? (
           <Router>
               <Routes>
-                {/* <Route path="/bidu-ecommerce" element={<Admin />} /> */}
-                {/* <Route path="/Donhang" element={<Donhang />} /> */}
+                {/* <Route path="/bidu-ecommerce" element={<Admin />} />
+                <Route path="/Donhang" element={<Donhang />} /> */}
               </Routes>
           </Router>
         ) : (
@@ -38,13 +40,22 @@ export const Routerr = (prop) => {
               <Route
                 path="/tim-kiem/keyword=:search"
                 element={<HomeSearch />}
+                
+                
               />
+             
               <Route
                 path="/san-pham/:id"
                 element={<DetailProduct checklogin={checklogin} />}
               />
+              
               <Route path="/gio-hang" element={<Cart />} />
               <Route path="/thanh-toan" element={<Checkout />} />
+              <Route path="/admin-ecommerce" element={<Admin />} />
+              <Route path="/Donhang" element={<Donhang />} />
+              <Route path="/Tongquan" element={<FormDetailOrder />} />
+              <Route path="/Tongquan1" element={<TableOrder />} />
+              
             </Routes>
             <Footer />
           </Router>

@@ -1,140 +1,74 @@
-import React, { useEffect, useState, useRef } from "react";
-import chevronRight from "../../assets/img/chevron-right.svg";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./detailProduct.scss";
 import minus_grey from "../../assets/img/minus_grey.svg";
 import plus_white from "../../assets/img/plus_white.svg";
 import { UseStore, action } from "../../store";
 import { useNavigate } from "react-router-dom";
-import { commerce } from "../../lib/commerce";
 import { Alert, CircularProgress } from "@mui/material";
 import { LoadingDetail } from "../../Components/loading/loadingDetail";
 import parse from "html-react-parser";
 
-export const DetailProduct = (checklogin) => {
-  const ref = useRef([]);
+import { ref } from "firebase/storage";
+import { ChevronRight } from "@mui/icons-material";
+import useGetData from "../../custom-hooks/useGetData";
+
+export const DetailProduct = (  ) => {
   const location = useLocation();
-  const id = location.pathname.split("san-pham/")[1];
   const [count, setCount] = useState(1);
-  const [mainData, setMainData] = useState();
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [firstLoading, setFistLoading] = useState(true);
-  const [variantGroups, setVariantGroups] = useState({}); 
-  const [checkSize, setCheckSize] = useState(false);
-  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [firstLoading, setFirstLoading] = useState(true);
   const [alert, setAlert] = useState(false);
-  const [state, dispatch] = UseStore();
-  const { checkAddToCart, checkoutData } = state;
-  const [idItemCart, setIdItemCart] = useState("");
-  const [data, setData] = useState([]);
-  const currenUser = localStorage.getItem("customerName");
+  const [loading, setLoading] = useState(false);
+  
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { data: productsData} = useGetData("product");
+  const productId = location.pathname.split("/")[2];
+  const mainData = productsData.find((productsData) => productsData.id === productId);
+  
 
-  const fetchData = () => {
-    commerce.products.retrieve(id).then((product) => {
-      setFistLoading(false);
-      setMainData(product);
-      setDescription(product.description);
-      setImage(product?.image.url);
-    });
-  };
-
-  const handleCount = (check) => {
-    if (check === "plus") {
+  const handleCount = (type) => {
+    if (type === "plus") {
       setCount(count + 1);
-    } else if (count === 1) {
-      setCount(1);
     } else {
-      setCount(count - 1);
-    }
-  };
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-    fetchData();
-  }, [location, checklogin]);
-  
-  const handleSize = (item, indexOption) => {
-    setVariantGroups({
-      [mainData.variant_groups[0].id]: item.id,
-    });
-    setCheckSize(true);
-    ref.current.forEach((element, index) => {
-      if (index === indexOption) {
-        ref.current[index].classList.add("clickOPtion");
-      } else {
-        ref.current[index].classList.remove("clickOPtion");
+      if (count > 1) {
+        setCount(count - 1);
       }
-    });
-  };
-  
-  const addToCart = async (check) => {
-    const timer = setTimeout(() => {
-      setAlert(false);
-    }, 3000);
-    if (currenUser) {
-      if (currenUser) {
-        setLoading(true);
-        setMessage("Thêm sản phẩm thành công!");
-        commerce.cart.add(id, count, variantGroups).then((response) => {
-          console.log(id, count, variantGroups);
-          dispatch(action.CheckAddToCart(!checkAddToCart));
-          setIdItemCart(response.line_item_id);
-          setLoading(!check);
-          setAlert(check);
-          setTimeout(() => {
-            if (!check) {
-              commerce.cart.retrieve().then((cart) => {
-                dispatch(action.SetItemCheckout(cart.line_items));
-                setData(cart.line_items);
-                cart.line_items.forEach((element) => {
-                  if (element.id === response.line_item_id) {
-                    element.checkBuyNow = true;
-                  } else {
-                    element.checkBuyNow = false;
-                  }
-                });
-                setTimeout(() => {
-                  setLoading(false);
-                  moveToCheckout(cart.line_items);
-                }, 1000);
-              });
-            }
-          }, 500);
-
-          const timer = setTimeout(() => {
-            setAlert(false);
-          }, 3000);
-          return () => clearTimeout(timer);
-        });
-      } else {
-        setMessage("Chọn kích cỡ để tiếp tục!");
-        setAlert(true);
-        return () => clearTimeout(timer);
-      }
-    } else {
-      setMessage("Đăng nhập để tiếp tục!");
-      setAlert(true);
-      return () => clearTimeout(timer);
     }
   };
 
-  const payNow = async () => {
-    await addToCart(false);
-    // setLoading(true)
-    // console.log(checkoutData);
-  };
+  
 
-  const moveToCheckout = async (data) => {
-    localStorage.setItem("checkOutItem", JSON.stringify(data));
-    navigate("/thanh-toan");
-  };
   const handleItemImage = (item) => {
-    setImage(item.url);
+    setImage(item.imgUrls);
+    
+    
   };
+
+  const addToCart = (redirect) => {
+    UseStore.dispatch(addToCart(mainData, selectedSize, count));
+  
+    setMessage("Đã thêm vào giỏ hàng");
+    setAlert(true);
+    setFirstLoading(true);
+    // setLoading(false);
+    setTimeout(() => {
+      setAlert(false);
+      setMessage("");
+      if (redirect) {
+        navigate("/cart");
+      }
+    }, 3000);
+  };
+
+  const payNow = () => {
+    UseStore.dispatch(addToCart(mainData, selectedSize, count));
+    navigate("/checkout");
+  };
+// console.log(productsData);
+console.log(mainData);
   return (
     <div className="detailProduct">
       {alert && (
@@ -142,16 +76,16 @@ export const DetailProduct = (checklogin) => {
           <Alert severity="info">{message}</Alert>
         </div>
       )}
-      {loading && (
+      
         <div className="loading">
           <CircularProgress color="inherit" className="loading_progress" />
         </div>
-      )}
+      
       <div className="detailProduct_header">
         <div className="detailProduct_header_content">
           <p>Trang chủ</p>
-          <img src={chevronRight} alt="" />
-          <p>{mainData?.name}</p>
+          <img src={ChevronRight} alt="" />
+          <p>{mainData?.category}</p>
         </div>
       </div>
       <div className="detailProduct_content">
@@ -166,7 +100,7 @@ export const DetailProduct = (checklogin) => {
                     <div
                       key={index}
                       className="item-img"
-                      style={{ backgroundImage: `url(${item.url})` }}
+                      style={{ backgroundImage: `url(${item.imgUrls})` }}
                       onClick={(e) => handleItemImage(item)}
                     ></div>
                   ))}
@@ -174,11 +108,11 @@ export const DetailProduct = (checklogin) => {
               </div>
               <div
                 className="image"
-                style={{ backgroundImage: `url(${image})` }}
+                style={{ backgroundImage: `url(${mainData?.imgUrls})` }}
               ></div>
               <div className="inf">
                 <div className="name">
-                  <p>{mainData?.name}</p>
+                  <p>{mainData?.shortDesc}</p>
                   <div className="row">
                     <div className="col">
                       <p>20</p>
@@ -247,7 +181,7 @@ export const DetailProduct = (checklogin) => {
           )}
           <div className="description">
             <h2>Mô tả:</h2>
-            {parse(description)}
+            {mainData?.description}
           </div>
         </div>
       </div>

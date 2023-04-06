@@ -1,6 +1,6 @@
 import React from "react"
 
-const Categories = () => {
+const Categories = (prop) => {
   const data = [
     {
       cateImg: "./images/category/cat1.png",
@@ -47,6 +47,9 @@ const Categories = () => {
       cateName: "Books",
     },
   ]
+  const filterSearch = (data) =>{
+    prop.sentData(data)
+  }
 
   return (
     <>
@@ -59,7 +62,7 @@ const Categories = () => {
       <div className='category'>
         {data.map((value, index) => {
           return (
-            <div className='box f_flex' key={index}>
+            <div onClick={(e) => filterSearch("all")} className='box f_flex' key={index}>
               <img src={value.cateImg} alt='' />
               <span>{value.cateName}</span>
             </div>

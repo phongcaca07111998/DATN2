@@ -1,27 +1,41 @@
 import React from "react";
 import "./card.scss";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../redux/slices/cartSlice";
+import { toast } from "react-toastify";
+import useGetData from "../../../custom-hooks/useGetData";
 
-export const Card = (props) => {
-  const data = props.item;
+export const Card = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const moveToDetail = () => {
-    navigate(`/san-pham/${data.id}`);
+    navigate(`/san-pham/${item.id}`);
   };
+
+  const addToCart = () => {
+    dispatch(cartActions.addToCart(item));
+    toast.success(`${item.productName} đã được thêm vào giỏ hàng!`, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000,
+    });
+  };
+
   return (
     <div className="cardProduct" onClick={moveToDetail}>
       <div
         className="image"
-        style={{ backgroundImage: `url(${data.image.url})` }}
+        style={{ backgroundImage: `url(${item.imgUrls})` }}
       ></div>
       <div className="company">
         <span>Chính hãng</span>
       </div>
       <div className="cardProduct__inf">
-        <p>{data.name}</p>
-        <b>{data.price.formatted_with_code}</b>
+        <p>{item.productName}</p>
+        <b>{item.price}</b>
         <div className="address">
-          <p>Việt nam</p>
+          <p onClick={addToCart}>Việt Nam</p>
         </div>
       </div>
     </div>
