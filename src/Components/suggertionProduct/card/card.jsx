@@ -29,7 +29,7 @@ export const Card = ({ item }) => {
         style={{ backgroundImage: `url(${item.imgUrls})` }}
       ></div>
       <div className="company">
-        <span>Chính hãng</span>
+        <span>{item.category}</span>
       </div>
       <div className="cardProduct__inf">
         <p>{item.productName}</p>
