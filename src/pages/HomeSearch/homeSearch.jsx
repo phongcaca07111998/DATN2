@@ -6,56 +6,48 @@ import { useLocation } from "react-router-dom";
 // import { removeVietnameseTones } from "../../components/layout/navbar/search/removeVNtones";
 import { Card } from "../../Components/suggertionProduct/card/card";
 import { UseStore } from "../../store";
-import { commerce } from "../../lib/commerce";
 import { CircularProgress } from "@mui/material";
+import Categories from "../../Components/MainPage/Categories";
+import useGetData from "../../custom-hooks/useGetData";
 
 export const HomeSearch = () => {
-  const [data, setData] = useState([]);
+  
   const location = useLocation();
+  const [data, setData] = useState([]);
   const search = location.pathname?.split("keyword=")[1];
   const [state] = UseStore();
   const [loading, setLoading] = useState(false);
+  const { data: productsData, loading: firstLoading } = useGetData("product");
 
-  const fetchData = (search) => {
-    setLoading(true);
-    commerce.products
-      .list({
-        query: search,
-      })
-      .then((product) => {
-        setData(product.data);
-        setLoading(false);
-      }
-      );
-  };
 
-  const sentData = (category) => {
-    // setData(
-    //   DataProduct.filter((item) =>
-    //     removeVietnameseTones(item?.name)
-    //       ?.toLocaleLowerCase()
-    //       ?.includes(category?.toLocaleLowerCase())
-    //   )
-    // );
-    if (category === "all") {
-      setLoading(true);
-      commerce.products.list({
-        limit: 35
-      }).then((product) => {
-        setData(product.data);
-        setLoading(false);
-      });
-    } else {
-      fetchData(category);
-    }
-  };
 
+  console.log(productsData);
+  
+  // const fetchData = (search) => {
+  
+  // };
+
+    
+
+  // useEffect(() => {
+  //   fetchData(search);
+  //   window.scrollTo({
+  //     top: 0,
+  //   });
+  // }, [location]);
   useEffect(() => {
-    fetchData(search);
-    window.scrollTo({
-      top: 0,
+    const filteredData = productsData.filter((item) => {
+      const itemName = item.category.toLowerCase();
+      const searchName = search.toLowerCase();
+      const itemShort = item.shortDesc.toLowerCase();
+      const searchShort = search.toLowerCase();
+      return (itemName.includes(searchName)||
+            itemShort.includes(searchShort)  
+      )
     });
-  }, [location]);
+    setData(filteredData);
+    setLoading(false);  
+  }, [search, productsData]);
 
   return (
     <div className="homeSearch">
@@ -76,7 +68,8 @@ export const HomeSearch = () => {
       <div className="homeSearch_content">
         <div className="main">
           <div className="category">
-            <Category sentData={sentData} />
+            {/* <Category sentData={sentData} /> */}
+            <Categories />
           </div>
           <div className="main_content">
             {data?.map((item, index) => (
@@ -89,3 +82,4 @@ export const HomeSearch = () => {
     </div>
   );
 };
+

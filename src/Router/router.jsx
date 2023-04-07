@@ -14,6 +14,7 @@ import { Admin } from "../pages/admin/admin";
 import { Donhang } from "../pages/admin/donhang";
 import { FormDetailOrder } from "../Components/admin/content/formDetailOrder";
 import { TableOrder } from "../Components/admin/content/tableOrder";
+import Userprofile from "../Components/layout/UserProfile/Userprofile";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   const admin = localStorage.getItem("isAdmin");
@@ -48,6 +49,9 @@ export const Routerr = (prop) => {
                 path="/san-pham/:id"
                 element={<DetailProduct checklogin={checklogin} />}
               />
+              <Route 
+                path="/userprofile"
+                element={<Userprofile />}/>
               
               <Route path="/gio-hang" element={<Cart />} />
               <Route path="/thanh-toan" element={<Checkout />} />

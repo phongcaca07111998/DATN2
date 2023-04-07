@@ -12,23 +12,30 @@ import parse from "html-react-parser";
 import { ref } from "firebase/storage";
 import { ChevronRight } from "@mui/icons-material";
 import useGetData from "../../custom-hooks/useGetData";
+import ReactStars from "react-rating-stars-component";
 
-export const DetailProduct = (  ) => {
+export const DetailProduct = () => {
   const location = useLocation();
   const [count, setCount] = useState(1);
-  const [image, setImage] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-  const [firstLoading, setFirstLoading] = useState(true);
-  const [alert, setAlert] = useState(false);
-  const [loading, setLoading] = useState(false);
-  
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-  const { data: productsData} = useGetData("product");
-  const productId = location.pathname.split("/")[2];
-  const mainData = productsData.find((productsData) => productsData.id === productId);
+
   
 
+  const [selectedSize, setSelectedSize] = useState("");
+  // const [firstLoading, setFirstLoading] = useState(true);
+  const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const { data: productsData, firstLoading } = useGetData("product");
+  const productId = location.pathname.split("/")[2];
+  const mainData = productsData.find((productsData) => productsData.id === productId);
+  const firstImgUrls = mainData?.imgUrls[0];
+  const [image=firstImgUrls, setImage] = useState(firstImgUrls);
+
+  
   const handleCount = (type) => {
     if (type === "plus") {
       setCount(count + 1);
@@ -38,21 +45,18 @@ export const DetailProduct = (  ) => {
       }
     }
   };
-
-  
-
-  const handleItemImage = (item) => {
-    setImage(item.imgUrls);
-    
-    
+  const handleItemImage = (imgUrl, index) => {
+    setCurrentIndex(index);
+    setImage(imgUrl);
+    console.log(imgUrl);
   };
 
   const addToCart = (redirect) => {
     UseStore.dispatch(addToCart(mainData, selectedSize, count));
-  
+
     setMessage("Đã thêm vào giỏ hàng");
     setAlert(true);
-    setFirstLoading(true);
+
     // setLoading(false);
     setTimeout(() => {
       setAlert(false);
@@ -67,8 +71,37 @@ export const DetailProduct = (  ) => {
     UseStore.dispatch(addToCart(mainData, selectedSize, count));
     navigate("/checkout");
   };
-// console.log(productsData);
-console.log(mainData);
+  //Binh luan va dnah gia
+const [comment, setComment] = useState("");
+const [comments, setComments] = useState([
+  { id: 1, name: "John", content: "Great product!", rating: 4 },
+  { id: 2, name: "Mary", content: "I love it!", rating: 5 },
+]);
+const [rating, setRating] = useState(0);
+
+const handleRatingChange = (newRating) => {
+  setRating(newRating);
+};
+
+const handleCommentChange = (event) => {
+  setComment(event.target.value);
+};
+
+const handleSubmitComment = () => {
+  const newComment = {
+    id: comments.length + 1,
+    name: "Guest",
+    content: comment,
+    rating: rating,
+  };
+  setComments([...comments, newComment]);
+  setComment("");
+  setRating(0);
+};
+
+/////
+  // console.log(productsData);
+  console.log(mainData);
   return (
     <div className="detailProduct">
       {alert && (
@@ -76,11 +109,11 @@ console.log(mainData);
           <Alert severity="info">{message}</Alert>
         </div>
       )}
-      
+      {loading && (
         <div className="loading">
           <CircularProgress color="inherit" className="loading_progress" />
         </div>
-      
+      )}
       <div className="detailProduct_header">
         <div className="detailProduct_header_content">
           <p>Trang chủ</p>
@@ -96,20 +129,21 @@ console.log(mainData);
             <div className="main_content">
               <div className="slide-image">
                 <div className="slide">
-                  {mainData?.assets.map((item, index) => (
+                  {mainData?.imgUrls?.map((imgUrl, index) => (
                     <div
                       key={index}
-                      className="item-img"
-                      style={{ backgroundImage: `url(${item.imgUrls})` }}
-                      onClick={(e) => handleItemImage(item)}
+                      className={`item-img ${index === currentIndex ? 'active' : ''}`}
+                      style={{ backgroundImage: `url(${imgUrl})` }}
+                      onClick={(e) => handleItemImage(imgUrl)}
                     ></div>
                   ))}
                 </div>
               </div>
               <div
                 className="image"
-                style={{ backgroundImage: `url(${mainData?.imgUrls})` }}
+                style={{ backgroundImage: `url(${image})` }}
               ></div>
+
               <div className="inf">
                 <div className="name">
                   <p>{mainData?.shortDesc}</p>
@@ -126,13 +160,13 @@ console.log(mainData);
                   </div>
                 </div>
                 <div className="price">
-                  <h1>{mainData?.price.formatted_with_symbol}</h1>
+                  <h1>{mainData?.price}</h1>
                   <div className="discount">
                     <span>10%</span>
                   </div>
                 </div>
                 <div className="price">
-                  <p>{(mainData?.price.raw * 110) / 100}đ</p>
+                  <p>{(mainData?.price * 110) / 100}đ</p>
                 </div>
                 <div className="sizes">
                   {/* <span>Kích cỡ: </span> */}
@@ -176,14 +210,51 @@ console.log(mainData);
                     Mua ngay
                   </button>
                 </div>
+                <div className="description">
+            <h2>Mô tả:</h2>
+            <div>{mainData?.description}</div>
+            
+          </div>
               </div>
             </div>
           )}
-          <div className="description">
-            <h2>Mô tả:</h2>
-            {mainData?.description}
-          </div>
+          
         </div>
+        <h2>Đánh giá và bình luận</h2>
+        <div className="rating">
+            <ReactStars
+              count={5}
+              onChange={handleRatingChange}
+              size={24}
+              activeColor="#ffd700"
+            />
+            <span>{rating} sao</span>
+          </div>
+          <div className="comment">
+            <textarea
+              placeholder="Viết bình luận của bạn..."
+              value={comment}
+              onChange={handleCommentChange}
+            ></textarea>
+            <button onClick={handleSubmitComment}>Gửi</button>
+          </div>
+          <div className="comments">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment-item">
+                <div className="comment-header">
+                  <span>{comment.name}</span>
+                  <ReactStars
+                    count={5}
+                    value={comment.rating}
+                    size={16}
+                    edit={false}
+                    activeColor="#ffd700"
+                  />
+                </div>
+                <div className="comment-content">{comment.content}</div>
+              </div>
+            ))}
+          </div>
       </div>
     </div>
   );

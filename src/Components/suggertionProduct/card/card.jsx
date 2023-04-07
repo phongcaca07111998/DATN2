@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import useGetData from "../../../custom-hooks/useGetData";
+import { Rating } from "@mui/material";
 
 export const Card = ({ item }) => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export const Card = ({ item }) => {
         <div className="address">
           <p onClick={addToCart}>Việt Nam</p>
         </div>
+        <Rating/>
       </div>
     </div>
   );

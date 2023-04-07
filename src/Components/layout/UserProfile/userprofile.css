@@ -1,0 +1,369 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+
+}
+body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+    color: #000;
+}
+.container {
+
+    width: 80%;
+    margin: auto;
+    padding: 7%;
+}
+.row {
+    display: flex;
+    margin-right: -15px;
+    margin-top: 60px;
+    margin-left: -15px;
+    flex-wrap: wrap;
+}
+.col-3-5 {
+    flex: 0 0 29.166666655%;
+    max-width: 29.166666655%;
+}
+.extra-col, .col-11-5, .col-10-5, .col-9-5, .col-8-5, .col-7-5, .col-6-5, .col-5-5, .col-4-5, .col-3-5, .col-2-5, .col-1-5, .col-0-5 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.layout-profile .sidebar {
+    padding-bottom: 50px;
+}
+.layout-profile .sidebar .profile-section {
+    min-height: 361px;
+    background: #fff;
+}
+.align-items-center {
+    align-items: center!important;
+}
+.justify-content-between {
+    justify-content: space-between!important;
+}
+.flex-column {
+    flex-direction: column!important;
+}
+.d-flex {
+    display: flex!important;
+}
+.layout-profile .sidebar .profile-section .user-avatar {
+    padding-top: 30px;
+    position: relative;
+}
+.layout-profile .sidebar .profile-section .user-avatar img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+}
+.layout-profile .sidebar .profile-section .user-avatar .edit-avatar {
+    border-radius: 50%;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 125px;
+    left: 90px;
+    background: #fff;
+    border: .1px solid #191919;
+    box-sizing: border-box;
+    z-index: 3;
+}
+.layout-profile .sidebar .profile-section .user-avatar .edit-avatar input[type=file] {
+    display: none;
+}
+.layout-profile .sidebar .profile-section .user-avatar .edit-avatar img {
+    border-radius: 0%;
+    height: auto;
+    width: 60%;
+    margin: auto;
+    display: inline-block;
+    cursor: pointer;
+}
+.layout-profile .sidebar .profile-section .user-name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    color: #000;
+}
+.layout-profile .sidebar .profile-section .follow .info-section {
+    width: 99px;
+}
+.info-section:first-child {
+    min-width: 109px;
+}
+.text-center {
+    text-align: center!important;
+}
+.layout-profile .sidebar .profile-section .follow .info-section h3 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+}
+/* .info-section h3 {
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    color: #666565;
+} */
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.layout-profile .sidebar .profile-section .follow .devider {
+    width: 1px;
+    height: 35px;
+    left: 869.41px;
+    top: 694.94px;
+    background: #c4c4c4;
+    margin: 0px 15px;
+}
+.layout-profile .sidebar .profile-section .change-profile {
+    margin-bottom: 3.125rem;
+}
+/* .layout-profile .sidebar .profile-section .change-profile .btn-see-more {
+    border-color: #9a9a9a;
+    padding: 10px 30px;
+    border-radius: 0px !important;
+} */
+.btn-see-more {
+    border: 1px solid #191919;
+    box-sizing: border-box;
+    border-radius: 50px;
+    background: transparent;
+    font-weight: 400;
+    padding: 8px 40px;
+    font-family: var(--font-medium);
+}
+.btn-see-more:hover{
+    background-color: black;
+    color: palevioletred;
+    cursor: pointer;
+}
+.tabList-section .tab .icon-tab {
+    padding-right: 12.45px;
+    width: 20%;
+}
+.tabList-section .tab span {
+    font-size: 14px;
+}
+img{
+    vertical-align: middle;
+}
+.col-8-5 {
+    flex: 0 0 70.833333305%;
+    max-width: 70.833333305%;
+}
+.h-100-p {
+    height: calc(100% - 25px)!important;
+}
+.profile-inform {
+    width: 100%;
+    background: #fff;
+    padding: 30px 60px;
+    /* height: calc(100% - 50px); */
+}
+.profile-inform .header-title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 25px;
+    margin-bottom: 17px;
+}
+.h-100 {
+    height: 100%!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+.profile-inform .form-group label {
+    font-size: 14px;
+    line-height: 44px;
+    width: 142px;
+    margin-right: 25px;
+}
+label {
+    font-weight: 600!important;
+    display: inline-block;
+    margin-bottom: .5rem;
+    cursor: default;
+}
+.profile-inform .form-group .input-and-error {
+    width: 316px;
+    display: flex;
+}
+.profile-inform .form-group .input-and-error input {
+    font-size: 14px;
+}
+.profile-inform .profile-form-control {
+    border-radius: 0;
+    height: 44px;
+    width: 100%;
+    background: #fafafa;
+    padding-left: 20px;
+    border: none;
+}
+.form-control {
+    color: #191919!important;
+    
+}
+.form-control {
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 1.25rem + 2px);
+    padding: .625rem .75rem;
+    transition: all .15s cubic-bezier(.68,-.55,.265,1.55);
+    color: #8898aa;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 3px 2px rgba(234, 232, 232, 0.56);
+}
+.flex-1 {
+    flex: 1;
+}
+.profile-inform .form-group .option {
+    width: fit-content;
+    margin-left: 10px;
+    font-size: 14px;
+}
+/* .profile-inform .form-group input[type=radio]+label:before {
+    border-color: #191919;
+} 
+input[type=radio]+label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    margin-right: 12px;
+    background-clip: content-box;
+    border: 1px solid #bbb;
+    border-radius: 50%;
+}
+input[type=radio]+label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    background-clip: content-box;
+    border: 1px solid #bbb;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
+    cursor: pointer;
+}
+::before {
+    box-sizing: border-box;
+}
+input[type=radio]:checked+label:before {
+    background-color: #ec2c7d!important;
+    border-color: #9a9a9a!important;
+} */
+.react-datepicker-wrapper {
+    display: inline-block;
+    width: 100%;
+}
+.react-datepicker__input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.react-datepicker__aria-live {
+    position: absolute;
+    clip-path: circle(0);
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    width: 1px;
+    white-space: nowrap;
+}
+.mb-5, .my-5 {
+    margin-bottom: 3rem!important;
+}
+.profile-inform .form-group .change-password {
+    width: 100%;
+}
+.pb-2, .py-2 {
+    padding-bottom: .5rem!important;
+}
+.pb-3, .py-3 {
+    padding-bottom: 1rem!important;
+}
+.profile-inform .expand-password {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 17px;
+    color: #000;
+}
+.change-password input.form-control {
+    background: #fafafa;
+    border: none!important;
+    height: 44px;
+}
+button, input {
+    overflow: visible;
+}
+.ml-2, .mx-2 {
+    margin-left: .5rem!important;
+}
+.mt-2, .my-2 {
+    margin-top: .5rem!important;
+}
+.mb-4-5 {
+    margin-bottom: 2rem!important;
+}
+.profile-inform .btn-bidu {
+    width: 184px;
+    border-radius: 0;
+    color: #fffefe;
+    background-color: #191919;
+}
+.btn-bidu {
+    border: 1px solid #191919;
+    box-sizing: border-box;
+    border-radius: 50px;
+    background: black;
+    font-weight: 600;
+    font-size: 14px;
+    height: 44px;
+    line-height: 17px;
+    padding: 13px 20px;
+}
+.btn-bidu:hover{
+    color: rgb(255, 2, 217);
+    cursor: pointer;
+}
+
+.ml-auto, .mx-auto {
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+.profile-inform .form-group.delete-account {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.profile-inform .form-group.delete-account:hover{
+    cursor: pointer;
+    color: brown;
+}

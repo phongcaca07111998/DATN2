@@ -1,0 +1,107 @@
+.header__container {
+    background-color: black;
+    color: white;
+    .header__main {
+      margin: auto;
+      width: 85%;
+      max-width: 1350px;
+      display: flex;
+      justify-content: space-between;
+      .col {
+        width: 300px;
+        display: flex;
+        font-size: 14px;
+        p {
+          margin: 6px;
+          cursor: pointer;
+          font-weight: bolder;
+          &:hover{
+            color: rgb(187, 58, 165);
+          }
+        }
+        span {
+          height: 100%;
+          width: 0.2px;
+          border-left: 0.2px solid white;
+        }
+      }
+      .right{
+          p{
+              margin: 6px 17px;
+          }
+      }
+    }
+  }
+  .top{
+    font-weight: bold;
+    padding: 5px 10px;
+    position: relative;
+  
+  }
+  .top:hover{
+    cursor: pointer;
+    color: purple;
+  }
+  .top .bottom{
+    width: 200px;
+    height: auto;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    transition: 0.1s;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .bottom::before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    border: 10px solid transparent;
+    border-bottom-color:black ;
+    position: absolute;
+    top:-20px;
+  }
+  .bottom .mt,.lk,.ct,.pk,.tb{
+    display: block;
+    text-decoration: none;
+    background-color: whitesmoke;
+    color: black;
+    font-size: 15px;
+    padding: 10px 0;
+    font-weight: bold;
+  }
+  .top:hover .bottom{
+      visibility: visible;
+      top:40px;
+      transition: 0.3s;
+      opacity: 1;
+  }
+  .bottom .mt a{
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+  }
+  .bottom .mt{
+    position: relative;
+  }
+  .bottom .mt .mt1{
+    position: absolute;
+    left: 200px;
+    width: 200px;
+    height: auto;
+    position: absolute;
+    top: 20px;
+    background-color:whitesmoke;
+    transition: 0.1s;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .bottom .mt:hover .mt1{
+      visibility: visible;
+      transition: 0.3s;
+      opacity: 1;
+  }
+  
+  

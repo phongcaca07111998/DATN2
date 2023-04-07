@@ -7,11 +7,12 @@ import { Cart } from "./cart/cart";
 import { useNavigate } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import { useEffect } from 'react';
-
+import Userprofile from '../../UserProfile/Userprofile';
 
 const Option=(prop)=> {
   const currenUser = localStorage.getItem("customerName");
   const [textLogin, setTextLogin] = useState("Đăng nhập");
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const navigate = useNavigate()
 
   const register = () => {
@@ -36,6 +37,9 @@ const Option=(prop)=> {
       setTextLogin("Đăng xuất");
     }
   },[currenUser]);
+  const profile = () => {
+    navigate('/userprofile'); // chuyển hướng đến trang Userprofile
+  };
   return (
     <div style={{ position: "relative" }}>
       <div className="option">
@@ -46,7 +50,7 @@ const Option=(prop)=> {
                 
                    {textLogin} </p>
                    {/* <p>{currenUser ? <p style={{color: "rgb(187, 58, 165)"}}>{currenUser}</p> : <p onClick={register}>Đăng ký</p>}</p> */}
-                <p>Trang cá nhân</p> 
+                <p onClick={profile}>Trang cá nhân</p> 
                 <p>Tư vấn hướng dẫn</p>       
             </div>
             </div> 
@@ -58,7 +62,6 @@ const Option=(prop)=> {
           <div className="menuCart">
           <Cart  />
           </div>
-          
           <img src={icon_cart} alt="" />
         </div>
       </div>
