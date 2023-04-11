@@ -1,26 +1,30 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {  useDispatch } from 'react-redux'
+import { useLocation, useParams } from "react-router-dom";
 import "./detailProduct.scss";
 import minus_grey from "../../assets/img/minus_grey.svg";
 import plus_white from "../../assets/img/plus_white.svg";
-import { UseStore, action } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Alert, CircularProgress } from "@mui/material";
 import { LoadingDetail } from "../../Components/loading/loadingDetail";
-import parse from "html-react-parser";
 
 import { ref } from "firebase/storage";
 import { ChevronRight } from "@mui/icons-material";
 import useGetData from "../../custom-hooks/useGetData";
 import ReactStars from "react-rating-stars-component";
+import { toast } from "react-toastify";
+import { cartActions } from "../../Components/redux/slices/cartSlice";
 
-export const DetailProduct = () => {
+import { db } from "../../Components/firebase/firebase";
+
+import { doc, getDoc } from "firebase/firestore"
+export const DetailProduct = ({item}) => {
   const location = useLocation();
   const [count, setCount] = useState(1);
-
-  
-
-  const [selectedSize, setSelectedSize] = useState("");
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  // const [selectedSize, setSelectedSize] = useState("");
   // const [firstLoading, setFirstLoading] = useState(true);
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,7 +38,64 @@ export const DetailProduct = () => {
   const mainData = productsData.find((productsData) => productsData.id === productId);
   const firstImgUrls = mainData?.imgUrls[0];
   const [image=firstImgUrls, setImage] = useState(firstImgUrls);
+  //
+  const currenUser = localStorage.getItem("customerName");
+  const [variantGroups, setVariantGroups] = useState({}); 
 
+  // const { checkAddToCart, checkoutData } = state;
+  const [idItemCart, setIdItemCart] = useState("");
+  const [data, setData] = useState([]);
+  
+
+
+
+
+
+  const moveToCheckout = async (data) => {
+    localStorage.setItem("checkOutItem", JSON.stringify(data));
+    navigate("/thanh-toan");
+  };
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const docRef = doc(db, "product", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setProduct(docSnap.data());
+      } else {
+        console.log("no product!");
+      }
+    };
+
+    getProduct();
+  }, [id]);
+
+  const {
+    imgUrls,
+    productName,
+    price,
+    avgRating,
+    reviews,
+    description,
+    shortDesc,
+    category,
+  } = product;
+
+  const addToCart = () => {
+    dispatch(
+      cartActions.addItem({
+        id,
+        image: imgUrls,
+        productName,
+        price,
+      })
+    );
+
+    toast.success("Product added successfully");
+  };
+ 
+  
   
   const handleCount = (type) => {
     if (type === "plus") {
@@ -48,28 +109,21 @@ export const DetailProduct = () => {
   const handleItemImage = (imgUrl, index) => {
     setCurrentIndex(index);
     setImage(imgUrl);
-    console.log(imgUrl);
+    // console.log(imgUrl);
   };
 
-  const addToCart = (redirect) => {
-    UseStore.dispatch(addToCart(mainData, selectedSize, count));
+  //
 
-    setMessage("Đã thêm vào giỏ hàng");
-    setAlert(true);
 
-    // setLoading(false);
-    setTimeout(() => {
-      setAlert(false);
-      setMessage("");
-      if (redirect) {
-        navigate("/cart");
-      }
-    }, 3000);
-  };
+
+
+
+
+
 
   const payNow = () => {
-    UseStore.dispatch(addToCart(mainData, selectedSize, count));
-    navigate("/checkout");
+    // UseStore.dispatch(addToCart(mainData, selectedSize, count));
+    navigate("/thanh-toan");
   };
   //Binh luan va dnah gia
 const [comment, setComment] = useState("");
@@ -101,7 +155,7 @@ const handleSubmitComment = () => {
 
 /////
   // console.log(productsData);
-  console.log(mainData);
+  // console.log(mainData);
   return (
     <div className="detailProduct">
       {alert && (
@@ -202,7 +256,7 @@ const handleSubmitComment = () => {
                 <div className="button">
                   <button
                     className="btn addToCart"
-                    onClick={(e) => addToCart(true)}
+                    onClick={(e) => addToCart()}
                   >
                     Thêm vào giỏ
                   </button>
