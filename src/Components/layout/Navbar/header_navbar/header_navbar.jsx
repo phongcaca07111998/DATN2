@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./header_navbar.scss";
 import {useNavigate} from "react-router-dom"
+import { auth } from "../../../firebase/firebase";
 
 const HeaderNavbar = (prop) => {
   const currenUser = localStorage.getItem("customerName");

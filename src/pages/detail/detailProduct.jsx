@@ -18,7 +18,9 @@ import { cartActions } from "../../Components/redux/slices/cartSlice";
 import { db } from "../../Components/firebase/firebase";
 
 import { doc, getDoc } from "firebase/firestore"
-export const DetailProduct = ({item}) => {
+import CommentSection from "./CommentSection";
+import useAuth from "../../custom-hooks/useAuth";
+export const DetailProduct = (checklogin) => {
   const location = useLocation();
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
@@ -34,12 +36,13 @@ export const DetailProduct = ({item}) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { data: productsData, firstLoading } = useGetData("product");
+
   const productId = location.pathname.split("/")[2];
   const mainData = productsData.find((productsData) => productsData.id === productId);
   const firstImgUrls = mainData?.imgUrls[0];
   const [image=firstImgUrls, setImage] = useState(firstImgUrls);
   //
-  const currenUser = localStorage.getItem("customerName");
+const {currentUser} = useAuth()
   const [variantGroups, setVariantGroups] = useState({}); 
 
   // const { checkAddToCart, checkoutData } = state;
@@ -51,10 +54,7 @@ export const DetailProduct = ({item}) => {
 
 
 
-  const moveToCheckout = async (data) => {
-    localStorage.setItem("checkOutItem", JSON.stringify(data));
-    navigate("/thanh-toan");
-  };
+ 
 
   useEffect(() => {
     const getProduct = async () => {
@@ -69,7 +69,7 @@ export const DetailProduct = ({item}) => {
     };
 
     getProduct();
-  }, [id]);
+  }, [id,checklogin]);
 
   const {
     imgUrls,
@@ -86,13 +86,20 @@ export const DetailProduct = ({item}) => {
     dispatch(
       cartActions.addItem({
         id,
-        image: imgUrls,
+        image: imgUrls[0],
         productName,
         price,
+        count,
       })
+      
     );
-
-    toast.success("Product added successfully");
+   
+      
+    setMessage("Thêm sản phẩm thành công");
+    setAlert(true)
+    setTimeout(() => {
+      setAlert(false);
+    }, 3000);
   };
  
   
@@ -121,41 +128,32 @@ export const DetailProduct = ({item}) => {
 
 
 
-  const payNow = () => {
-    // UseStore.dispatch(addToCart(mainData, selectedSize, count));
+  const handleBuyNow = () => {
+    if (currentUser === null) {
+      setMessage("Đăng nhập để tiếp tục")
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    } else {
+
+        dispatch(
+          cartActions.addItem({
+            id,
+            image: imgUrls[0],
+            productName,
+            price,
+            count,
+          })
+        );
+        setMessage("Đã thêm sản phẩm thành công");
+        setAlert(true)
+        setTimeout(() => {
+          setAlert(false);
+        }, 3000);
     navigate("/thanh-toan");
-  };
-  //Binh luan va dnah gia
-const [comment, setComment] = useState("");
-const [comments, setComments] = useState([
-  { id: 1, name: "John", content: "Great product!", rating: 4 },
-  { id: 2, name: "Mary", content: "I love it!", rating: 5 },
-]);
-const [rating, setRating] = useState(0);
-
-const handleRatingChange = (newRating) => {
-  setRating(newRating);
+  }
 };
-
-const handleCommentChange = (event) => {
-  setComment(event.target.value);
-};
-
-const handleSubmitComment = () => {
-  const newComment = {
-    id: comments.length + 1,
-    name: "Guest",
-    content: comment,
-    rating: rating,
-  };
-  setComments([...comments, newComment]);
-  setComment("");
-  setRating(0);
-};
-
-/////
-  // console.log(productsData);
-  // console.log(mainData);
   return (
     <div className="detailProduct">
       {alert && (
@@ -260,7 +258,8 @@ const handleSubmitComment = () => {
                   >
                     Thêm vào giỏ
                   </button>
-                  <button className="btn buyNow" onClick={payNow}>
+
+                  <button  className="btn buyNow" onClick={handleBuyNow}>
                     Mua ngay
                   </button>
                 </div>
@@ -274,41 +273,7 @@ const handleSubmitComment = () => {
           )}
           
         </div>
-        <h2>Đánh giá và bình luận</h2>
-        <div className="rating">
-            <ReactStars
-              count={5}
-              onChange={handleRatingChange}
-              size={24}
-              activeColor="#ffd700"
-            />
-            <span>{rating} sao</span>
-          </div>
-          <div className="comment">
-            <textarea
-              placeholder="Viết bình luận của bạn..."
-              value={comment}
-              onChange={handleCommentChange}
-            ></textarea>
-            <button onClick={handleSubmitComment}>Gửi</button>
-          </div>
-          <div className="comments">
-            {comments.map((comment) => (
-              <div key={comment.id} className="comment-item">
-                <div className="comment-header">
-                  <span>{comment.name}</span>
-                  <ReactStars
-                    count={5}
-                    value={comment.rating}
-                    size={16}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                </div>
-                <div className="comment-content">{comment.content}</div>
-              </div>
-            ))}
-          </div>
+        <CommentSection/>
       </div>
     </div>
   );

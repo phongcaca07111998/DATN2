@@ -4,99 +4,28 @@ import chevronRight from "../../assets/img/chevron-right.svg";
 import iconCart from "../../assets/img/icon-cart.svg";
 import { CartItem } from "../../Components/cart/cartitem/cart_item";
 import CheckBox from "react-animated-checkbox";
-import { useLocation, useNavigate } from "react-router-dom";
-import { commerce } from "../../lib/commerce";
-import { UseStore, action } from "../../store";
+
+
+
 import { CircularProgress } from "@mui/material";
-import useGetData from "../../custom-hooks/useGetData";
-import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "./../../Components/redux/slices/cartSlice";
+
+
+
+//
+
+import Helmet from "../../Components/Helmet/Helmet";
+import CommonSection from "./CommonSection";
+import { Container, Row, Col } from "reactstrap";
+
+import { motion } from "framer-motion";
+import { cartActions } from "../../Components/redux/slices/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Link } from "react-router-dom";
+
 export const Cart = () => {
-  // const location = useLocation();
-  // const [data, setData] = useState([]);
-  // const [check, setCheck] = useState(false);
-  // const [countCheckout, setCountCheckout] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [totalItem, setTotalItem] = useState(0);
-  // const [loading, setLoading] = useState(false);
-  // const [checkFinishUpdateItemProduct, setCheckFinishUpdateItemProduct] =
-  //   useState(false);
-
-  // const [state, dispatch] = UseStore();
-  // const { CheckCountInCart, checkoutData, checkAddToCart } = state;
-  // const totalProductCheck = checkoutData.filter((x) => x.checkBuyNow === true);
-  // const navigate = useNavigate();
-  // //
-  // const { data: productsData, firstLoading } = useGetData("product");
-  // const productId = location.pathname.split("/")[2];
-  // const mainData = productsData.find((productsData) => productsData.id === productId);
   
-  // useEffect(() => {
-  //   setLoading(true);
-  //   mainData.cart.retrieve().then((cart) => {
-  //     dispatch(action.SetItemCheckout(cart.line_items));
-  //     setData(cart.line_items);
-  //     setTotalItem(cart.total_unique_items);
-  //     setLoading(false);
-  //     setCheckFinishUpdateItemProduct(!checkFinishUpdateItemProduct);
-  //   });
-  // }, [CheckCountInCart]);
 
-  // useEffect(() => {
-  //   let count = 0;
-  //   checkoutData.forEach((element) => {
-  //     if (element.checkBuyNow === true) {
-  //       count = count + element.line_total.raw;
-  //     }
-  //   });
-  //   setTotalPrice(count);
-  // }, [checkAddToCart, loading, check]);
-
-  // const handleClickCheckBox = (check) => {
-  //   setCheck(check);
-  //   if (check) {
-  //     checkoutData.forEach((element) => {
-  //       element.checkBuyNow = true;
-  //     });
-  //   } else {
-  //     checkoutData.forEach((element) => {
-  //       element.checkBuyNow = false;
-  //     });
-  //   }
-  // };
-
-  // const handleCheckOut = () => {
-  //   localStorage.setItem("checkOutItem", JSON.stringify(state.checkoutData));
-  //   navigate("/thanh-toan");
-  // };
-  // const checkHandleCount = () => {};
-
-  // const handleDeleteAll = () => {
-  //   setLoading(true);
-  //   mainData.cart.delete().then((response) => {
-  //     dispatch(action.CheckAddToCart(!checkAddToCart));
-  //     setData([]);
-  //     setTotalItem(0);
-  //     dispatch(action.CheckAddToCart(!checkAddToCart));
-  //     setLoading(false);
-  //   });
-  // };
-
-  // const UpdateDuplicateProduct = async (
-  //   productLocation,
-  //   count,
-  //   variantGroupsUpdate,
-  //   ItemDelete
-  // ) => {
-  //   setLoading(true);
-  //   mainData.cart.remove(ItemDelete.productId).then((response) => {
-  //     mainData.cart
-  //       .add(data[productLocation].productId, count, variantGroupsUpdate)
-  //       .then((response) => {
-  //         dispatch(action.CheckChangeCountInCart(!CheckCountInCart));
-  //       });
-  //   });
-  // };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
 
@@ -133,8 +62,8 @@ export const Cart = () => {
             </div>
           </div>
           <div className="list-table">
-            {cartItems?.map((item, index) => (
-              <CartItem
+            {cartItems.map((item, index) => (
+              <Tr
                 item={item}
                 key={index}
                 

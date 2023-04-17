@@ -82,7 +82,8 @@ export const Navbar = (prop) => {
               <Option 
               passCheckRegister={passCheckRegister}
               passCheckLogin={passCheckLogin}
-              checkLogout={checkLogout}/> 
+              checkLogout={checkLogout}
+              /> 
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
 const Rating = (props) => {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
   const handleSubmit = (event) => {
     event.preventDefault();
     // Gửi kết quả đánh giá lên server
@@ -15,7 +15,7 @@ const Rating = (props) => {
         count={5}
         size={24}
         activeColor="#ffd700"
-        onChange={(newRating) => setRating(newRating)}
+        value={5}
       />
     </div>
   );

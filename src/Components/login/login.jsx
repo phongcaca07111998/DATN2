@@ -43,10 +43,9 @@ export const Login = (prop) => {
     signInWithEmailAndPassword(auth, email, password)
 
 
-    .then(function(userCredential) {
+    .then(function() {
         // Signed in 
         setLoading(false);
-        localStorage.setItem("customerName", userCredential.user);
         // localStorage.setItem("userId", userCredential.user);
         // localStorage.setItem("isAdmin", userCredential.user);
         prop.closeLogin(false);

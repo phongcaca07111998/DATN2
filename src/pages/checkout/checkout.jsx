@@ -4,48 +4,98 @@ import chevronRight from "../../assets/img/chevron-right.svg";
 import iconCheckout from "../../assets/img/icon-checkout.svg";
 import iconCheckoutVouucher from "../../assets/img/icon-checkout-system-vouucher.svg";
 import iconCheckoutPayment from "../../assets/img/icon-checkout-payment.svg";
-import { UseStore, action } from "../../store";
+import { motion } from "framer-motion";
 import { CardItem } from "../../Components/checkout/card_item/card_item";
-import { commerce } from "../../lib/commerce";
+
 import { SetProductsOrder } from "../../store/action";
 import { PaymentForm } from "../../Components/checkout/paymentForm/paymentForm";
+import { useSelector , useDispatch} from "react-redux";
+import { cartActions } from "../../Components/redux/slices/cartSlice";
+import Cart from "../cart/Cart1";
+import Helmet from "../../Components/Helmet/Helmet";
+import CommonSection from "../cart/CommonSection";
+import { Link } from "react-router-dom";
 
 export const Checkout = () => {
-  const [state, dispatch] = UseStore();
-  const { checkoutData, listOrder } = state;
-  const [totalItem, setTotalItem] = useState(0);
-  const [totalPayment, setTotalPayment] = useState(0);
-  const [checkFormPayment, setCheckFormPayment] = useState(false);
-  
-  const checkOutItem = localStorage.getItem("checkOutItem");
-  const dataCheckout = JSON.parse(checkOutItem).filter(
-    (x) => x.checkBuyNow === true
-  );
-  const fetchData = () => {
-    let total = 0;
-    dataCheckout.forEach((element) => {
-      total = element.line_total.raw + total;
-    });
-    setTotalItem(total);
-    setTotalPayment(total );
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const payment = () => {
-    setCheckFormPayment(true)
+  const totalQty = useSelector(state => state.cart.totalQuantity);
+  const totalAmount = useSelector(state => state.cart.totalAmount);
+ const Cartime=()=>{
+  return(
+    <Helmet title="Cart">
+      <CommonSection title="Shopping Cart" />
+      <section>
+        <div className="container">
+          <div className="cartall">
+            <div className="col-9" >
+              {cartItems.length === 0 ? (
+                <h2 className="fs-4 text-center">No item added to the cart</h2>
+              ) : (
+                <table className="table bordered">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Qty</th>              
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {cartItems.map((item, index) => (
+                      <Tr item={item} key={index} />
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </Helmet>
+  )
+ }
+  const Tr = ({ item }) => {
+    const dispatch = useDispatch();
+  
+    const deleteProduct = () => {
+      dispatch(cartActions.deleteItem(item.id));
+    };
+    console.log(item);
+    
+  
+    return (
+      <tr>
+        <td>
+          <img src={item.imgUrls} alt="" />
+        </td>
+        <td>{item.productName}</td>
+        <td>${item.price}</td>
+        <td>{item.quantity}sp</td>
+        <td>
+          <motion.i
+            whileTap={{ scale: 1.2 }}
+            onClick={deleteProduct}
+            class="ri-delete-bin-line"
+          ></motion.i>
+        </td>
+      </tr>
+    );
   };
-  const turnOff = (check) => {
-    setCheckFormPayment(check);
-  };
+
+  // const Tr = ({ item }) => {
+  //   const dispatch = useDispatch();
+  //    }
+  //    console.log(cartItems);
+  
   return (
     <div className="Checkout">
-      {checkFormPayment && (
+      {/* {checkFormPayment && (
         <div>
           <PaymentForm turnOff={turnOff} totalPayment={totalPayment}/>
         </div>
-      )}
+      )} */}
       <div className="Checkout_header">
         <div className="Checkout_header_content">
           <p>Trang chủ</p>
@@ -64,9 +114,8 @@ export const Checkout = () => {
               <span>Đơn hàng</span>
             </div>
             <div className="order-info-body">
-              {dataCheckout?.map((item, index) => (
-                <CardItem key={index} item={item} />
-              ))}
+                <Cartime/>
+                  
             </div>
             <div className="system-vouchers">
               <div className="title">
@@ -82,10 +131,10 @@ export const Checkout = () => {
             <div className="order-payment-title">
               <div className="general-info">
                 <div className="general-info-item">
-                  <span>Tổng tiền hàng ({dataCheckout.length} sản phẩm) </span>
+                  <span>Tổng sản phẩm ({totalQty} sản phẩm) </span>
                   <span>
-                    {totalItem.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    đ
+                    {totalQty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    sp
                   </span>
                 </div>
                 {/* <div className="general-info-item">
@@ -103,16 +152,16 @@ export const Checkout = () => {
                 <div className="general-info-item">
                   <span style={{ fontWeight: "bolder" }}>Tổng thanh toán:</span>
                   <span style={{ fontWeight: "bolder", color: "#fd37ae" }}>
-                    {totalPayment
+                    {totalAmount
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    đ
+                    $
                   </span>
                 </div>
               </div>
             </div>
             <div className="order-create-section">
-              <div className="create-order" onClick={payment}>
+              <div className="create-order" >
                 <p>Thanh toán</p>
               </div>
             </div>

@@ -14,7 +14,6 @@ export const Card = (prop) => {
       </div>
       <div className="inf">
         <p className="inf_name">{data.name}</p>
-        {/* <p>Kích cỡ: {data.selected_options[0].option_name}</p> */}
         <b>{data.price.formatted_with_symbol} </b>
         <span>x{data.quantity}</span>
       </div>

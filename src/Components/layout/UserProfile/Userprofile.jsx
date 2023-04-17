@@ -1,11 +1,64 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './userprofile.css'
+import { getAuth } from 'firebase/auth';
+import useGetData from '../../../custom-hooks/useGetData';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { db } from '../../firebase/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 
-export default class Userprofile extends Component {
-  render() {
-    return (
-        <div className="container">
+const Userprofile = () => {
+    const {currentUser} = getAuth();
+    const [users, setUsers] = useState([]);
+    const { data: usersData, loading } = useGetData("users");
+    const [userfname,setUserfname]=useState("")
+
+    const mainUser = usersData.find(userData => userData.email === currentUser.email);
+    
+    
+       
+    
+    useEffect(() => {
+      if (!loading) {
+        setUsers([mainUser]);
+      }
+    }, [loading, mainUser]);
+    
+
+    // 
+    const updateUserFname = async (e) => {
+        e.preventDefault()
+        const userId = getAuth().currentUser.uid;
+        const userDocRef = doc(db, "users", userId);
+      
+        try {
+          await updateDoc(userDocRef, {
+            userfname: userfname,
+          });
+          console.log("Cập nhật thành công trường userfname trong tài liệu của người dùng hiện tại");
+        } catch (error) {
+          console.log("Lỗi khi cập nhật trường userfname: ", error);
+        }
+        console.log(userId);
+      }
+
+
+      
+
+
+
+
+
+
+
+
+
+
+    // 
+    // console.log(currentUser.uid);
+  return (
+    <div className="container">
         <div className="row layout-profile">
           <div className="col-3-5">
             <div className="sidebar">
@@ -16,7 +69,7 @@ export default class Userprofile extends Component {
                   <img src="../userprofile/public/images/icon_photographic.svg"/>
                   </div>
                 </div>
-                <div className="user-name">Nguyễn Văn A</div>
+                <div className="user-name">{currentUser.displayName}</div>
                 <div style={{marginBottom: '2.25rem'}}>
                   <div className="follow d-flex justify-content-center align-items-center">
                     <div className="info-section text-center" style={{cursor: 'pointer'}}>
@@ -42,24 +95,33 @@ export default class Userprofile extends Component {
               </div>
             </div>
           </div>
+          
           <div className="col-8-5">
             <div className="profile-inform h-100-p">
               <div className="header-title">Thông tin tài khoản</div>
+              
                 <form action="#" className="h-100">
+                {users.map((key) => (
                   <div className>
+                    
                     <div className="d-flex form-group mb-4"><label className="mb-0">Họ tên</label>
-                      <div className="input-and-error"><input name="userName" className="profile-form-control form-control" type="text" placeholder="Họ và tên" defaultValue="Nguyễn Văn A" /></div>
+                      <div  onChange= {(e)=> setUserfname (e.target.value)}  className="input-and-error"><input name="userName" className="profile-form-control form-control" type="text" placeholder="Họ và tên" defaultValue={key.userfname} /></div>
                     </div>
                     <div className="d-flex form-group mb-4"><label className="mb-0">Số điện thoại</label>
+                   
                       <div className="input-and-error d-flex">
-                        <div className=" flex-1"><input name="phoneNumber" className="profile-form-control form-control" type="text" placeholder="Nhập số điện thoại" defaultValue={+1234567891} /></div>
+                      
+                        <div className=" flex-1"><input name="phoneNumber" className="profile-form-control form-control" type="text" placeholder="Nhập số điện thoại" defaultValue={key.phone}/></div>
                       </div>
+
+
+                      
                     </div>
                     <div className="d-flex form-group mb-4"><label className="mb-0">Số CMND/CCCD</label>
                       <div className="input-and-error"><input name="identity_number" className="profile-form-control form-control" type="text" placeholder="Nhập số CMND/ CCCD" defaultValue={+131241121} /></div>
                     </div>
                     <div className="d-flex form-group mb-4"><label className="mb-0">Email</label>
-                      <div className="input-and-error"><input name="email" className="profile-form-control form-control" type="text" placeholder="Nhập Email" defaultValue="abc@gmail.com" /></div>
+                      <div className="input-and-error"><input name="email" className="profile-form-control form-control" type="text" placeholder="Nhập Email" defaultValue={key.email} /></div>
                     </div>
                     <div className="d-flex form-group mb-4"><label className="mb-0">Giới tính</label>
                       <div className="input-and-error"><input name="gender" type="radio" id="nu" defaultValue={2} defaultChecked /><label className="option" htmlFor="nu">Nữ</label><input name="gender" type="radio" id="nam" defaultValue={1} /><label className="option" htmlFor="nam">Nam</label><input name="gender" type="radio" id="khac" defaultValue={3} /><label className="option" htmlFor="khac">Khác</label></div>
@@ -95,15 +157,19 @@ export default class Userprofile extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="d-flex form-group mb-4-5"><button type="submit" className="btn-bidu mx-auto">Cập nhật</button></div>
+                    <div onClick={updateUserFname} className="d-flex form-group mb-4-5"><button className="btn-bidu mx-auto">Cập nhật</button></div>
                     <div className="text-center form-group pt-2 mb-4 font-size-14px delete-account mx-auto cursor-pointer">Xóa tài khoản</div>
                   </div>
+                  )
+                      )}
                 </form>
              
             </div>
           </div>
+          
         </div>
-      </div>      
-    )
-  }
+      </div> 
+  )
 }
+
+export default Userprofile

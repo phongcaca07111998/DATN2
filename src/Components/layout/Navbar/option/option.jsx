@@ -8,12 +8,21 @@ import { useNavigate } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import { useEffect } from 'react';
 import Userprofile from '../../UserProfile/Userprofile';
+import { auth } from "../../../firebase/firebase";
+import { getAuth, signOut } from 'firebase/auth';
+import { useSelector } from 'react-redux';
 
 const Option=(prop)=> {
-  const currenUser = localStorage.getItem("customerName");
-  const [textLogin, setTextLogin] = useState("Đăng nhập");
-  const [showUserProfile, setShowUserProfile] = useState(false);
+  const {currentUser} = getAuth();
+  const totalQuantity = useSelector(state => state.cart.totalQuantity);
+
+
   const navigate = useNavigate()
+
+
+  const moveToCart = () => {
+    navigate("/gio-hang");
+  };
 
   const register = () => {
     prop.passCheckRegister(true);
@@ -24,35 +33,67 @@ const Option=(prop)=> {
     
   };
 
-  const logOut = () => {
-    localStorage.removeItem("customerName");
-    // localStorage.removeItem("isAdmin");
-    // localStorage.removeItem("userId");
-    setTextLogin("Đăng nhập");
-    prop.checkLogout(true)
-    navigate("/bidu-ecommerce")
+  // const logOut = (auth) => {
+  
+  //   // localStorage.removeItem("isAdmin");
+  //   // localStorage.removeItem("userId");
+  //   setTextLogin("Đăng nhập");
+  //   prop.checkLogout(true)
+  //   navigate("/bidu-ecommerce")
+  // };
+
+  const logOut = () => {  
+    signOut(auth)
+    
+
+      .then(() => {
+        // toast.success("Logged out");
+        navigate("/bidu-ecommerce");
+        prop.passCheckLogout(true)
+        
+      })
+      .catch(err => {
+        // toast.error(err.message);
+      });
+      
+  }
+  const profileseler = () => {
+    navigate('/selerprofile'); // chuyển hướng đến trang Userprofile
   };
-  useEffect(() => {
-    if (currenUser) {
-      setTextLogin("Đăng xuất");
-    }
-  },[currenUser]);
+
   const profile = () => {
     navigate('/userprofile'); // chuyển hướng đến trang Userprofile
   };
+  console.log(currentUser);
   return (
     <div style={{ position: "relative" }}>
       <div className="option">
         <div className="option_icon">
       <div className='phantu'><i className='fa fa-user icon-circle'></i>
-            <div className="bottom">
-                <p onClick={textLogin === "Đăng nhập" ? login : logOut} >
+
+            {currentUser ? (
+              <div className="bottom">
                 
-                   {textLogin} </p>
-                   {/* <p>{currenUser ? <p style={{color: "rgb(187, 58, 165)"}}>{currenUser}</p> : <p onClick={register}>Đăng ký</p>}</p> */}
-                <p onClick={profile}>Trang cá nhân</p> 
-                <p>Tư vấn hướng dẫn</p>       
+
+
+              <p>{currentUser ? <a >Hello dit me may:{currentUser.displayName}</a> : <p></p>}</p>
+              
+                 
+              <p onClick={profile}>Trang cá nhân</p> 
+              <p onClick={profileseler}>Trang người bán</p>
+              <p>Tư vấn hướng dẫn</p>       
+              <p onClick={logOut}>Đăng xuất</p>       
+          </div>
+
+            ) : (
+              <div className="bottom">
+                <p onClick={login} >Không đăng nhập thì cút</p> 
+                <p onClick={register}>Đăng kí ở đây</p>       
             </div>
+
+            )
+          }
+            
             </div> 
             </div>
         <div className="option_icon">
@@ -60,9 +101,23 @@ const Option=(prop)=> {
         </div>
         <div className="option_icon cart">
           <div className="menuCart">
-          <Cart  />
+          
           </div>
-          <img src={icon_cart} alt="" />
+          
+          {currentUser?(
+            <div>
+            <img onClick={moveToCart}  src={icon_cart} alt="" />
+          
+            <span className="badge">{totalQuantity}</span>
+            </div>
+            
+
+          ):(
+            <img   src={icon_cart} alt="" />
+
+          )}
+          
+          
         </div>
       </div>
     </div>

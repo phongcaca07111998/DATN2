@@ -1,0 +1,121 @@
+
+    .container12 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    background-color: #fafafa;
+    }
+    .titlel{
+        margin-top: 30px;
+        font-size: 25px;
+        margin-left: 20px;
+        color: #007bff;
+    }
+    .section {
+    background-color: #f7f4f4;
+    padding: 50px 0;
+    }
+    
+    .section-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    }
+    
+    .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    }
+    
+    .product {
+    width: calc(33.3333% - 20px);
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+    
+    .product-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    }
+    
+    .product-name {
+    font-weight: bold;
+    margin-bottom: 10px;
+    }
+    
+    .product-price {
+    font-weight: bold;
+    }
+    
+    .form__group {
+    margin-bottom: 20px;
+    }
+    
+    .form__group span {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left:40px;
+    }
+    
+    .form__group input,
+    .form__group select {
+    display: block;
+    width: 240%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 35px;
+    line-height: 1.5;
+    color: #333;
+    }
+    
+    .form__group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path d="M2 0L0 2h4zm0 5L0 3h4z" fill="%23000"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    }
+    
+    .form__group input[type='file'] {
+        display: block;
+        width: 240%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-left: 35px;
+        line-height: 1.5;
+        color: #333;
+    }
+    
+    .buy__btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    }
+    
+    .buy__btn:hover {
+    background-color: #0069d9;
+    }

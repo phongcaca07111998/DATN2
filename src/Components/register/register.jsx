@@ -7,72 +7,98 @@ import Cursor from "../../assets/img/cursor.png";
 import icon_close_menu from "../../assets/img-login/icon_close_menu.svg";
 import { RegisterSchema } from "./validate";
 import { Alert, CircularProgress } from "@mui/material";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import app from "../firebase/firebase";
-import logo from '../../assets/img/logo.png'
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../firebase/firebase";
+
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
 export const Register=(prop) => {
 
-    const auth = getAuth(app);
+  const [userfname,setUserfname]= useState("")
+  const [username,setUsername]= useState("")
+  const [userphone,setPhone]= useState("")
+  const [email,setEmail]= useState("")
+  const [password,setPassword]= useState("")
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("")
 
-    const [email,setEmail]= useState("")
-    const [password,setPassword]= useState("")
-    const [loading, setLoading] = useState(false);
-    const [alert, setAlert] = useState(false);
-    const [message, setMessage] = useState("")
+  const signUp = async(e)=>{
+    e.preventDefault()
+    setLoading(true)
+  
 
-    const initialValues = {
-        username: "",
-        email: "",
-        password: "",
-        password_confirm: "",
-        phone: "",
-    };
+  try {
+    const userCredential= await createUserWithEmailAndPassword(auth,email,password);
+    const user = userCredential.user;
+    const storageRef= ref(storage,`{username}`)
+    const uploadTask =uploadBytesResumable(storageRef)
 
-    const closeRegister = () => {
-        prop.closeRegister(false);
-    };
-
-    const onAdd = ( { resetForm }) => {
-        signUp( {resetForm});
-    };
-
-
-    const signUp=({resetForm})=>{
-    setLoading(true);
-
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          console.log(user)
-          setLoading(false);
-          // console.log(user);
-          setMessage("Đăng ký thành công!");
-          // setAlert("Đăng ký thành công!");
-          setAlert(true);
-          // resetForm()
-          // setAlert(false);
-          setTimeout(() => {
-            
-            prop.closeRegister(false);
-          }, 3000);
-        
-          // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            setLoading(false);
-            // console.log(error);
-            setMessage("Đăng ký thất bại!");
-            setAlert(true);
-            // setAlert("Đăng ký thất bại!");
-            // setTimeout(() => {
-            // setAlert(false);
-            // }, 3000);
-            // // ..
+    uploadTask.on((error)=>{
+      const errorCode = error.code
+      setLoading(false);
+      setMessage("Đăng ký thất bại!");
+      setAlert(true);
+      // toast.error(error.message)
+    },()=>{
+      getDownloadURL(uploadTask.snapshot.ref).then(async()=>{
+        //update user profile
+        await updateProfile(
+          user,{
+          displayName:username,
+          // photoURL: downloadURL,
         });
+        
+      //store user data firestore database
 
-}
+        await setDoc(doc(db,'users',user.uid),{
+          uid:user.uid,
+          userfname:userfname,
+          displayName:username,
+          email,
+          pass :password,
+          phone:userphone
+          // photoURL:dowloadURL,
+        });
+      });
+    })
+    
+
+    setLoading(false)
+    // console.log(user)
+    setMessage("Đăng ký thành công!");
+    setAlert(true);
+    setTimeout(() => {
+          
+                  prop.closeRegister(false);
+                }, 3000);
+    
+    
+   
+  }catch (error){
+    setLoading(false)
+    setMessage("Đăng ký thất bại!");
+    setAlert(true);
+    
+    }
+  };
+
+  const initialValues = {
+      userfname:"",
+      username: "",
+      email: "",
+      password: "",
+      password_confirm: "",
+      phone: "",
+  };
+
+  const closeRegister = () => {
+      prop.closeRegister(false);
+  };
+
+  const onAdd = ( { resetForm }) => {
+      signUp( {resetForm});
+  };
   
   return (
     <div>
@@ -111,10 +137,21 @@ export const Register=(prop) => {
               {({ errors, touched }) => (
                 <Form className="form_fields">
                   <label htmlFor="">ĐĂNG KÝ</label>
-                  <div className="field" >
+                  <div className="field" onChange= {(e)=>setUserfname(e.target.value)} >
+                    <FastField
+                      name="hovaten"
+                      placeholder="Họ và tên"
+                      className="input"
+                      type="text"
+                    />
+                    {errors.hovaten && touched.hovaten ? (
+                      <div className="formError">{errors.hovaten}</div>
+                    ) : null}
+                  </div>
+                  <div className="field" onChange= {(e)=>setUsername(e.target.value)} >
                     <FastField
                       name="username"
-                      placeholder="Họ và tên"
+                      placeholder="username"
                       className="input"
                       type="text"
                     />
@@ -155,12 +192,12 @@ export const Register=(prop) => {
                       <div className="formError">{errors.password_confirm}</div>
                     ) : null}
                   </div>
-                  <div className="field">
+                  <div className="field" onChange= {(e)=>setPhone(e.target.value)}>
                     <FastField
                       name="phone"
                       placeholder="Số điện thoại"
                       className="input"
-                    />
+                    />  
                     {errors.phone && touched.phone ? (
                       <div className="formError">{errors.phone}</div>
                     ) : null}

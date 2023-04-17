@@ -1,27 +1,36 @@
-import React from "react";
+import React ,{useState}from "react";
 import Helmet from "../../Components/Helmet/Helmet";
 import CommonSection from "./CommonSection";
 import { Container, Row, Col } from "reactstrap";
-
+import "./cart.css"
 import { motion } from "framer-motion";
 import { cartActions } from "../../Components/redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { UseStore } from "../../store";
 
 
 
 const Cart = () => {
+  
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  
 
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  
+ 
+  
+
+  
+  
   return (
     <Helmet title="Cart">
       <CommonSection title="Shopping Cart" />
       <section>
-        <Container>
-          <Row>
-            <Col lg="9">
+        <div className="container">
+          <div className="cartall">
+            <div className="col-9" >
               {cartItems.length === 0 ? (
                 <h2 className="fs-4 text-center">No item added to the cart</h2>
               ) : (
@@ -34,7 +43,6 @@ const Cart = () => {
                       <th>Qty</th>
                       <th>Delete</th>
 
-
                       
                     </tr>
                   </thead>
@@ -46,9 +54,9 @@ const Cart = () => {
                   </tbody>
                 </table>
               )}
-            </Col>
+            </div>
 
-            <Col lg="3">
+            <div className="col-3">
               <div>
                 <h6 className="d-flex align-items-center justify-content-between ">
                   Subtotal
@@ -60,19 +68,21 @@ const Cart = () => {
               </p>
               <div>
                 <button className="buy__btn w-100 ">
-                  <Link to="/checkout">Checkout</Link>
+                  <Link  to="/thanh-toan">Checkout</Link>
                 </button>
+                
                 <button className="buy__btn w-100 mt-3">
-                  <Link to="/shop">Continue Shopping</Link>
+                  <Link to="/bidu-ecommerce">Shopping</Link>
                 </button>
               </div>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </div>
+        </div>
       </section>
     </Helmet>
   );
 };
+
 
 const Tr = ({ item }) => {
   const dispatch = useDispatch();
@@ -80,21 +90,25 @@ const Tr = ({ item }) => {
   const deleteProduct = () => {
     dispatch(cartActions.deleteItem(item.id));
   };
+  console.log(item);
+  
 
   return (
     <tr>
       <td>
-        <img src={item.imgUrls[0]} alt="" />
+        <img src={item.imgUrls} alt="" />
       </td>
       <td>{item.productName}</td>
       <td>${item.price}</td>
-      <td>{item.quantity}px</td>
+      <td>{item.quantity}sp</td>
       <td>
-        <motion.i
+        
+        <button className="" onClick={deleteProduct}>Xóa</button>
+        {/* <motion.i
           whileTap={{ scale: 1.2 }}
           onClick={deleteProduct}
           class="ri-delete-bin-line"
-        ></motion.i>
+        ></motion.i> */}
       </td>
     </tr>
   );
