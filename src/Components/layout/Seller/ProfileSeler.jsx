@@ -48,7 +48,7 @@ const ProfileSeler = () => {
                     </div>
                     <ul className="sidebar-submenu">
                         <li className="sidebar-submenu-item">
-                            <a href="#">Tất Cả Sản Phẩm</a>
+                            <Link to="/allproduct">Tất Cả Sản Phẩm</Link>
                         </li>
                         <li className="sidebar-submenu-item">
                             <Link to="/addproduct">Thêm Sản Phẩm</Link>
@@ -152,71 +152,14 @@ const ProfileSeler = () => {
                         <span>Tìm kiếm</span>
                     </button>
                 </div>
-                <div className="order-panel-header">
-                    <div className="title">0 Đơn hàng</div>
-                </div>
+               
             </div>
         </div>
     </div>
-    <div className="order-list-section">
-    <Helmet title="Cart">
-      <section>
-        <div className="container1">
-          <div className="cartall">
-            <div className="col-9" >
-              {cartItems.length === 0 ? (
-                <h2 className="fs-4 text-center">No item added to the cart</h2>
-              ) : (
-                <table className="table bordered">
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th>Title</th>
-                      <th>Price</th>
-                      <th>Qty</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartItems.map((item, index) => (
-                      <Tr item={item} key={index} />
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-    </Helmet>
-    </div>
+  
 </div>
   )
 }
-const Tr = ({ item }) => {
-    const dispatch = useDispatch();
-  
-    const deleteProduct = () => {
-      dispatch(cartActions.deleteItem(item.id));
-    };
-  
-    return (
-      <tr>
-        <td>
-          <img src={item.imgUrls} alt="" />
-        </td>
-        <td>{item.productName}</td>
-        <td>${item.price}</td>
-        <td>{item.quantity}px</td>
-        <td>
-          <motion.i
-            whileTap={{ scale: 1.2 }}
-            onClick={deleteProduct}
-            class="ri-delete-bin-line"
-          ></motion.i>
-        </td>
-      </tr>
-    );
-  };
+
 
 export default ProfileSeler

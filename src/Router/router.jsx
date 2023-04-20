@@ -21,6 +21,8 @@ import Cart1 from "../pages/cart/Cart1";
 import Userprofile from "../Components/layout/UserProfile/Userprofile";
 import ProfileSeler from "../Components/layout/Seller/ProfileSeler";
 import AddProducts from "../Components/layout/Seller/AddProducts";
+import AllProducts from "../Components/layout/Seller/Allproduct";
+import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   const admin = localStorage.getItem("isAdmin");
@@ -62,7 +64,8 @@ export const Routerr = (prop) => {
               <Route path="/addproduct"
               element={<AddProducts />}/>
 
-              
+              <Route path="/allproduct" element={<AllProducts/>}/>
+              <Route path="/User" element={<UserAdmin/>}/>
               <Route path="/gio-hang" element={<Cart1 />} />
               {/* <Route path="/gio-hang" element={<Cart />} /> */}
               <Route  path="/thanh-toan" element={<Checkout />} />
