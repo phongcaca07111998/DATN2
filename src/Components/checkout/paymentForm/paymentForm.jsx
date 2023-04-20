@@ -18,7 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, doc, updateDoc, addDoc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { Checkout } from "../../../pages/checkout/checkout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions  } from "./../../redux/slices/cartSlice";
 import useGetData from "../../../custom-hooks/useGetData";
 
 
@@ -33,6 +34,7 @@ export const PaymentForm = (prop) => {
   const [message, setMessage] = useState("");
   // const { data: productsData, firstLoading } = useGetData("product");
   const paymentType1=prop.paymentType
+  const dispatch = useDispatch();
   //
   async function updateProductQuantity(productId, newQuantity) {
     console.log(productId);
@@ -60,7 +62,7 @@ export const PaymentForm = (prop) => {
       console.error(`Lỗi khi cập nhật số lượng sản phẩm ${productId}:`, error);
     }
   }
-  
+ 
   // Hàm xử lý khi người dùng click vào thanh toán
   async function handleCheckout(cartItems) {
     // Duyệt qua từng item trong cartItems và cập nhật lại số lượng sản phẩm trong Firestore
@@ -80,7 +82,6 @@ export const PaymentForm = (prop) => {
 
   
   // const [listIdCountries, setListIdCountries] = useState([]);
-
 
 
   useEffect(() => {
@@ -120,7 +121,7 @@ export const PaymentForm = (prop) => {
       });
       handleCheckout(cartItems);
       
- 
+      dispatch(cartActions.resetCart());
       
       setLoading(true);
       setMessage("Product successfully added!");

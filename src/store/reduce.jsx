@@ -99,6 +99,7 @@ function Reducer(state, action) {
         ...state,
         // listOrder: list
       };
+      
     default:
       throw new Error("Invalid action.");
   }
