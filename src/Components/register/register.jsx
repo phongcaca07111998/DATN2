@@ -82,7 +82,7 @@ export const Register=(prop) => {
     
     }
   };
-
+  
   const initialValues = {
       userfname:"",
       username: "",

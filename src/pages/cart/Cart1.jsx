@@ -58,13 +58,14 @@ const Cart = () => {
 
             <div className="col-3">
               <div>
-                <h6 className="d-flex align-items-center justify-content-between ">
-                  Subtotal
-                  <span className="fs-4 fw-bold">${totalAmount}</span>
+                <h6 className="d-flex align-items-center justify-content-between fs-4 fw-bold ">
+                  Tổng giá trị :
+          
                 </h6>
               </div>
-              <p className="fs-6 mt-2">
-                taxes and shipping will calculate in checkout
+              <p className="fs-4 fw-bold">
+              {totalAmount .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ
               </p>
               <div>
                 <button className="buy__btn w-100 ">
@@ -99,16 +100,13 @@ const Tr = ({ item }) => {
         <img src={item.imgUrls} alt="" />
       </td>
       <td>{item.productName}</td>
-      <td>${item.price}</td>
-      <td>{item.quantity}sp</td>
+      <td>{item.price .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".") } VNĐ</td>
+      <td>{item.quantity }sp</td>
       <td>
         
         <button className="" onClick={deleteProduct}>Xóa</button>
-        {/* <motion.i
-          whileTap={{ scale: 1.2 }}
-          onClick={deleteProduct}
-          class="ri-delete-bin-line"
-        ></motion.i> */}
+       
       </td>
     </tr>
   );

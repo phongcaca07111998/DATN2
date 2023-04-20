@@ -8,10 +8,17 @@ import { commerce } from "../../lib/commerce";
 import { removeVietnameseTones } from "../../Components/layout/Navbar/search/removeVNtones";
 import { TableOrder } from "../../Components/admin/content/tableOrder";
 import { FormDetailOrder } from "../../Components/admin/content/formDetailOrder";
-export const Donhang = () => {
+import useGetData from "../../custom-hooks/useGetData";
+
+
+export const Donhang = ({item}) => {
   const [data, setData] = useState([]);
   const [ItemDetail, setItemDetail] = useState({});
   const [checkFormDetail, setCheckFormDetail] = useState(false);
+  //
+
+
+
   const listOrder = localStorage.getItem("listOrder");
   const dataOrder = JSON.parse(listOrder);
   const fetchData = () => {
@@ -24,6 +31,7 @@ export const Donhang = () => {
 
   useEffect(() => {
     fetchData();
+    
   });
 
   const dataProductCard = [
@@ -50,8 +58,10 @@ export const Donhang = () => {
     setCheckFormDetail(check)
   }
   return (
+    
     <div className="_loading_overlay_wrapper css-79elbk">
-      {checkFormDetail && <FormDetailOrder ItemDetail={ItemDetail} closeForm={closeForm}/>}
+      
+      {checkFormDetail && <FormDetailOrder ItemDetail={ItemDetail} closeForm={closeForm} />}
       <NavbarAdmin />
       <div className="main-content">
         <Navbar />

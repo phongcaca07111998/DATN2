@@ -42,7 +42,7 @@ const Userprofile = () => {
         }
         console.log(userId);
       }
-
+    
 
       
 
@@ -105,7 +105,7 @@ const Userprofile = () => {
                   <div className>
                     
                     <div className="d-flex form-group mb-4"><label className="mb-0">Họ tên</label>
-                      <div  onChange= {(e)=> setUserfname (e.target.value)}  className="input-and-error"><input name="userName" className="profile-form-control form-control" type="text" placeholder="Họ và tên" defaultValue={key.userfname} /></div>
+                      <div onClick={updateUserFname}  onChange= {(e)=> setUserfname (e.target.value)}  className="input-and-error"><input name="userName" className="profile-form-control form-control" type="text" placeholder="Họ và tên" defaultValue={key.userfname} /></div>
                     </div>
                     <div className="d-flex form-group mb-4"><label className="mb-0">Số điện thoại</label>
                    
@@ -157,7 +157,7 @@ const Userprofile = () => {
                         </div>
                       </div>
                     </div>
-                    <div onClick={updateUserFname} className="d-flex form-group mb-4-5"><button className="btn-bidu mx-auto">Cập nhật</button></div>
+                    <div  className="d-flex form-group mb-4-5"><button className="btn-bidu mx-auto">Cập nhật</button></div>
                     <div className="text-center form-group pt-2 mb-4 font-size-14px delete-account mx-auto cursor-pointer">Xóa tài khoản</div>
                   </div>
                   )

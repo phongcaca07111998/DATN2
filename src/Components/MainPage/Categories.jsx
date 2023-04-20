@@ -17,63 +17,78 @@ const Categories = ({prop,item}) => {
       setCategories(uniqueCategories);
     }
   }, [productsData]);
-  console.log(categories);
+
   
   const data = [
     {
       id:categories[0],
       cateImg: "./images/category/cat1.png",
-      cateName: "Fashion",
+      cateName: "Điện máy",
     },
     {
       id:categories[1],
       cateImg: "./images/category/cat2.png",
-      cateName: "Electronic",
+      cateName: "Đồ gia dụng",
     },
     {
       id:categories[2],
       cateImg: "./images/category/cat3.png",
-      cateName: "Cars",
+      cateName: "Công cụ & Dụng cụ",
     },
     {
       id:categories[3],
       cateImg: "./images/category/cat4.png",
-      cateName: "Home & Garden",
+      cateName: "Y tế & Sức khoẻ",
     },
     {
-      id:"msi",
+      id:categories[4],
       cateImg: "./images/category/cat5.png",
-      cateName: "Gifts",
+      cateName: "Thể thao & Ngoài trời",
     },
     {
-      id:"dell",
+      id:categories[5],
       cateImg: "./images/category/cat6.png",
-      cateName: "Music",
+      cateName: "Thiết bị công nghiệp",
     },
     {
-      id:"dell",
+      id:categories[6],
       cateImg: "./images/category/cat7.png",
-      cateName: "Health & Beauty",
+      cateName: "Thiết bị số, Phụ kiện",
     },
     {
-      id:"dell",
+      id:categories[7],
       cateImg: "./images/category/cat8.png",
-      cateName: "Pets",
+      cateName: "Nhà cửa & Đời sống",
     },
     {
-      id:"dell",
+      id:categories[8],
       cateImg: "./images/category/cat9.png",
-      cateName: "Baby Toys",
+      cateName: "Thiết bị văn phòng",
     },
     {
-      id:"dell",
+      id:categories[9],
       cateImg: "./images/category/cat10.png",
-      cateName: "Groceries",
+      cateName: "Mỹ phẩm & Làm đẹp",
     },
     {
-      id:"dell",
+      id:categories[10],
       cateImg: "./images/category/cat11.png",
-      cateName: "Books",
+      cateName: "Mẹ và bé",
+    },
+    {
+      id:categories[11],
+      cateImg: "./images/category/cat11.png",
+      cateName: "Phụ kiện ô tô, xe hơi",
+    },
+    {
+      id:categories[12],
+      cateImg: "./images/category/cat11.png",
+      cateName: "Thời trang & Du lịch",
+    },
+    {
+      id:categories[13],
+      cateImg: "./images/category/cat11.png",
+      cateName: "Bách hoá tổng hợp",
     },
   ]
   const navigate = useNavigate();
@@ -86,11 +101,11 @@ const Categories = ({prop,item}) => {
   return (
     <>
      <div className='catgrories3 d_flex'>
-            <span class='fa-solid fa-border-all icon'></span>
+            <span className='fa-solid fa-border-all icon'></span>
             <h4>
               Categories <i className='fa fa-chevron-down icon1'></i>
             </h4>
-          </div>
+</div>
       <div className='category1'>
         {data.map((value, index) => {
           return (

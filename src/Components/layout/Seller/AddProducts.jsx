@@ -14,7 +14,8 @@ const AddProducts = () => {
   const [enterCategory, setEnterCategory] = useState("");
   const [enterPrice, setEnterPrice] = useState("");
   const [enterUsername, setEnterUsername] = useState("");
-  
+  const [enterSl, setSl] = useState("");
+
   const [enterProductImgs, setEnterProductImgs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -55,22 +56,25 @@ const AddProducts = () => {
         description: enterDescription,
         category: enterCategory,
         price: enterPrice,
-        username:enterUsername,
+        username: enterUsername,
         imgUrls: imgUrls,
+        sl: enterSl,
       });
 
       setLoading(false);
-      toast.success("Product successfully added!");
-      navigate("/dashboard/all-products");
+      toast.error("Product successfully added!");
+      
+      navigate("/selerprofile");
     } catch (err) {
       setLoading(false);
       toast.error("Failed to add product!");
     }
   };
+  
 
   return (
     <section className="section">
-      <div className="container12"> 
+      <div className="container12">
         <Row>
           <Col lg="12">
             {loading ? (
@@ -80,20 +84,20 @@ const AddProducts = () => {
                 <h4 className="titlel mb-5">Add Product</h4>
                 <Form onSubmit={addProduct}>
                   <FormGroup className="form__group">
-                    <span>Product title</span>
+                    <span>Tên sản phẩm</span>
                     <input
                       type="text"
-                      placeholder="Double sofa"
+                      placeholder="Điện thoại"
                       value={enterTitle}
                       onChange={e => setEnterTitle(e.target.value)}
                       required
                     />
                   </FormGroup>
                   <FormGroup className="form__group">
-                    <span>Short Description</span>
+                    <span>Mô tả ngắn</span>
                     <input
                       type="text"
-                      placeholder="lorem......"
+                      placeholder="text"
                       value={enterShortDesc}
                       onChange={e => setEnterShortDesc(e.target.value)}
                       required
@@ -101,20 +105,20 @@ const AddProducts = () => {
                   </FormGroup>
 
                   <FormGroup className="form__group">
-                    <span>Description</span>
+                    <span>Mô tả</span>
                     <input
                       type="text"
-                      placeholder="Description....."
+                      placeholder="Mô tả...."
                       value={enterDescription}
                       onChange={e => setEnterDescription(e.target.value)}
                       required
                     />
                   </FormGroup>
                   <FormGroup className="form__group">
-                    <span>username</span>
+                    <span>Tên người bán</span>
                     <input
                       type="text"
-                      placeholder="username....."
+                      placeholder="Tên người bán"
                       value={enterUsername}
                       onChange={e => setEnterUsername(e.target.value)}
                       required
@@ -123,35 +127,54 @@ const AddProducts = () => {
 
                   <div className="d-flex align-items-center justify-content-between gap-5">
                     <FormGroup className="form__group w-50">
-                      <span>Price</span>
+                      <span>Giá</span>
                       <input
                         type="number"
-                        placeholder="$100"
+                        placeholder="VNĐ"
                         value={enterPrice}
                         onChange={e => setEnterPrice(e.target.value)}
                         required
                       />
                     </FormGroup>
+                    <FormGroup className="form__group w-50">
+                      <span>Số Lượng</span>
+                      <input
+                        type="number"
+                        placeholder="1"
+                        value={enterSl}
+                        onChange={e => setSl(e.target.value)}
+                        required
+                      />
+                    </FormGroup>
 
                     <FormGroup className="form__group w-50">
-                      <span>Category</span>
+                      <span>Danh mục</span>
                       <select
                         className="w-100 p-2"
                         onChange={e => setEnterCategory(e.target.value)}
                       >
-                        <option>Select category</option>
-                        <option value="chair">Chair</option>
-                        <option value="sofa">Sofa</option>
-                        <option value="mobile">Mobile</option>
-                        <option value="watch">Watch</option>
-                        <option value="wireless">Wireless</option>
+                        <option>Chọn danh mục</option>
+                        <option value="dienmay">Điện máy</option>
+                        <option value="dogiadung">Đồ gia dụng</option>
+                        <option value="congcudungcu">Công cụ & Dụng cụ</option>
+                        <option value="ytesuckhoe">Y tế & Sức khoẻ</option>
+                        <option value="thethaongoaitroi">Thể thao & Ngoài trời</option>
+                        <option value="thietbicongnghiep">Thiết bị công nghiệp</option>
+                        <option value="thietbisophukien">Thiết bị số, Phụ kiện</option>
+                        <option value="nhacuadoisong">Nhà cửa & Đời sống</option>
+                        <option value="thietbivanphong">Thiết bị văn phòng</option>
+                        <option value="myphamlamdep">Mỹ phẩm & Làm đẹp</option>
+                        <option value="mevabe">Mẹ và bé</option>
+                        <option value="phukienoto">Phụ kiện ô tô, xe hơi</option>
+                        <option value="thoitrangdulich">Thời trang & Du lịch</option>
+                        <option value="bachhoatonghop">Bách hoá tổng hợp</option>
                       </select>
                     </FormGroup>
                   </div>
 
                   <div>
                     <FormGroup className="form__group ">
-                      <span>Product Image</span>
+                      <span>Ảnh</span>
                       <input
                         type="file"
                         onChange={e => setEnterProductImgs(e.target.files)}
@@ -162,7 +185,7 @@ const AddProducts = () => {
                   </div>
 
                   <button className="buy__btn " type="submit">
-                    Add Product
+                    Thêm sản phẩm
                   </button>
                 </Form>
               </>

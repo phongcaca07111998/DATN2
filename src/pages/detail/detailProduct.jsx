@@ -36,6 +36,7 @@ export const DetailProduct = (checklogin) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { data: productsData, firstLoading } = useGetData("product");
+  
 
   const productId = location.pathname.split("/")[2];
   const mainData = productsData.find((productsData) => productsData.id === productId);
@@ -102,11 +103,11 @@ const {currentUser} = useAuth()
     }, 3000);
   };
  
-  
-  
-  const handleCount = (type) => {
+  const handleCount = (type, limit) => {
     if (type === "plus") {
-      setCount(count + 1);
+      if (count < limit) {
+        setCount(count + 1);
+      }
     } else {
       if (count > 1) {
         setCount(count - 1);
@@ -198,11 +199,11 @@ const {currentUser} = useAuth()
 
               <div className="inf">
                 <div className="name">
-                  <p>{mainData?.shortDesc}</p>
+                  <p>{mainData?.productName}</p>
                   <div className="row">
                     <div className="col">
-                      <p>20</p>
-                      <span>Đánh giá</span>
+                      <p>{mainData?.sl}</p>
+                      <span>Tồn Kho</span>
                     </div>
                     <div className="devider"></div>
                     <div className="col">
@@ -212,13 +213,15 @@ const {currentUser} = useAuth()
                   </div>
                 </div>
                 <div className="price">
-                  <h1>{mainData?.price}</h1>
+                  <h1>{mainData?.price .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</h1>
                   <div className="discount">
                     <span>10%</span>
                   </div>
                 </div>
                 <div className="price">
-                  <p>{(mainData?.price * 110) / 100}đ</p>
+                  <p>{[(mainData?.price * 110) / 100].toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".") } VNĐ</p>
                 </div>
                 <div className="sizes">
                   {/* <span>Kích cỡ: </span> */}
@@ -246,7 +249,7 @@ const {currentUser} = useAuth()
                   <p>{count}</p>
                   <div
                     className="btn_amount plus"
-                    onClick={() => handleCount("plus")}
+                    onClick={() => handleCount("plus",mainData?.sl)}
                   >
                     <img className="icon_amount" src={plus_white} alt="" />
                   </div>

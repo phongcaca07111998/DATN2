@@ -15,32 +15,80 @@ import Select from "@mui/material/Select";
 import { PaymentSchema } from "./validate";
 import { UseStore, action } from "../../../store";
 import { useNavigate } from "react-router-dom";
+import { getFirestore, collection, doc, updateDoc, addDoc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { Checkout } from "../../../pages/checkout/checkout";
+import { useSelector } from "react-redux";
+import useGetData from "../../../custom-hooks/useGetData";
+
+
 export const PaymentForm = (prop) => {
   const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPayment = prop.totalPayment + 32000;
-  const [state, dispatch] = UseStore();
-  const { checkoutData, listOrder } = state;
-
   const [listCountries, setListCountries] = useState([]);
   const [province, setProvince] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
+  // const { data: productsData, firstLoading } = useGetData("product");
+  const paymentType1=prop.paymentType
+  //
+  async function updateProductQuantity(productId, newQuantity) {
+    console.log(productId);
+    try {
+      // Lấy một tham chiếu đến sản phẩm cần cập nhật
+      const productDocRef=doc(db, "product", productId)
+      // const productRef = updateDoc(doc(db, "product"), productId);
+      const productDocSnapshot = await getDoc(productDocRef);
+      const productData = productDocSnapshot.data();
+      const quantitysl = productData.sl;
+      
+      const quantity = String(newQuantity);
+      //
+      
+      //
+      
+      // Thực hiện cập nhật số lượng sản phẩm
+      // await productRef.update({sl: quantity ,});
+      await updateDoc(productDocRef, {
+        sl:quantitysl- quantity, });
 
-  const checkOutItem = localStorage.getItem("checkOutItem");
-  const listProduct = JSON.parse(checkOutItem).filter(
-    (x) => x.checkBuyNow === true
-  );
+  
+      console.log(`Đã cập nhật số lượng sản phẩm ${productId} thành công.`);
+    } catch (error) {
+      console.error(`Lỗi khi cập nhật số lượng sản phẩm ${productId}:`, error);
+    }
+  }
+  
+  // Hàm xử lý khi người dùng click vào thanh toán
+  async function handleCheckout(cartItems) {
+    // Duyệt qua từng item trong cartItems và cập nhật lại số lượng sản phẩm trong Firestore
+    for (const cartItem of cartItems) {
+      const productId = cartItem.id;
+      const newQuantity = cartItem.quantity;
+     
+      console.log(cartItem.id);
+      await updateProductQuantity(productId, newQuantity);
+    }
+  
+    // Thông báo cho người dùng rằng thanh toán thành công
+    console.log('Thanh toán thành công.');
+  }
+  
+  // Sử dụng hàm handleCheckout khi người dùng click vào thanh toán
 
+  
   // const [listIdCountries, setListIdCountries] = useState([]);
+
+
 
   useEffect(() => {
     commerce.services.localeListSubdivisions("VN").then((response) => {
       const array = Object.values(response.subdivisions);
       setListCountries(array);
     });
-    console.log(listProduct);
+    
   }, []);
 
   const handleChange = (event) => {
@@ -57,32 +105,40 @@ export const PaymentForm = (prop) => {
   const turnOffForm = () => {
     prop.turnOff(false);
   };
-
   const onAddOrder = async (values) => {
-    console.log(values);
-    setLoading(true);
-    const infOrder = {
-      name: values.name,
-      email: values.email,
-      phone: values.phone,
-      address: values.address,
-      province: province,
-      listProduct: listProduct,
-    };
-    setTimeout(() => {
-      dispatch(action.SetProductsOrder(infOrder));
+    console.log('onAddOrder called with values:', values);
+    try {
+      const docRef = await collection(db, "Oders");
+      await addDoc(docRef, {
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        address: values.address,
+        province: province,
+        cartItems: cartItems,
+        
+      });
+      handleCheckout(cartItems);
+      
+ 
+      
+      setLoading(true);
+      setMessage("Product successfully added!");
+      setAlert(true);
       setTimeout(() => {
-        setLoading(false);
-        localStorage.setItem("listOrder", JSON.stringify(state.listOrder));
-        // turnOffForm();
-        setAlert(true);
-        setMessage("Đặt hàng thành công!!");
-        setTimeout(() => {
-          navigate("/bidu-ecommerce");
-        }, 1000);
-      }, 1000);
-    }, 1000);
-    // return () => clearTimeout(timer);
+        setAlert(false);
+      }, 3000);
+  
+      navigate("/bidu-ecommerce");
+    } catch (err) {
+      console.error('Error adding order: ', err);
+      setLoading(false);
+      setMessage("Failed to add product!");
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    }
   };
   return (
     <div className="payment-container">
@@ -212,7 +268,7 @@ export const PaymentForm = (prop) => {
             </div>
             <div className="total_price">
               <div className="left">
-                <p>Hình thức thanh toán: Trực tiếp</p>
+           <p>Hình thức thanh toán: {paymentType1==="online"? 'trực tuyến':'trực tiếp'}</p>
               </div>
               <div className="right">
                 <div className="general-info-item">

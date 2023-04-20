@@ -19,16 +19,6 @@ const cartSlice = createSlice({
 
       state.totalQuantity++;
 
-      // if (!existingItem) {
-      //   state.cartItems.push({
-      //     id: newItem.id,
-      //     productName: newItem.productName,
-      //     imgUrls: newItem.image,
-      //     price: newItem.price,
-      //     quantity: newItem.count,
-      //     totalPrice: newItem.price,
-      //     // count: newItem.count
-      //   });
       if (existingItemIndex === -1) {
         state.cartItems.push({
           id: newItem.id,

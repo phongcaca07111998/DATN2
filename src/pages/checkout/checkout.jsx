@@ -6,7 +6,9 @@ import iconCheckoutVouucher from "../../assets/img/icon-checkout-system-vouucher
 import iconCheckoutPayment from "../../assets/img/icon-checkout-payment.svg";
 import { motion } from "framer-motion";
 import { CardItem } from "../../Components/checkout/card_item/card_item";
-
+import momo from "../../assets/imgs/momo.svg";
+import vnpay from "../../assets/imgs/vnpay.svg";
+import cash from "../../assets/imgs/cash_vi.svg";
 import { SetProductsOrder } from "../../store/action";
 import { PaymentForm } from "../../Components/checkout/paymentForm/paymentForm";
 import { useSelector , useDispatch} from "react-redux";
@@ -16,11 +18,19 @@ import Helmet from "../../Components/Helmet/Helmet";
 import CommonSection from "../cart/CommonSection";
 import { Link } from "react-router-dom";
 
-export const Checkout = () => {
+export const Checkout = (prop) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
-
+    const [paymentType, setPaymentType] = useState("online");
+  
+    function handlePaymentTypeChange(event) {
+      setPaymentType(event.target.value);
+      
+    }
+    console.log(paymentType);
   const totalQty = useSelector(state => state.cart.totalQuantity);
   const totalAmount = useSelector(state => state.cart.totalAmount);
+  const [checkFormPayment, setCheckFormPayment] = useState(false);
+  // const [totalPayment, setTotalPayment] = useState(0);
  const Cartime=()=>{
   return(
     <Helmet title="Cart">
@@ -58,11 +68,11 @@ export const Checkout = () => {
  }
   const Tr = ({ item }) => {
     const dispatch = useDispatch();
-  
+    
+    // setTotalPayment(item );
     const deleteProduct = () => {
       dispatch(cartActions.deleteItem(item.id));
     };
-    console.log(item);
     
   
     return (
@@ -71,7 +81,8 @@ export const Checkout = () => {
           <img src={item.imgUrls} alt="" />
         </td>
         <td>{item.productName}</td>
-        <td>${item.price}</td>
+        <td>{item.price .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</td>
         <td>{item.quantity}sp</td>
         <td>
           <motion.i
@@ -83,7 +94,12 @@ export const Checkout = () => {
       </tr>
     );
   };
-
+  const payment = () => {
+    setCheckFormPayment(true)
+  };
+  const turnOff = (check) => {
+    setCheckFormPayment(check);
+  };
   // const Tr = ({ item }) => {
   //   const dispatch = useDispatch();
   //    }
@@ -91,11 +107,11 @@ export const Checkout = () => {
   
   return (
     <div className="Checkout">
-      {/* {checkFormPayment && (
+      {checkFormPayment && (
         <div>
-          <PaymentForm turnOff={turnOff} totalPayment={totalPayment}/>
+          <PaymentForm paymentType={paymentType} turnOff={turnOff} totalPayment={totalAmount}/>
         </div>
-      )} */}
+      )}
       <div className="Checkout_header">
         <div className="Checkout_header_content">
           <p>Trang chủ</p>
@@ -125,8 +141,35 @@ export const Checkout = () => {
               <div className="action-vouchers">Chọn voucher</div>
             </div>
             <div className="order-payment-header">
-              <img src={iconCheckoutPayment} alt="" />
-              <p>Hình thức thanh toán</p>
+              <h2>Chọn hình thức thanh toán</h2>
+              
+              <div className="input-and-error">
+      <input
+        type="radio"
+        name="payment-type"
+        id="online"
+        value="online"
+        // checked={paymentType }
+        onChange={handlePaymentTypeChange}
+      />
+      <div className="payer">Thanh toán trực tuyến</div>
+      <label className="option" htmlFor="online">
+        <img className="pr-3" src={vnpay} alt="" />
+        <img className="pr-3" src={momo} alt="" />
+      </label>
+      <input
+        type="radio"
+        name="payment-type"
+        id="offline"
+        value="offline"
+        // checked={paymentType }
+        onChange={handlePaymentTypeChange}
+      />
+      <div className="payer">Thanh toán trực tiếp</div>
+      <label className="option" htmlFor="offline">
+        <img className="pr-3" src={cash} alt="" />
+      </label>
+    </div>
             </div>
             <div className="order-payment-title">
               <div className="general-info">
@@ -143,11 +186,11 @@ export const Checkout = () => {
                 </div> */}
                 <div className="general-info-item">
                   <span>Giảm giá phí vận chuyển:</span>
-                  <span>0đ</span>
+                  <span>0VNĐ</span>
                 </div>
                 <div className="general-info-item">
                   <span>Giảm giá tiền hàng:</span>
-                  <span>0đ</span>
+                  <span>0VNĐ</span>
                 </div>
                 <div className="general-info-item">
                   <span style={{ fontWeight: "bolder" }}>Tổng thanh toán:</span>
@@ -155,14 +198,14 @@ export const Checkout = () => {
                     {totalAmount
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                    $
+                    VNĐ
                   </span>
                 </div>
               </div>
             </div>
             <div className="order-create-section">
-              <div className="create-order" >
-                <p>Thanh toán</p>
+              <div className="create-order"  onClick={payment}>
+                <p>Thanh toán </p>
               </div>
             </div>
           </div>

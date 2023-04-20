@@ -68,7 +68,7 @@
     .form__group input,
     .form__group select {
     display: block;
-    width: 240%;
+    width: 150%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -90,7 +90,7 @@
     
     .form__group input[type='file'] {
         display: block;
-        width: 240%;
+        width: 150%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;

@@ -17,7 +17,6 @@ export const SuggestionProduct = ({ tieude }) => {
     setLimit(prevLimit => prevLimit + 3);
     setLoading(false);
   };
-  console.log(productsData);
   return (
     <div className="suggestionProduct">
       <div className="suggestionProduct_header">

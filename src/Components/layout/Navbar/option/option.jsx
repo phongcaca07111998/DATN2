@@ -64,7 +64,7 @@ const Option=(prop)=> {
   const profile = () => {
     navigate('/userprofile'); // chuyển hướng đến trang Userprofile
   };
-  console.log(currentUser);
+
   return (
     <div style={{ position: "relative" }}>
       <div className="option">

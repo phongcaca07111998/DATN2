@@ -1,6 +1,6 @@
 import React from "react";
 import "./card.scss";
-import { motion } from "framer-motion";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
@@ -40,20 +40,17 @@ export const Card = ({ item }) => {
         style={{ backgroundImage: `url(${item.imgUrls})` }}
       ></div>
       <div className="company">
-        <span>{item.category}</span>
+        <span>{item.username}</span>
       </div>
       <div className="cardProduct__inf">
         <p>{item.productName}</p>
-        <b>{item.price}</b>
+        <b>{item.price .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</b>
         <div className="address">
-          <p>Việt Nam</p>
+        <a>{item.shortDesc}</a>
         </div>
 
         <Rating/>
-        <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
-        <i class='bx bxs-plus-circle' ></i>
-        </motion.span>
-
       </div>
     </div>
   );
