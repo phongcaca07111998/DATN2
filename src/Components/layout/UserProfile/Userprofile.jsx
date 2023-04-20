@@ -111,7 +111,7 @@ const Userprofile = () => {
                    
                       <div className="input-and-error d-flex">
                       
-                        <div className=" flex-1"><input name="phoneNumber" className="profile-form-control form-control" type="text" placeholder="Nhập số điện thoại" defaultValue={key.phone}/></div>
+                        <div className=" flex-1"><input name="phoneNumber" className="profile-form-control form-control" type="text" placeholder="Nhập số điện thoại" defaultValue={key.phoneNumber}/></div>
                       </div>
 
 

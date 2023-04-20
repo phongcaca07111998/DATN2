@@ -16,13 +16,18 @@ export const Register=(prop) => {
 
   const [userfname,setUserfname]= useState("")
   const [username,setUsername]= useState("")
-  const [userphone,setPhone]= useState("")
+  const [isChecked, setIsChecked] = useState(false);
+  const [phoneNumber,setPhone]= useState("")
   const [email,setEmail]= useState("")
   const [password,setPassword]= useState("")
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("")
 
+  const handleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+  console.log(isChecked);
   const signUp = async(e)=>{
     e.preventDefault()
     setLoading(true)
@@ -31,13 +36,14 @@ export const Register=(prop) => {
   try {
     const userCredential= await createUserWithEmailAndPassword(auth,email,password);
     const user = userCredential.user;
+    // const userphone = user.phoneNumber;
     const storageRef= ref(storage,`{username}`)
     const uploadTask =uploadBytesResumable(storageRef)
 
     uploadTask.on((error)=>{
       const errorCode = error.code
       setLoading(false);
-      setMessage("Đăng ký thất bại!");
+      setMessage("Đăng ký thất bại!")
       setAlert(true);
       // toast.error(error.message)
     },()=>{
@@ -46,20 +52,35 @@ export const Register=(prop) => {
         await updateProfile(
           user,{
           displayName:username,
+          phoneNumber:phoneNumber,
+          
           // photoURL: downloadURL,
         });
         
       //store user data firestore database
 
+      if (isChecked===true) {
+        await setDoc(doc(db,'users',user.uid),{
+          uid:user.uid,
+          userfname:userfname,
+          displayName:username,
+          email,
+          seller:"Nhà bán hàng",
+          pass :password,
+          phoneNumber:phoneNumber,
+          // photoURL:dowloadURL,
+        });
+      } else {
         await setDoc(doc(db,'users',user.uid),{
           uid:user.uid,
           userfname:userfname,
           displayName:username,
           email,
           pass :password,
-          phone:userphone
+          phoneNumber:phoneNumber,
           // photoURL:dowloadURL,
         });
+      }
       });
     })
     
@@ -82,7 +103,7 @@ export const Register=(prop) => {
     
     }
   };
-  
+
   const initialValues = {
       userfname:"",
       username: "",
@@ -168,6 +189,17 @@ export const Register=(prop) => {
                     />
                     
                   </div>
+                  <div>
+                    <FastField 
+                    onClick= {handleCheckbox} 
+                    className="checkbox" 
+                    type="checkbox" 
+                    name="checked"
+                    checked={isChecked}
+                    />
+                    
+                    One
+                    </div>
                   <div className="field" onChange= {(e)=>setPassword(e.target.value)}>
                     <FastField
                       name="password"

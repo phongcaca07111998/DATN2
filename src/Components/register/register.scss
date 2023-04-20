@@ -47,10 +47,14 @@
           }
         }
         .form_fields {
-          margin: 70px 50px 30px 50px;
+          margin: 40px 50px 30px 50px;
           label {
             font-weight: bold;
             font-size: 18px;
+          }
+          .checkbox{
+            width: 10px;
+            padding:10px ;
           }
           .field {
             margin-top: 25px;

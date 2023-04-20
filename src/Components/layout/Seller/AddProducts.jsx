@@ -6,8 +6,16 @@ import { db, storage } from "../../../Components/firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import useGetData from "../../../custom-hooks/useGetData";
 
 const AddProducts = () => {
+  //
+  const {currentUser} = getAuth();
+  const { data: usersData } = useGetData("users");
+  const mainUser = usersData.find(userData => userData.email == currentUser?.email);
+  console.log(mainUser?.userfname);
+
   const [enterTitle, setEnterTitle] = useState("");
   const [enterShortDesc, setEnterShortDesc] = useState("");
   const [enterDescription, setEnterDescription] = useState("");
@@ -55,8 +63,9 @@ const AddProducts = () => {
         shortDesc: enterShortDesc,
         description: enterDescription,
         category: enterCategory,
+        nameseller:mainUser?.userfname,
         price: enterPrice,
-        username: enterUsername,
+        username: mainUser?.displayName,
         imgUrls: imgUrls,
         sl: enterSl,
       });
@@ -114,7 +123,7 @@ const AddProducts = () => {
                       required
                     />
                   </FormGroup>
-                  <FormGroup className="form__group">
+                  {/* <FormGroup className="form__group">
                     <span>Tên người bán</span>
                     <input
                       type="text"
@@ -123,7 +132,7 @@ const AddProducts = () => {
                       onChange={e => setEnterUsername(e.target.value)}
                       required
                     />
-                  </FormGroup>
+                  </FormGroup> */}
 
                   <div className="d-flex align-items-center justify-content-between gap-5">
                     <FormGroup className="form__group w-50">

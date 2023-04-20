@@ -17,20 +17,7 @@ export const Card = ({ item }) => {
     navigate(`/san-pham/${item.id}`);
   };
 
- 
-
-  const addToCart = () => {
-    dispatch(
-      cartActions.addItem({
-        id: item.id,
-        productName: item.productName,
-        price: item.price,
-        imgUrl: item.imgUrl,
-      })
-    );
-
-    toast.success("Product added successfully");
-  };
+ console.log(item.nameseller);
 
 
   return (
@@ -40,7 +27,7 @@ export const Card = ({ item }) => {
         style={{ backgroundImage: `url(${item.imgUrls})` }}
       ></div>
       <div className="company">
-        <span>{item.username}</span>
+        <span>{item.nameseller}</span>
       </div>
       <div className="cardProduct__inf">
         <p>{item.productName}</p>

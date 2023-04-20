@@ -33,6 +33,10 @@ export const NavbarAdmin = () => {
       img: shop,
     },
     {
+      name: "User",
+      img: shop,
+    },
+    {
       name: "Danh mục",
       img: category,
     },
