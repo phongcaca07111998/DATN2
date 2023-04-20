@@ -4,11 +4,14 @@ import { db } from "../../../Components/firebase/firebase"
 import { doc, deleteDoc } from "firebase/firestore";
 import useGetData from "../../../custom-hooks/useGetData";
 import { toast } from "react-toastify";
+import { getAuth} from 'firebase/auth';
 import './allproduct.css';
 
 const AllProducts = () => {
+  const {currentUser} = getAuth();
   const { data: productsData, loading } = useGetData("product");
-
+  const maindataproduct = productsData.filter(productsData => productsData.username == currentUser?.displayName);
+  console.log(maindataproduct);
   const deleteProduct = async id => {
     await deleteDoc(doc(db, "product", id));
     toast.success("Deleted!");
@@ -34,7 +37,7 @@ const AllProducts = () => {
                 {loading ? (
                   <h4 className="py-5 text-center fw-bold ">Loading.....</h4>
                 ) : (
-                  productsData.map(item => (
+                  maindataproduct?.map(item => (
                     <tr key={item.id}>
                       <td >
                         {item.imgUrls && item.imgUrls.length > 0 ? (
