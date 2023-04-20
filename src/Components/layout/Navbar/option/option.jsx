@@ -11,14 +11,20 @@ import Userprofile from '../../UserProfile/Userprofile';
 import { auth } from "../../../firebase/firebase";
 import { getAuth, signOut } from 'firebase/auth';
 import { useSelector } from 'react-redux';
+import useGetData from '../../../../custom-hooks/useGetData';
 
 const Option=(prop)=> {
   const {currentUser} = getAuth();
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
+  
+  const { data: usersData, loading } = useGetData("users");
+  const mainUser = usersData.find(userData => userData.email == currentUser?.email);
+
+  console.log(mainUser?.seller);
 
 
   const navigate = useNavigate()
-
+  
 
   const moveToCart = () => {
     navigate("/gio-hang");
@@ -80,7 +86,9 @@ const Option=(prop)=> {
               
                  
               <p onClick={profile}>Trang cá nhân</p> 
-              <p onClick={profileseler}>Trang người bán</p>
+              <p 
+               onClick={profileseler}>
+                {mainUser?.seller=="Nhà bán hàng" ? <a>Trang người bán</a> :<a>Đăng kí trang người bán</a>}</p>
               <p>Tư vấn hướng dẫn</p>       
               <p onClick={logOut}>Đăng xuất</p>       
           </div>
