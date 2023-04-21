@@ -23,6 +23,7 @@ import ProfileSeler from "../Components/layout/Seller/ProfileSeler";
 import AddProducts from "../Components/layout/Seller/AddProducts";
 import AllProducts from "../Components/layout/Seller/Allproduct";
 import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
+import History from "../Components/layout/Seller/History";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   
@@ -69,7 +70,7 @@ export const Routerr = (prop) => {
               element={<AddProducts />}/>
 
               <Route path="/allproduct" element={<AllProducts/>}/>
-              
+              <Route path="/lichsu" element={<History/>}/>
               <Route path="/gio-hang" element={<Cart1 />} />
               {/* <Route path="/gio-hang" element={<Cart />} /> */}
               <Route  path="/thanh-toan" element={<Checkout />} />           

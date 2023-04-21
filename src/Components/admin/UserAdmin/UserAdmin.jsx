@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { db } from "../../../Components/firebase/firebase"
 import { doc, deleteDoc } from "firebase/firestore";
 import useGetData from "../../../custom-hooks/useGetData";
 import { toast } from "react-toastify";
 import './useradmin.css';
-
-
+import { NavbarAdmin } from "../layout/navbar";
+import { FormDetailOrder } from "../content/formDetailOrder";
+import { Card } from "../content/card";
+import { Navbar } from "../content/navbar";
 const UserAdmin = () => {
   const { data: productsData, loading } = useGetData("users");
 
@@ -14,12 +16,65 @@ const UserAdmin = () => {
     await deleteDoc(doc(db, "users", id));
     toast.success("Deleted!");
   };
+  const [ItemDetail, setItemDetail] = useState({});
+  const { data: userData } = useGetData("users");
+  const { data: oderData } = useGetData("Oders");
+  const [checkFormDetail, setCheckFormDetail] = useState(false);
+  //
+
+
+
+
+
+  const dataProductCard = [
+    {
+      text: "TỔNG SỐ DANH MỤC",
+      count: 13,
+    },
+    {
+      text: "TỔNG SỐ SẢN PHẨM",
+      count: productsData?.length,
+    },
+    {
+      text: "TỔNG SỐ ĐƠN HÀNG",
+      count: oderData?.length,
+    },
+    {
+      text: "TỔNG SỐ USER",
+      count: userData?.length,
+    },
+  ];
+
+  const sendItemDetailOrder = (item) => {
+    setItemDetail(item);
+    setCheckFormDetail(false);
+  };
+
+  const closeForm = (check) => {
+    setCheckFormDetail(check)
+  }
 
   return (
-    <section >
-      <div className="container17">
-        <div className="row2">
-          <div className="col-12">
+    <div className="_loading_overlay_wrapper css-79elbk">
+      
+    {checkFormDetail && <FormDetailOrder ItemDetail={ItemDetail} closeForm={closeForm} />}
+    <NavbarAdmin />
+    <div className="main-content">
+      <Navbar />
+      <div
+        className="Products-Card"
+        style={{ display: "flex", justifyContent: "space-evenly" }}
+      >
+        {dataProductCard.map((item, index) => (
+          <Card key={index} item={item} />
+        ))}
+      </div>
+      <div className="chart">
+        <div className="header"></div>
+        <div className="content1">
+     
+     
+          <div className="col-12 userad">
           <table className="table">
               <thead>
                 <tr>
@@ -63,7 +118,9 @@ const UserAdmin = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+    
   );
 };
 

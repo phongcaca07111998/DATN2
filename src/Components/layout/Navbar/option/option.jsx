@@ -66,6 +66,9 @@ const Option=(prop)=> {
   const profileseler = () => {
     navigate('/selerprofile'); // chuyển hướng đến trang Userprofile
   };
+  const historycart = () => {
+    navigate('/lichsu'); // chuyển hướng đến trang Userprofile
+  };
 
   const profile = () => {
     navigate('/userprofile'); // chuyển hướng đến trang Userprofile
@@ -87,8 +90,9 @@ const Option=(prop)=> {
                  
               <p onClick={profile}>Trang cá nhân</p> 
               <p 
-               onClick={profileseler}>
-                {mainUser?.seller=="Nhà bán hàng" ? <a>Trang người bán</a> :<a>Đăng kí trang người bán</a>}</p>
+              >
+                {mainUser?.seller=="Nhà bán hàng" ? <a  onClick={profileseler}>Trang người bán</a> :<a onClick={register}>Đăng kí trang người bán</a>}</p>
+                <p onClick={historycart}>Lịch sử đơn hàng</p>
               <p>Tư vấn hướng dẫn</p>       
               <p onClick={logOut}>Đăng xuất</p>       
           </div>

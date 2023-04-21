@@ -2,7 +2,19 @@
     width: 100px;
     height: auto;
   }
-  
+  .container18{
+    padding:15%;
+    height: auto;
+    width: 100vw;
+  }
+  .khongcart{
+    margin-top: 200px;
+  }
+  .his{
+    margin-top: -18%;
+    height: auto;
+    width: 100%;
+  }
   .row1{
     display: flex;
     margin-right: -15px;
@@ -17,7 +29,6 @@
     margin-left: 30px!important;
     font-size: 14px;
   }
-  
   .table td,
   .table th {
     padding: .75rem!important;

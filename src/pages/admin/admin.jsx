@@ -83,7 +83,7 @@ export const Admin = () => {
             <Card key={index} item={item} />
           ))}
         </div>
-        <div className="chart">
+        <div className="chart"> 
           <div className="header"></div>
           <div className="content">
             <Chart
@@ -93,7 +93,7 @@ export const Admin = () => {
               width="100%"
               height="380"
             />
-            <TableOrder sendItemDetailOrder={sendItemDetailOrder} />
+            {/* <TableOrder sendItemDetailOrder={sendItemDetailOrder} /> */}
           </div>
         </div>
       </div>

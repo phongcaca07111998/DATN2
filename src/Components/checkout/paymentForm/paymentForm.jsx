@@ -117,6 +117,7 @@ export const PaymentForm = (prop) => {
         address: values.address,
         province: province,
         cartItems: cartItems,
+        totalPayment:totalPayment,
         
       });
       handleCheckout(cartItems);

@@ -154,8 +154,8 @@ export const Checkout = (prop) => {
       />
       <div className="payer">Thanh toán trực tuyến</div>
       <label className="option" htmlFor="online">
-        <img className="pr-3" src={vnpay} alt="" />
-        <img className="pr-3" src={momo} alt="" />
+       <a href="https://vivnpay.vn/thanh-toan-mua-sam"><img className="pr-3" src={vnpay} alt="" /></a> 
+        <a href="https://momo.vn/thanh-toan-hoa-don"><img className="pr-3" src={momo} alt="" /> </a>
       </label>
       <input
         type="radio"
