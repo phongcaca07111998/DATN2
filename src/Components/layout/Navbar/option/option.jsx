@@ -39,14 +39,6 @@ const Option=(prop)=> {
     
   };
 
-  // const logOut = (auth) => {
-  
-  //   // localStorage.removeItem("isAdmin");
-  //   // localStorage.removeItem("userId");
-  //   setTextLogin("Đăng nhập");
-  //   prop.checkLogout(true)
-  //   navigate("/bidu-ecommerce")
-  // };
 
   const logOut = () => {  
     signOut(auth)

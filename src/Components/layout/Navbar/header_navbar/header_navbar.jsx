@@ -17,7 +17,7 @@ const HeaderNavbar = (prop) => {
   };
 
   const logOut = () => {
-    localStorage.removeItem("customerName");
+    // localStorage.removeItem("customerName");
     // localStorage.removeItem("isAdmin");
     // localStorage.removeItem("userId");
     setTextLogin("Đăng nhập");

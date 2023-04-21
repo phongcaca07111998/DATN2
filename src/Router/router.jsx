@@ -37,10 +37,10 @@ export const Routerr = (prop) => {
   return (
     <div>
       <StoreProvider>
-        {admin === 'phongcaca07111998@gmail.com' ? (
-          <Router>
+        {admin ==='phongcaca07111998@gmail.com' ? (
+          <Router >
               <Routes>
-                <Route path="/bidu-ecommerce" element={<Admin />} />
+                <Route  path="/bidu-ecommerce" element={<Admin />} />
                 <Route path="/Donhang" element={<Donhang />} />
                 <Route path="/User" element={<UserAdmin/>}/>
               </Routes>

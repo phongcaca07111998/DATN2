@@ -21,9 +21,7 @@ export const Navbar = () => {
   }
 
   const logout = () => {
-    localStorage.removeItem("customerName");
-    localStorage.removeItem("isAdmin");
-    localStorage.removeItem("userId");
+
   };
   return (
     <div className="navbar-header">
