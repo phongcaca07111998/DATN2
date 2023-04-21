@@ -80,7 +80,7 @@ export const NavbarAdmin = () => {
         <div>
           <div className="sidenav-header">
             <div className="nav-logo-pito">
-              <a href="/bidu-ecommerce">
+              <a href="/admin-ecommerce">
                 <img src={logo} width="70" />
               </a>
             </div>

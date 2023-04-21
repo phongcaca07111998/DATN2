@@ -3,6 +3,14 @@ import React, { useState } from "react";
 export const FormDetailOrder = (prop) => {
   const [orderStatus, setOrderStatus] = useState(0);
 
+  const data = prop.ItemDetail;
+  console.log(data);
+  const handleSelectChange = (e) => {
+    console.log("value", parseInt(e.target.value));
+    const order = parseInt(e.target.value);
+    setOrderStatus(order);
+  };
+  
   
   const closeFormDetail = () =>{
     prop.closeForm(false)
@@ -22,8 +30,10 @@ export const FormDetailOrder = (prop) => {
           <div className="row">Email: {data.email}</div>
           <div className="row">
             <h4>Thông tin sản phẩm</h4>
-            {data?.listProduct.map((item, index) => (
-              <div className="card-item" key={index}>
+            {/* {data?.map((item) =>
+                item.cartItems?.map((cartItem) => (
+                  console.log(cartItem),
+              <div className="card-item" key={cartItem}>
                 <div className="card-item-id">
                   ID sản phẩm: {item.product_id}
                 </div>
@@ -36,7 +46,8 @@ export const FormDetailOrder = (prop) => {
                     item.selected_options[0].option_name}
                 </div>
               </div>
-            ))}
+                )
+            ))} */}
           </div>
           <div className="row">
             Trạng thái đơn hàng:

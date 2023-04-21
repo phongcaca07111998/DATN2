@@ -20,7 +20,6 @@ import { db } from "../../firebase/firebase";
 import { Checkout } from "../../../pages/checkout/checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions  } from "./../../redux/slices/cartSlice";
-import useGetData from "../../../custom-hooks/useGetData";
 
 
 export const PaymentForm = (prop) => {
@@ -120,6 +119,7 @@ export const PaymentForm = (prop) => {
         totalPayment:totalPayment,
         
       });
+      
       handleCheckout(cartItems);
       
       dispatch(cartActions.resetCart());

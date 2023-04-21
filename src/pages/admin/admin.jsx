@@ -12,13 +12,15 @@ import useGetData from "../../custom-hooks/useGetData";
 
 export const Admin = () => {
 
-  const [data, setData] = useState([]);
+
   const [ItemDetail, setItemDetail] = useState({});
   const [checkFormDetail, setCheckFormDetail] = useState(false);
   const { data: productsData } = useGetData("product");
-  const allCategories = productsData.map((product) => product.category);
+
   const { data: oderData } = useGetData("Oders");
   const { data: userData } = useGetData("users");
+  
+  
   
   const dataProductCard = [
     {
@@ -35,7 +37,7 @@ export const Admin = () => {
     },
     {
       text: "TỔNG SỐ USER",
-      count: oderData?.length,
+      count: userData?.length,
     },
   ];
   const [options, setOptions] = useState({

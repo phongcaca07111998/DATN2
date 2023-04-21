@@ -4,7 +4,7 @@ import "./admin.scss";
 import Chart from "react-apexcharts";
 import { NavbarAdmin } from "../../Components/admin/layout/navbar";
 import { Card } from "../../Components/admin/content/card";
-import { commerce } from "../../lib/commerce";
+
 import { removeVietnameseTones } from "../../Components/layout/Navbar/search/removeVNtones";
 import { TableOrder } from "../../Components/admin/content/tableOrder";
 import { FormDetailOrder } from "../../Components/admin/content/formDetailOrder";
@@ -46,7 +46,8 @@ export const Donhang = ({item,prop}) => {
 
   const sendItemDetailOrder = (item) => {
     setItemDetail(item);
-    setCheckFormDetail(false);
+    console.log(item);
+    setCheckFormDetail(true);
   };
 
   const closeForm = (check) => {

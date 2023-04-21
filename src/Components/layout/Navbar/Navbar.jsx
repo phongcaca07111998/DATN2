@@ -9,12 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import { Register } from '../../register/register';
 import { Login } from "../../login/login";
 import Head from "./header_navbar/Head";
-
+import { getAuth } from 'firebase/auth';
 
 export const Navbar = (prop) => {
   const [checkRegister, setCheckRegister] = useState(false);
   const [checkLogin, setCheckLogin] = useState(false);
   const navigate = useNavigate();
+  const {currentUser} = getAuth();
+
+  
   
   const passCheckRegister = (check) => {
     if (check) {
@@ -32,9 +35,10 @@ export const Navbar = (prop) => {
     }
   };
   const closeLogin = (check) => {
-    const admin = localStorage.getItem("isAdmin");
-    if (admin === "true") {
-      navigate("/bidu-ecommerce");
+   
+    const admin = currentUser?.email==="phongcaca07111998@gmail.com"
+    if (admin === true) {
+      navigate("/admin-ecommerce");;
     }
     if (!check) {
       setCheckLogin(false);
@@ -59,7 +63,10 @@ export const Navbar = (prop) => {
       <div className="login">
       {checkRegister && <Register closeRegister={closeRegister} />}
       {checkLogin && (
-          <Login closeLogin={closeLogin} openRegister={openRegister} />
+          <Login closeLogin={closeLogin} openRegister={openRegister} 
+          passCheckLogin={passCheckLogin}
+              checkLogout={checkLogout}/>
+      
       )}
       </div>
       <div className="navbar_container">
