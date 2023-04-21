@@ -3,14 +3,7 @@ import React, { useState } from "react";
 export const FormDetailOrder = (prop) => {
   const [orderStatus, setOrderStatus] = useState(0);
 
-  const data = prop.ItemDetail;
-  console.log(data);
-  const handleSelectChange = (e) => {
-    console.log("value", parseInt(e.target.value));
-    const order = parseInt(e.target.value);
-    setOrderStatus(order);
-  };
-
+  
   const closeFormDetail = () =>{
     prop.closeForm(false)
   }

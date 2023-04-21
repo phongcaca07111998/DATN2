@@ -17,7 +17,7 @@ import { TableOrder } from "../Components/admin/content/tableOrder";
 
 // import { Cart } from "../pages/cart/cart";
 import Cart1 from "../pages/cart/Cart1";
-
+import { getAuth } from 'firebase/auth';
 import Userprofile from "../Components/layout/UserProfile/Userprofile";
 import ProfileSeler from "../Components/layout/Seller/ProfileSeler";
 import AddProducts from "../Components/layout/Seller/AddProducts";
@@ -25,7 +25,10 @@ import AllProducts from "../Components/layout/Seller/Allproduct";
 import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
-  const admin = localStorage.getItem("isAdmin");
+  
+
+  const {currentUser} = getAuth();
+  const admin = currentUser?.email
 
   const checkLogin = (check) => {
     setCheckLogin(!checklogin);
@@ -34,11 +37,12 @@ export const Routerr = (prop) => {
   return (
     <div>
       <StoreProvider>
-        {admin === 'true' ? (
+        {admin === 'phongcaca07111998@gmail.com' ? (
           <Router>
               <Routes>
-                {/* <Route path="/bidu-ecommerce" element={<Admin />} />
-                <Route path="/Donhang" element={<Donhang />} /> */}
+                <Route path="/bidu-ecommerce" element={<Admin />} />
+                <Route path="/Donhang" element={<Donhang />} />
+                <Route path="/User" element={<UserAdmin/>}/>
               </Routes>
           </Router>
         ) : (
@@ -65,15 +69,10 @@ export const Routerr = (prop) => {
               element={<AddProducts />}/>
 
               <Route path="/allproduct" element={<AllProducts/>}/>
-              <Route path="/User" element={<UserAdmin/>}/>
+              
               <Route path="/gio-hang" element={<Cart1 />} />
               {/* <Route path="/gio-hang" element={<Cart />} /> */}
-              <Route  path="/thanh-toan" element={<Checkout />} />
-              <Route path="/admin-ecommerce" element={<Admin />} />
-              <Route path="/Donhang" element={<Donhang />} />
-             
-              
-              
+              <Route  path="/thanh-toan" element={<Checkout />} />           
             </Routes>
             <Footer />
           </Router>

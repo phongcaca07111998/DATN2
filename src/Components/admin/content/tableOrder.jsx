@@ -9,9 +9,11 @@ import Paper from "@mui/material/Paper";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import "./contentStyle.scss";
+import useGetData from "../../../custom-hooks/useGetData";
 export const TableOrder = (prop) => {
-  const listOrder = localStorage.getItem("listOrder"); 
-  const data = JSON.parse(listOrder);
+
+
+  const { data: oderData } = useGetData("Oders");
 
   const showInfOrder = (item) => {
     prop.sendItemDetailOrder(item);
@@ -32,7 +34,7 @@ export const TableOrder = (prop) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((item, index) => (
+            {oderData?.map((item, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
                   {index}

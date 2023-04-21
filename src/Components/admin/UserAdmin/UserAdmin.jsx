@@ -6,6 +6,7 @@ import useGetData from "../../../custom-hooks/useGetData";
 import { toast } from "react-toastify";
 import './useradmin.css';
 
+
 const UserAdmin = () => {
   const { data: productsData, loading } = useGetData("users");
 
@@ -41,7 +42,7 @@ const UserAdmin = () => {
                       <td>{item.displayName}</td>
                       <td >{item.email}</td>
                       <td >{item.pass}</td>
-                      <td>{item.phone} </td>
+                      <td>{item.phoneNumber} </td>
                       <td>{item.seller==="Nhà bán hàng"?"Nhà bán hàng":"Người dùng"} </td>
                       <td>{item.uid} </td>
                       <td>

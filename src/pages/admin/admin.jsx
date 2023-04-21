@@ -8,38 +8,34 @@ import { commerce } from "../../lib/commerce";
 // import { removeVietnameseTones } from "../../Components/layout/navbar/search/removeVNtones";
 import { TableOrder } from "../../Components/admin/content/tableOrder";
 import { FormDetailOrder } from "../../Components/admin/content/formDetailOrder";
-import useAuth from "../../custom-hooks/useAuth";
+import useGetData from "../../custom-hooks/useGetData";
+
 export const Admin = () => {
-  const {currenUser } = useAuth()
+
   const [data, setData] = useState([]);
   const [ItemDetail, setItemDetail] = useState({});
   const [checkFormDetail, setCheckFormDetail] = useState(false);
-  const listOrder = localStorage.getItem("listOrder");
-  const dataOrder = JSON.parse(listOrder);
-  const fetchData = () => {
-    commerce.products
-      .list({
-        limit: 50,
-      })
-      .then((product) => setData(product.data));
-  };
-
-  useEffect(() => {
-    fetchData();
-  });
-
+  const { data: productsData } = useGetData("product");
+  const allCategories = productsData.map((product) => product.category);
+  const { data: oderData } = useGetData("Oders");
+  const { data: userData } = useGetData("users");
+  
   const dataProductCard = [
     {
       text: "TỔNG SỐ DANH MỤC",
-      count: 15,
+      count: 13,
     },
     {
       text: "TỔNG SỐ SẢN PHẨM",
-      count: data?.length,
+      count: productsData?.length,
     },
     {
       text: "TỔNG SỐ ĐƠN HÀNG",
-      count: dataOrder?.length,
+      count: oderData?.length,
+    },
+    {
+      text: "TỔNG SỐ USER",
+      count: oderData?.length,
     },
   ];
   const [options, setOptions] = useState({
