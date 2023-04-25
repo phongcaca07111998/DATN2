@@ -85,7 +85,7 @@ export const Register=(prop) => {
     })
     
 
-    setLoading(false)
+    setLoading(true)
     // console.log(user)
     setMessage("Đăng ký thành công!");
     setAlert(true);
@@ -187,7 +187,9 @@ export const Register=(prop) => {
                       className="input"
                     //   onChange= {(e)=>setEmail(e.target.value)}
                     />
-                    
+                      {errors.email && touched.email ? (
+                      <div className="formError">{errors.email}</div>
+                    ) : null}
                   </div>
                   <div>
                     <FastField 

@@ -7,12 +7,8 @@ import plus_white from "../../assets/img/plus_white.svg";
 import { useNavigate } from "react-router-dom";
 import { Alert, CircularProgress } from "@mui/material";
 import { LoadingDetail } from "../../Components/loading/loadingDetail";
-
-import { ref } from "firebase/storage";
 import { ChevronRight } from "@mui/icons-material";
 import useGetData from "../../custom-hooks/useGetData";
-import ReactStars from "react-rating-stars-component";
-import { toast } from "react-toastify";
 import { cartActions } from "../../Components/redux/slices/cartSlice";
 
 import { db } from "../../Components/firebase/firebase";
@@ -78,11 +74,6 @@ const {currentUser} = useAuth()
     productName,
     price,
     username,
-    avgRating,
-    reviews,
-    description,
-    shortDesc,
-    category,
   } = product;
 
   const addToCart = () => {
@@ -94,12 +85,10 @@ const {currentUser} = useAuth()
         price,
         count,
         username,
-
       })
       
     );
-   
-      
+
     setMessage("Thêm sản phẩm thành công");
     setAlert(true)
     setTimeout(() => {
