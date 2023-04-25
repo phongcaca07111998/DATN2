@@ -27,6 +27,7 @@ const cartSlice = createSlice({
           price: newItem.price,
           quantity: newItem.count,
           totalPrice: newItem.price,
+          usersell:newItem.username,
         });
       } else {
         const existingItem = state.cartItems[existingItemIndex];

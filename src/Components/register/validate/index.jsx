@@ -20,6 +20,7 @@ export const RegisterSchema = Yup.object().shape({
   password_confirm: Yup.string()
     .required("Bắt buộc")
     .oneOf([Yup.ref("password"), null], "Không trùng"),
+    
   // gender: Yup.string()
   //   .oneOf(["1", "2", "3"], "Bạn không thể để trống Field này")
   //   .required(Messages.bat_buoc),

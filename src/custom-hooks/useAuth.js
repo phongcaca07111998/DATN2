@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../Components/firebase/firebase'
+import { fetchUser } from '../Components/redux/slices/authSlice';
+const userInfo=fetchUser()
 const useAuth = () => {
 
     const  [currentUser,setCurrenUser]=useState()
@@ -11,7 +13,7 @@ const useAuth = () => {
                 setCurrenUser(user)
             }
             else{
-                setCurrenUser(null)
+                setCurrenUser(userInfo)
             }
         })
     })

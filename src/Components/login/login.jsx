@@ -14,21 +14,29 @@ import { Alert, CircularProgress } from "@mui/material";
 import logo from '../../assets/img/logo.png'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../firebase/firebase";
+import { useNavigate } from 'react-router-dom';
 export const Login = (prop) => {
 
     const auth = getAuth(app);
+    const {currentUser}=getAuth()
     const [email,setEmail]= useState("")
     const [password,setPassword]= useState("")
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(false);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
     const initialValues = {
         username: "",
         password: "",
     };
     const closeLogin = () => {
-        prop.closeLogin(false);
+        prop.closeLogin(false); 
+    const admin = email==="phongcaca07111998@gmail.com"
+    console.log(admin);
+    if (admin === true) {
+      navigate("/admin-ecommerce")
     };
+     }
 
     const openRegister = () => {
     prop.openRegister(true);
@@ -63,6 +71,7 @@ export const Login = (prop) => {
           setAlert(false);
         }, 3000);
       });
+      localStorage.setItem('user', JSON.stringify(email));
 }
 
 

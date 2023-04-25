@@ -20,11 +20,12 @@ import { db } from "../../firebase/firebase";
 import { Checkout } from "../../../pages/checkout/checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions  } from "./../../redux/slices/cartSlice";
-import useGetData from "../../../custom-hooks/useGetData";
+import { getAuth } from "firebase/auth";
 
 
 export const PaymentForm = (prop) => {
   const navigate = useNavigate();
+  const {currentUser}=getAuth()
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPayment = prop.totalPayment + 32000;
   const [listCountries, setListCountries] = useState([]);
@@ -36,8 +37,9 @@ export const PaymentForm = (prop) => {
   const paymentType1=prop.paymentType
   const dispatch = useDispatch();
   //
+  console.log(currentUser.email);
   async function updateProductQuantity(productId, newQuantity) {
-    console.log(productId);
+  
     try {
       // Lấy một tham chiếu đến sản phẩm cần cập nhật
       const productDocRef=doc(db, "product", productId)
@@ -117,14 +119,16 @@ export const PaymentForm = (prop) => {
         address: values.address,
         province: province,
         cartItems: cartItems,
-        
+        totalPayment:totalPayment,
+        email:currentUser?.email,
       });
+      
       handleCheckout(cartItems);
       
       dispatch(cartActions.resetCart());
       
       setLoading(true);
-      setMessage("Product successfully added!");
+      setMessage("Đặt hàng thành công");
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -132,9 +136,9 @@ export const PaymentForm = (prop) => {
   
       navigate("/bidu-ecommerce");
     } catch (err) {
-      console.error('Error adding order: ', err);
+      
       setLoading(false);
-      setMessage("Failed to add product!");
+      setMessage("Đặt hàng thất bại . Vui lòng thao tác lại");
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -188,17 +192,7 @@ export const PaymentForm = (prop) => {
                           <div className="formError">{errors.name}</div>
                         ) : null}
                       </div>
-                      <div className="field">
-                        <FastField
-                          name="email"
-                          placeholder="Email"
-                          className="input"
-                          type="text"
-                        />
-                        {errors.email && touched.email ? (
-                          <div className="formError">{errors.email}</div>
-                        ) : null}
-                      </div>
+                    
                     </div>
                     <div className="fields">
                       <div className="field">
@@ -226,10 +220,6 @@ export const PaymentForm = (prop) => {
                     </div>
                     <div className="fields">
                       <div className="field">
-                        {/* {errors.password && touched.password ? (
-                          <div className="formError">{errors.password}</div>
-                        ) : null} */}
-                        {/* <FormControl fullWidth> */}
                         <FormControl fullWidth size="small">
                           <InputLabel id="demo-simple-select-standard-label">
                             Tỉnh thành

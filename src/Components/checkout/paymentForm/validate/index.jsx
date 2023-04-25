@@ -8,7 +8,7 @@ const phoneRegExp =
     .required("Bắt buộc")
     .min(6, "Tối thiểu 6 ký tự")
     .max(30, "Quá dài"),
-    email: Yup.string().email("Sai định dạng").required("Bắt buộc"),
+    
     phone: Yup.string()
     .matches(phoneRegExp, "Sai định dạng")
     .required("Bắt buộc"),

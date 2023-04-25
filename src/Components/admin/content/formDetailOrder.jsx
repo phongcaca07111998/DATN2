@@ -1,17 +1,41 @@
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../../firebase/firebase";
 
 export const FormDetailOrder = (prop) => {
-  const [orderStatus, setOrderStatus] = useState(0);
+  // const [orderxStatus, setOrderStatus] = useState(0);
+  const [orderStatus, setOrderStatus] = useState(prop.ItemDetail.orderStatus);
+  const [cartItems, setCartItems] = useState(prop.ItemDetail.cartItems);
 
-  const data = prop.ItemDetail;
-  console.log(data);
-  const handleSelectChange = (e) => {
-    console.log("value", parseInt(e.target.value));
-    const order = parseInt(e.target.value);
-    setOrderStatus(order);
+  const statusMap = {
+    1: "Vừa đặt",
+    2: "Đang giao",
+    3: "Đã nhận",
+    4: "Gửi trả"
+  };
+  const handleSelectChange = (index, e) => {
+    const newCartItems = [...cartItems];
+    const selectedValue = parseInt(e.target.value);
+    newCartItems[index].orderStatus = statusMap[selectedValue];
+    console.log(newCartItems[index].orderStatus);
+    setCartItems(newCartItems);
+
+
   };
 
-  const closeFormDetail = () =>{
+  //
+  const updateOrderStatus = async () => {
+    const orderRef = doc(db, "Oders", prop.ItemDetail.id);
+    const updatedData = {
+      cartItems: cartItems,
+      // orderStatus: orderStatus,
+    };
+    await updateDoc(orderRef, updatedData);
+  };
+  //
+  const data = prop.ItemDetail;
+
+  const closeFormDetail = () => {
     prop.closeForm(false)
   }
   return (
@@ -28,39 +52,46 @@ export const FormDetailOrder = (prop) => {
           </div>
           <div className="row">Email: {data.email}</div>
           <div className="row">
-            <h4>Thông tin sản phẩm</h4>
-            {data?.listProduct.map((item, index) => (
-              <div className="card-item" key={index}>
-                <div className="card-item-id">
-                  ID sản phẩm: {item.product_id}
+            <h4>Thông tin sản phẩm:</h4>
+            {cartItems?.map((item, index) => {
+              console.log("Item " + (index + 1) + ":");
+              console.log("ID sản phẩm: " + item.id);
+              console.log("Tên sản phẩm: " + item.productName);
+              console.log("Số lượng: " + item.quantity);
+              console.log(
+
+              );
+              return (
+                <div className="card-item" key={index}>
+                  <div className="card-item-id">
+                    ID sản phẩm: {item.id}
+                  </div>
+                  <div className="card-item-name">Tên sp :{item.productName}</div>
+                  <div className="card-item-name">Số lượng: {item.quantity}</div>
+                  <div className="card-item-name"> <img src={item.imgUrls} alt={item.title} width="75" height="50" />
+
+                  </div>
+                  <div className="row">
+                    Trạng thái đơn hàng:
+                    <select
+                      // value={item.orxderStatus}
+                      onChange={(e) => handleSelectChange(index, e)}
+                      className="select-status"
+                    >
+                      <option value="1">Vừa đặt</option>
+                      <option value="2">Đang giao</option>
+                      <option value="3">Đã nhận</option>
+                      <option value="4">Gửi trả</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="card-item-name">{item.product_name}</div>
-                <div className="card-item-name">Số lượng: {item.quantity}</div>
-                <div className="card-item-name">
-                  {item.selected_options[0].group_name +
-                    " " +
-                    ":" +
-                    item.selected_options[0].option_name}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
-          <div className="row">
-            Trạng thái đơn hàng:
-            <select
-              value={orderStatus}
-              onChange={(e) => handleSelectChange(e)}
-              className="select-status"
-            >
-              <option value="1">Vừa đặt</option>
-              <option value="2">Đang giao</option>
-              <option value="3">Đã nhận</option>
-              <option value="4">Gửi trả</option>
-            </select>
-          </div>
+
           <div className="row-btn">
             <div className="groupBtn">
-              <button className="btn btn-update">Cập nhật</button>
+              <button onClick={() => updateOrderStatus()} className="btn btn-update">Cập nhật</button>
               <button className="btn btn-cancel" onClick={closeFormDetail}>Hủy</button>
             </div>
           </div>
