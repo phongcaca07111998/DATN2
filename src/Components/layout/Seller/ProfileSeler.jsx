@@ -5,9 +5,34 @@ import { useSelector,useDispatch } from 'react-redux';
 import Helmet from '../../Helmet/Helmet';
 import { Link } from 'react-router-dom';
 import { cartActions } from '../../redux/slices/cartSlice';
+import useGetData from '../../../custom-hooks/useGetData';
+import { getAuth } from 'firebase/auth';
 const ProfileSeler = () => {
-    const cartItems = useSelector((state) => state.cart.cartItems);
+    const cartItems=""
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const { data: oderData,loading } = useGetData("Oders");
+  const {currentUser} = getAuth();
+ 
+ 
+  const userSellValues = oderData.map(order => {
+    return order.cartItems.map(item => item.usersell);
+  });
+  const index = userSellValues.findIndex(userSellArray => userSellArray.includes(currentUser.email));
+  
+if (index !== -1) {
+  const cartItems = oderData[index].cartItems;
+  console.log("currentUser's email is in userSellValues");
+  console.log("cartItems:", cartItems);
+  cartItems.forEach(item => console.log(item.usersell));
+} else {
+  console.log("currentUser's email is not in userSellValues");
+}
+ 
+
+  const deleteProduct = async id => {
+     await deleteDoc(doc(db, "Oders", id));
+     toast.success("Deleted!");
+   };
   return (
     <div>
     <div className="sidebar-container">
@@ -58,6 +83,7 @@ const ProfileSeler = () => {
             </ul>
         </div>
     </div>
+    
     <div className="page-container">
         <div className="page-content1">
             <div className="portal-sale-container">
@@ -68,37 +94,37 @@ const ProfileSeler = () => {
                                 <div className="tabs-nav-warp">
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Tất cả</span>
+                                            {/* <span>Tất cả</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Chờ xác nhận</span>
+                                            {/* <span>Chờ xác nhận</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Chờ lấy hàng</span>
+                                            {/* <span>Chờ lấy hàng</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Đang giao</span>
+                                            {/* <span>Đang giao</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Đã giao</span>
+                                            {/* <span>Đã giao</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Đơn Hủy</span>
+                                            {/* <span>Đơn Hủy</span> */}
                                         </div>
                                     </div>
                                     <div className="tabs-nav-tabs">
                                         <div className="tab-label">
-                                            <span>Trả hàng/ Hoàn tiền</span>
+                                            {/* <span>Trả hàng/ Hoàn tiền</span> */}
                                         </div>
                                     </div>
                                 </div>
@@ -130,32 +156,65 @@ const ProfileSeler = () => {
                         </div>
                     </div>
                 </div>
-                <div className="order-search-container">
-                    <div className="input-group">
-                        <div className="select">
-                            {/* <div class="selector">
-  </div> */}
-                        </div>
-                        <span className="input-group-append">
-                            <div className="search-wrapper">
-                                <div className="order-search-btn">
-                                    <div className="input-inner">
-                                        <input type="text" placeholder="Nhập Mã đơn hàng" className="input-input" />
-                                    </div>
-                                    {/* <div class="input-suffix">
-        <i class='bx bx-search'></i>
-      </div> */}
-                                </div>
-                            </div>
-                        </span></div>
-                    <button type="button" className="search1 sp-button">
-                        <span>Tìm kiếm</span>
-                    </button>
-                </div>
+              
                
             </div>
         </div>
     </div>
+    <section >
+      <div className="container18">
+        <div className="row1">
+          <div className="col-12 his">
+          {cartItems?.length === 0 ? (
+                <h2 className="fs-4 text-center khongcart">No item added to the cart</h2>
+              ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Số lượng</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <h4 className="py-5 text-center fw-bold ">Loading.....</h4>
+                ) : cartItems?.forEach((item) =>    
+                  <tr key={item.id}>
+                    <td>
+                      <img src={item.imgUrls} alt={item.title} width="75" height="50" />
+                    </td>
+                    <td>{item.id}</td>
+                    <td>{item.productName}</td>
+                    <td>{item.quantity}</td>
+                   
+                    <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</td>
+                    <td>{item.orderStatus}</td>
+                    <td>
+                    <button
+                        onClick={() => {
+                          deleteProduct(item.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                  
+             
+              )}
+              </tbody>
+            </table>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   
 </div>
   )

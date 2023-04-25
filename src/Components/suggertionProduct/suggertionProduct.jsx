@@ -9,12 +9,12 @@ import useGetData from "../../custom-hooks/useGetData";
 
 export const SuggestionProduct = ({ tieude }) => {
   const { data: productsData, loading: firstLoading } = useGetData("product");
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(8);
   const [loading, setLoading] = useState(false);
 
   const handleSeeMore = () => {
     setLoading(true);
-    setLimit(prevLimit => prevLimit + 3);
+    setLimit(prevLimit => prevLimit + 4);
     setLoading(false);
   };
   return (

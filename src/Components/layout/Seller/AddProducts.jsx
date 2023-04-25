@@ -23,7 +23,7 @@ const AddProducts = () => {
   const [enterPrice, setEnterPrice] = useState("");
   const [enterUsername, setEnterUsername] = useState("");
   const [enterSl, setSl] = useState("");
-
+  const [enterDate, setDate] = useState("");
   const [enterProductImgs, setEnterProductImgs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -68,6 +68,7 @@ const AddProducts = () => {
         username: mainUser?.displayName,
         imgUrls: imgUrls,
         sl: enterSl,
+        date:enterDate,
       });
 
       setLoading(false);
@@ -152,6 +153,15 @@ const AddProducts = () => {
                         placeholder="1"
                         value={enterSl}
                         onChange={e => setSl(e.target.value)}
+                        required
+                      />
+                    </FormGroup>
+                    <FormGroup className="form__group w-50">
+                      <span>Ngày Tháng Năm</span>
+                      <input
+                        type="date"
+                        value={enterDate}
+                        onChange={e => setDate(e.target.value)}
                         required
                       />
                     </FormGroup>

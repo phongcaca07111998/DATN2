@@ -68,13 +68,14 @@ a {
     width: inherit;
     margin-top: 60px;
     z-index: 20;
+    
 }
 .sidebar-menu{
-    
+   
     padding: 16px 16px 0;
     background-color: #fff;
     list-style: none;
-    margin-top: 60px;
+    margin-top: 80px;
     z-index:10 ;
 }
 .sidebar-menu-box{
@@ -235,6 +236,7 @@ i{
 }
 .order-search-panel .order-export{
     display: flex;
+    margin-bottom: -150px;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     flex-direction: row;
@@ -538,4 +540,10 @@ i{
 
  .col-9 .table .ri-delete-bin-line:hover {
   transform: scale(1.2);
+}
+.bang1{
+        border-collapse: collapse!important;
+        width: 95%!important;
+        margin-left: 50px!important;
+        font-size: 14px;
 }

@@ -45,6 +45,7 @@ export const DetailProduct = (checklogin) => {
   //
 const {currentUser} = useAuth()
   const [variantGroups, setVariantGroups] = useState({}); 
+  console.log(mainData?.date);
 
   // const { checkAddToCart, checkoutData } = state;
   const [idItemCart, setIdItemCart] = useState("");
@@ -76,6 +77,7 @@ const {currentUser} = useAuth()
     imgUrls,
     productName,
     price,
+    username,
     avgRating,
     reviews,
     description,
@@ -91,6 +93,8 @@ const {currentUser} = useAuth()
         productName,
         price,
         count,
+        username,
+
       })
       
     );
@@ -145,6 +149,7 @@ const {currentUser} = useAuth()
             productName,
             price,
             count,
+            username,
           })
         );
         setMessage("Đã thêm sản phẩm thành công");
