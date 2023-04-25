@@ -71,6 +71,7 @@ export const Login = (prop) => {
           setAlert(false);
         }, 3000);
       });
+      localStorage.setItem('user', JSON.stringify(email));
 }
 
 
