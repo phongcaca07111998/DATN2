@@ -8,7 +8,7 @@ import useGetData from "../../custom-hooks/useGetData";
 
 export const SuggestionProduct = ({ tieude }) => {
   const { data: productsData, loading: firstLoading } = useGetData("product");
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(4);
   const [loading, setLoading] = useState(false);
 
   const handleSeeMore = () => {

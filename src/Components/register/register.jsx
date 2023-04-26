@@ -13,6 +13,7 @@ import { auth, db, storage } from "../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 export const Register=(prop) => {
+  
 
   const [userfname,setUserfname]= useState("")
   const [username,setUsername]= useState("")
@@ -27,7 +28,7 @@ export const Register=(prop) => {
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
   };
-  console.log(isChecked);
+
   const signUp = async(e)=>{
     e.preventDefault()
     setLoading(true)
@@ -109,8 +110,8 @@ export const Register=(prop) => {
       username: "",
       email: "",
       password: "",
-      password_confirm: "",
-      phone: "",
+      password_confirm:"",
+      phone:"",
   };
 
   const closeRegister = () => {
@@ -208,7 +209,7 @@ export const Register=(prop) => {
                       placeholder="Mật khẩu"
                       className="input"
                       type="password"
-                    //   onChange= {(e)=>setPassword(e.target.value)}
+                   
                     />
                     {errors.password && touched.password ? (
                       <div className="formError">{errors.password}</div>
@@ -220,7 +221,7 @@ export const Register=(prop) => {
                       placeholder="Nhập lại mật khẩu"
                       className="input"
                       type="password"
-                    //   onChange= {(e)=>setPassword(e.target.value)}
+                   
                     />
                     {errors.password_confirm && touched.password_confirm ? (
                       <div className="formError">{errors.password_confirm}</div>

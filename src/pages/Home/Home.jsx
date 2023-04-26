@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Banner} from '../../Components/banner/banner'
+import { Banner } from '../../Components/banner/banner'
 import './Home.scss'
 
 import { SuggestionProduct } from "../../Components/suggertionProduct/suggertionProduct";
@@ -51,19 +51,18 @@ return (
         <SuggestionProduct tieude="Gợi Ý CHO BẠN"/>
       </div>
       <div className="Content Content_2">
-    
         <NewsuggestionProduct tieude="MẶC HÀNG MỚI NHẤT" />
-      
       </div>
       <div className="Content Content_2">
         <SuggestionProduct tieude="MẶC HÀNG GIẢM GIÁ"/>
       </div>
       <div className="Content Content_2">
         <SuggestionProduct tieude="SẢN PHẨM YÊU THÍCH"/>
+        </div>
+
       </div>
     </div>
-  </div>
-);
+  );
 
 };
 export default Home;

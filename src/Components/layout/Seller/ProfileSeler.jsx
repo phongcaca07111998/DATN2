@@ -7,27 +7,32 @@ import { Link } from 'react-router-dom';
 import { cartActions } from '../../redux/slices/cartSlice';
 import useGetData from '../../../custom-hooks/useGetData';
 import { getAuth } from 'firebase/auth';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
+import { toast } from 'react-toastify';
+
+
+
 const ProfileSeler = () => {
-    const cartItems=""
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
+
   const { data: oderData,loading } = useGetData("Oders");
   const {currentUser} = getAuth();
  
- 
-  const userSellValues = oderData.map(order => {
-    return order.cartItems.map(item => item.usersell);
-  });
-  const index = userSellValues.findIndex(userSellArray => userSellArray.includes(currentUser.email));
+ //Ở đây, chúng ta sử dụng phương thức reduce để duyệt qua tất cả các đơn đặt hàng trong oderData. Với mỗi đơn đặt hàng, chúng ta lọc ra tất cả các cartItems có trường usersell giống với email của user hiện tại (currentUser.user), sau đó gom tất cả các cartItems này vào mảng acc. Cuối cùng, phương thức reduce sẽ trả về mảng cartItemsWithUserSell chứa tất cả các cartItems có trường usersell giống với user của user hiện tại
+
+    
+const cartItemsWithUserSell = oderData.reduce((acc, order) => {
+    const cartItems = order.cartItems.filter(item => item.usersell === currentUser.displayName);
+    return acc.concat(cartItems);
+  }, []);
   
-if (index !== -1) {
-  const cartItems = oderData[index].cartItems;
-  console.log("currentUser's email is in userSellValues");
-  console.log("cartItems:", cartItems);
-  cartItems.forEach(item => console.log(item.usersell));
-} else {
-  console.log("currentUser's email is not in userSellValues");
-}
- 
+  console.log(cartItemsWithUserSell);
+  
+
+
+
+
+
 
   const deleteProduct = async id => {
      await deleteDoc(doc(db, "Oders", id));
@@ -164,8 +169,8 @@ if (index !== -1) {
     <section >
       <div className="container18">
         <div className="row1">
-          <div className="col-12 his">
-          {cartItems?.length === 0 ? (
+        <div className="col-12 his">
+          {cartItemsWithUserSell?.length === 0  ? (
                 <h2 className="fs-4 text-center khongcart">No item added to the cart</h2>
               ) : (
             <table className="table">
@@ -183,8 +188,8 @@ if (index !== -1) {
               <tbody>
                 {loading ? (
                   <h4 className="py-5 text-center fw-bold ">Loading.....</h4>
-                ) : cartItems?.forEach((item) =>    
-                  <tr key={item.id}>
+                ) : cartItemsWithUserSell?.map((item,index) =>    
+                  <tr key={index}>
                     <td>
                       <img src={item.imgUrls} alt={item.title} width="75" height="50" />
                     </td>
