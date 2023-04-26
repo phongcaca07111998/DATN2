@@ -192,7 +192,7 @@ export const Register=(prop) => {
                       <div className="formError">{errors.email}</div>
                     ) : null}
                   </div>
-                  <div>
+                  <div className="nhaban">
                     <FastField 
                     onClick= {handleCheckbox} 
                     className="checkbox" 
@@ -201,7 +201,7 @@ export const Register=(prop) => {
                     checked={isChecked}
                     />
                     
-                    One
+                    Xác nhận đăng kí người bán
                     </div>
                   <div className="field" onChange= {(e)=>setPassword(e.target.value)}>
                     <FastField

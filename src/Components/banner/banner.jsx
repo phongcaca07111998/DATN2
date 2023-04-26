@@ -34,6 +34,10 @@ export const Banner = () => {
         <div className="slide-banner">
           <img src={banner5} alt="" />
         </div>
+        {/* <div className="slide-banner">
+          <img src="https://via.placeholder.com/875x420" alt="" />
+        </div> */}
+        
         
       </Slider>
     );

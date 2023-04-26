@@ -3,7 +3,7 @@ import "./homeSearch.scss";
 import chevronRight from "../../assets/img/chevron-right.svg";
 import { Category } from "../../Components/category/category";
 import { useLocation } from "react-router-dom";
-// import { removeVietnameseTones } from "../../components/layout/navbar/search/removeVNtones";
+import { removeVietnameseTones } from "../../Components/layout/Navbar/search/removeVNtones";
 import { Card } from "../../Components/suggertionProduct/card/card";
 import { UseStore } from "../../store";
 import { CircularProgress } from "@mui/material";
@@ -22,32 +22,37 @@ export const HomeSearch = () => {
 
 
   console.log(productsData);
-  
-  // const fetchData = (search) => {
-  
-  // };
-
-    
-
   // useEffect(() => {
-  //   fetchData(search);
-  //   window.scrollTo({
-  //     top: 0,
+  //   const filteredData = productsData.filter((item) => {
+  //     const itemName = item.category.toLowerCase();
+  //     const searchName = search.toLowerCase();
+  //     const itemShort = item.productName.toLowerCase();
+  //     const searchShort = search.toLowerCase();
+  //     return (itemName.includes(searchName)||
+  //           itemShort.includes(searchShort)
+            
+  //     ) 
   //   });
-  // }, [location]);
+  //   setData(filteredData);
+  //   setLoading(false);  
+  // }, [search, productsData]);
+
+  //
   useEffect(() => {
     const filteredData = productsData.filter((item) => {
       const itemName = item.category.toLowerCase();
-      const searchName = search.toLowerCase();
-      const itemShort = item.shortDesc.toLowerCase();
-      const searchShort = search.toLowerCase();
-      return (itemName.includes(searchName)||
-            itemShort.includes(searchShort)  
-      )
+      const searchName = removeVietnameseTones(search).toLowerCase(); // Loại bỏ dấu tiếng Việt trong chuỗi tìm kiếm
+      const itemShort = removeVietnameseTones(item.productName).toLowerCase(); // Loại bỏ dấu tiếng Việt trong tên sản phẩm
+      const searchShort = removeVietnameseTones(search).toLowerCase(); // Loại bỏ dấu tiếng Việt trong chuỗi tìm kiếm
+      return (
+        itemName.includes(searchName) ||
+        itemShort.includes(searchShort)
+      );
     });
     setData(filteredData);
-    setLoading(false);  
+    setLoading(false);
   }, [search, productsData]);
+  //
 
   return (
     <div className="homeSearch">
