@@ -124,17 +124,7 @@ const AddProducts = () => {
                       required
                     />
                   </FormGroup>
-                  {/* <FormGroup className="form__group">
-                    <span>Tên người bán</span>
-                    <input
-                      type="text"
-                      placeholder="Tên người bán"
-                      value={enterUsername}
-                      onChange={e => setEnterUsername(e.target.value)}
-                      required
-                    />
-                  </FormGroup> */}
-
+                 
                   <div className="d-flex align-items-center justify-content-between gap-5">
                     <FormGroup className="form__group w-50">
                       <span>Giá</span>

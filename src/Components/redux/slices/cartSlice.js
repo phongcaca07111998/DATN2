@@ -7,6 +7,7 @@ const initialState = {
   count:1
 };
 
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -28,6 +29,7 @@ const cartSlice = createSlice({
           quantity: newItem.count,
           totalPrice: newItem.price,
           usersell:newItem.username,
+          orderStatus:"Vừa đặt"
 
         });
       } else {

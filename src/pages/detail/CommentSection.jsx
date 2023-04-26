@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { db } from "../../Components/firebase/firebase";
 
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc } from "firebase/firestore";
 
 import "./comments.scss";
 
@@ -22,6 +22,9 @@ const CommentSection = () => {
     const location = useLocation();
 
     const productId = location.pathname.split("/")[2];
+    const { data: productsData, firstLoading } = useGetData("product");
+    const mainData = productsData.find((productsData) => productsData.id === productId);
+    
     const mainComment = useMemo(() => {
         return commentsData.filter(commentData => commentData.idcomment === productId);
       }, [commentsData, productId]);
@@ -30,6 +33,39 @@ const CommentSection = () => {
       const [comments, setComments] = useState([]);
       const [rating, setRating] = useState(0);
       
+
+      //
+      let productRatings = [];
+      commentsData.forEach((comment) => {
+        const { idcomment, rating } = comment;
+        if (idcomment === productId) {
+          productRatings.push(rating);
+        }
+      });
+      function average(arr) {
+        if (arr.length === 0) {
+          return 0;
+        }
+        const sum = arr.reduce((total, num) => total + num);
+        return sum / arr.length;
+      }
+      const productAverageRating = average(productRatings);
+      console.log(productAverageRating);
+
+      //
+      
+    const updateRatingToFirestore = (productId, newRating) => {
+    const productDocRef = doc(db, "product", productId);
+    updateDoc(productDocRef, { rating: newRating })
+      .then(() => console.log("Rating updated successfully"))
+      .catch((error) => console.log("Error updating rating: ", error));
+  };
+      //
+
+
+
+
+    
       useEffect(() => {
         if (!loading) {
           setComments(mainComment);
@@ -77,8 +113,10 @@ const CommentSection = () => {
             console.error("Error adding document: ", error);
 
         }
+        
 
     };
+    updateRatingToFirestore(productId,productAverageRating)
 
     return (
 

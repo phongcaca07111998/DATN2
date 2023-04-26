@@ -32,6 +32,7 @@ const History = () => {
                   <th>Category</th>
                   <th>Số lượng</th>
                   <th>Price</th>
+                  <th>Trạng thái</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -48,6 +49,7 @@ const History = () => {
                     <td>{cartItem.productName}</td>
                     <td>{cartItem.quantity}</td>
                     <td>{cartItem.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</td>
+                    <td>{cartItem.orderStatus}</td>
                     <td>
                     <button
                         onClick={() => {

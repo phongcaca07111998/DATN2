@@ -16,10 +16,6 @@ export const Card = ({ item }) => {
   const moveToDetail = () => {
     navigate(`/san-pham/${item.id}`);
   };
-
- console.log(item.nameseller);
-
-
   return (
     <div className="cardProduct" onClick={moveToDetail}>
       <div
@@ -36,8 +32,8 @@ export const Card = ({ item }) => {
         <div className="address">
         <a>{item.shortDesc}</a>
         </div>
-
-        <Rating/>
+          
+        <Rating rating={item.rating} />
       </div>
     </div>
   );
