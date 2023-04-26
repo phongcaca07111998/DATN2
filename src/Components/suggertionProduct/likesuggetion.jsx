@@ -5,34 +5,23 @@ import { CircularProgress } from "@mui/material";
 import { LoadingSuggest } from "../loading/loadingSuggest";
 import useGetData from "../../custom-hooks/useGetData";
 
-
-export const NewsuggestionProduct = ({ tieude  }) => {
+export const Likesuggetion = ({ tieude }) => {
   const { data: productsData, loading: firstLoading } = useGetData("product");
-  const [latestProducts, setLatestProducts] = useState([]);
-  useEffect(() => {
-    // Lọc danh sách sản phẩm mới nhất
-    const now = new Date();
-    const tenDaysAgo = new Date();
-    tenDaysAgo.setDate(now.getDate() - 10);
-    const filteredProducts = productsData.filter((product) => {
-      const productDate = new Date(product.date);
-      return productDate >= tenDaysAgo && productDate <= now;
-    });
-
-    // Sắp xếp theo thứ tự giảm dần của ngày tháng
-    filteredProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    // Lưu danh sách sản phẩm mới nhất vào state
-    setLatestProducts(filteredProducts);
-  }, [productsData]);
   const [limit, setLimit] = useState(5);
   const [loading, setLoading] = useState(false);
+  const [sortedProducts, setSortedProducts] = useState([]);
 
   const handleSeeMore = () => {
     setLoading(true);
     setLimit(prevLimit => prevLimit + 5);
     setLoading(false);
   };
+
+  useEffect(() => {
+    const sorted = [...productsData].sort((a, b) => b.rating - a.rating);
+    setSortedProducts(sorted.slice(0, 5));
+  }, [productsData]);
+  console.log(sortedProducts);
   return (
     <div className="suggestionProduct">
       <div className="suggestionProduct_header">
@@ -42,12 +31,10 @@ export const NewsuggestionProduct = ({ tieude  }) => {
         {firstLoading ? (
           <LoadingSuggest />
         ) : (
-          latestProducts.slice(0, limit).map((item, index) => (
-            <Card key={index} item={item} />
-          ))
+          sortedProducts.map((item, index) => <Card key={index} item={item} />)
         )}
       </div>
-      {limit < productsData.length && (
+      {limit < sortedProducts.length && (
         <div className="suggestionProduct_seeMore" onClick={handleSeeMore}>
           {loading ? (
             <CircularProgress color="inherit" />

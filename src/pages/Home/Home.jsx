@@ -9,37 +9,11 @@ import { NewsuggestionProduct } from "../../Components/suggertionProduct/newsugg
 import { Category } from "../../Components/category/category";
 import Categories from "../../Components/MainPage/Categories";
 import useGetData from "../../custom-hooks/useGetData";
+import { Likesuggetion } from "../../Components/suggertionProduct/likesuggetion";
 
 
 export const Home = (props) => {
-  const { data: productsData, loading } = useGetData("product");
-  const [latestProducts, setLatestProducts] = useState([]);
-  // useEffect(()=>{
-  //   fetchData()
-  // },[])
-  // const fetchData = () => {
-  //   commerce.products.list().then((product) => {
-  //     console.log(product);
-  //   });
-  // };
-  // console.log(productsData);
-  useEffect(() => {
-    if (productsData && !loading) {
-      const tenDaysAgo = new Date();
-      tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-      const now = new Date();
-  
-      const filteredProducts = productsData.filter((product) => {
-        const productDate = new Date(product.date);
-        return productDate >= tenDaysAgo && productDate <= now;
-      });
-
-      filteredProducts.sort((a, b) => new Date(b.date) - new Date(a.date)); // sắp xếp mảng sản phẩm theo ngày tháng đảo ngược (tức là giảm dần)
-  
-      setLatestProducts(filteredProducts.slice(0, 2)); // lấy ra 5 sản phẩm mới nhất để hiển thị
-    }
-  }, [productsData, loading]);
-  console.log(latestProducts);
+ 
 return (
   <div className="container">
     <div className="Home_content">
@@ -57,7 +31,7 @@ return (
         <SuggestionProduct tieude="MẶC HÀNG GIẢM GIÁ"/>
       </div>
       <div className="Content Content_2">
-        <SuggestionProduct tieude="SẢN PHẨM YÊU THÍCH"/>
+        <Likesuggetion tieude="SẢN PHẨM YÊU THÍCH"/>
         </div>
 
       </div>

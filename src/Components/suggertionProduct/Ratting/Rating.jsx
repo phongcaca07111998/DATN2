@@ -11,9 +11,9 @@ const Rating = (prop) => {
         size={24}
         activeColor="#ffd700"
         value={prop.rating}
-        
+         
       />
-      {prop.rating}
+     
     </div>
   );
 };

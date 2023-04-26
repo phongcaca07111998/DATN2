@@ -33,7 +33,10 @@ export const Card = ({ item }) => {
         <a>{item.shortDesc}</a>
         </div>
           
-        <Rating rating={item.rating} />
+        <div className="rating-wrapper">
+          <Rating rating={item.rating} />
+          <div className="rating-value">({item.rating?.toFixed(1)})</div>
+        </div>
       </div>
     </div>
   );

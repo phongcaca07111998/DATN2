@@ -1,5 +1,5 @@
 .cardProduct {
-  width: 189px;
+  width: 175px;
   height: 62%;
   background-color: #FFFFFF;
   cursor: pointer;
@@ -32,7 +32,17 @@
   &__inf {
     width: 92%;
     margin: 5px auto;
-
+    .rating-wrapper {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 10px;
+    }
+    
+    .rating-value {
+      grid-column: 2 / 3;
+      margin-top: 7px;
+      text-align: left;
+    }
     p {
       display: -webkit-box;
       font-size: 15px;
