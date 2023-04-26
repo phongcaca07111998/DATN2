@@ -14,7 +14,7 @@ const Categories = ({prop,item}) => {
   const data = [
     {
       id:"dienmay",
-      cateImg: "./images/category/cat1.png",
+      cateImg: "https://meta.vn/icons/cats/1013.png",
       cateName: "Điện máy",
     },
     {
@@ -72,16 +72,16 @@ const Categories = ({prop,item}) => {
       cateImg: "./images/category/cat11.png",
       cateName: "Phụ kiện ô tô, xe hơi",
     },
-    {
-      id:"thoitrangdulich",
-      cateImg: "./images/category/cat11.png",
-      cateName: "Thời trang & Du lịch",
-    },
-    {
-      id:"bachhoatonghop",
-      cateImg: "./images/category/cat11.png",
-      cateName: "Bách hoá tổng hợp",
-    },
+    // {
+    //   id:"thoitrangdulich",
+    //   cateImg: "./images/category/cat11.png",
+    //   cateName: "Thời trang & Du lịch",
+    // },
+    // {
+    //   id:"bachhoatonghop",
+    //   cateImg: "./images/category/cat11.png",
+    //   cateName: "Bách hoá tổng hợp",
+    // },
   ]
   const navigate = useNavigate();
   
