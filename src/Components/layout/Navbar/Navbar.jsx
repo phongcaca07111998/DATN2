@@ -10,13 +10,27 @@ import { Register } from '../../register/register';
 import { Login } from "../../login/login";
 import Head from "./header_navbar/Head";
 import { getAuth } from 'firebase/auth';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+
 
 export const Navbar = (prop) => {
   const [checkRegister, setCheckRegister] = useState(false);
   const [checkLogin, setCheckLogin] = useState(false);
-  const navigate = useNavigate();
-  const {currentUser} = getAuth();
+  
 
+  
+  const navigate = useNavigate();
+  
+
+  //
+
+
+  
+
+    
+
+  //
   
   
   const passCheckRegister = (check) => {
@@ -29,6 +43,7 @@ export const Navbar = (prop) => {
       setCheckRegister(false);
     }
   };
+ 
   const passCheckLogin = (check) => {
     if (check) {
       setCheckLogin(true);
@@ -36,10 +51,6 @@ export const Navbar = (prop) => {
   };
   const closeLogin = (check) => {
    
-    const admin = currentUser?.email==="phongcaca07111998@gmail.com"
-    if (admin === true) {
-      navigate("/admin-ecommerce");;
-    }
     if (!check) {
       setCheckLogin(false);
       prop.checkLogin(true);
@@ -51,6 +62,7 @@ export const Navbar = (prop) => {
       setCheckRegister(true);
     }
   };
+  
   
   const moveToHome = () => {
     navigate("/bidu-ecommerce");
@@ -65,9 +77,11 @@ export const Navbar = (prop) => {
       {checkLogin && (
           <Login closeLogin={closeLogin} openRegister={openRegister} 
           passCheckLogin={passCheckLogin}
-              checkLogout={checkLogout}/>
+              checkLogout={checkLogout}
+              />
       
-      )}
+      )
+      }
       </div>
       <div className="navbar_container">
         <div className="header">
@@ -90,6 +104,7 @@ export const Navbar = (prop) => {
               passCheckRegister={passCheckRegister}
               passCheckLogin={passCheckLogin}
               checkLogout={checkLogout}
+         
               /> 
             </div>
           </div>

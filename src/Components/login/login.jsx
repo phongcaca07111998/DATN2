@@ -12,58 +12,114 @@ import auth_background from "../../assets/img-login/auth_background.svg";
 // import icon_close_menu from "../../assets/img-login/icon_close_menu.svg";
 import { Alert, CircularProgress } from "@mui/material";
 import logo from '../../assets/img/logo.png'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from "../firebase/firebase";
+import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail  } from "firebase/auth";
+import app, { db } from "../firebase/firebase";
 import { useNavigate } from 'react-router-dom';
+import { doc, updateDoc } from "firebase/firestore";
+
+
+
+
 export const Login = (prop) => {
 
-    const auth = getAuth(app);
-    const {currentUser}=getAuth()
-    const [email,setEmail]= useState("")
-    const [password,setPassword]= useState("")
-    const [loading, setLoading] = useState(false);
-    const [alert, setAlert] = useState(false);
-    const [message, setMessage] = useState("");
-    const navigate = useNavigate();
-    const initialValues = {
-        username: "",
-        password: "",
-    };
-    const closeLogin = () => {
-        prop.closeLogin(false); 
-    const admin = email==="phongcaca07111998@gmail.com"
+  const auth = getAuth(app);
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  //
+ 
+  
+  const [showResetPasswordPopup, setShowResetPasswordPopup] = useState(false);
+  const [resetPasswordEmail, setResetPasswordEmail] = useState("");
+  console.log(resetPasswordEmail);
+  const handleResetPassword = async () => {
+    try {
+      await sendPasswordResetEmail(auth,resetPasswordEmail);
+      setShowResetPasswordPopup(false);
+      setAlert(true);
+      setMessage("Vui lòng kiểm tra email của bạn để đặt lại mật khẩu.");
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    } catch (error) {
+      setAlert(true);
+      console.log(error);
+      setMessage("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    }
+  };
+  
+  //
+  //
+ 
+  //
+
+
+  const initialValues = {
+    username: "",
+    password: "",
+  };
+  const closeLogin = () => {
+    prop.closeLogin(false);
+    const admin = email === "phongcaca07111998@gmail.com"
     console.log(admin);
     if (admin === true) {
       navigate("/admin-ecommerce")
     };
-     }
+  }
 
-    const openRegister = () => {
+  const openRegister = () => {
     prop.openRegister(true);
-    };
-    const onAdd = async (values, { resetForm }) => {
-        await onLogin(values);
-        await resetForm();
-    };
-    const onLogin = () => {
-        setLoading(true);
+  };
+ 
+
+  const onAdd = async (values, { resetForm }) => {
+    await onLogin(values);
+    await resetForm();
+  };
+  const onLogin = () => {
+    setLoading(true);
+    
+    setMessage("Đăng nhập thành công");
+    setAlert(true);
+    setTimeout(() => {
+      setAlert(false);
+    }, 3000);
+   
 
     signInWithEmailAndPassword(auth, email, password)
 
 
-    .then(function() {
+      .then(function () {
         // Signed in 
-        setLoading(false);
-        // localStorage.setItem("userId", userCredential.user);
-        // localStorage.setItem("isAdmin", userCredential.user);
+        setLoading(true);
+       
+
         prop.closeLogin(false);
-        setMessage("Đăng nhập thành công");
-        setAlert(true);
-        setTimeout(() => {
-          setAlert(false);
-        }, 3000);
+        const updatePassword = async () => {
+    
+          const userId = getAuth().currentUser.uid;
+          const userDocRef = doc(db, "users", userId);
+          try {
+            await updateDoc(userDocRef, {
+              pass:password,
+            });
+            
+            console.log("Cập nhật thành công trường userfname trong tài liệu của người dùng hiện tại");
+          } catch (error) {
+            console.log("Lỗi khi cập nhật trường userfname: ", error);
+          }
+          console.log(userId);
+        }
+        updatePassword()
       })
-    .catch(function(error)  {
+      .catch(function (error) {
         setLoading(false);
         setMessage("Sai tên đăng nhập hoặc mật khẩu");
         setAlert(true);
@@ -71,96 +127,110 @@ export const Login = (prop) => {
           setAlert(false);
         }, 3000);
       });
-      localStorage.setItem('user', JSON.stringify(email));
-}
+    localStorage.setItem('user', JSON.stringify(email));
+  }
 
 
 
   return (
     <div>
       <div className="container">
-      {loading && (
-        <div className="loading">
-          <CircularProgress color="inherit" className="loading_progress" />
-        </div>
-      )}
-      {alert && (
-        <div className="alert">
-          <Alert severity="info">{message}</Alert>
-        </div>
-      )}
-      <div
-        className="outsite"
-        onClick={closeLogin}
-        style={{ cursor: `url(${Cursor}), pointer` }}
-      >
-        {" "}
-      </div>
-      <div className="form">
+        {loading && (
+          <div className="loading">
+            <CircularProgress color="inherit" className="loading_progress" />
+          </div>
+        )}
+        {alert && (
+          <div className="alert">
+            <Alert severity="info">{message}</Alert>
+          </div>
+        )}
         <div
-          className="intro"
-          style={{ backgroundImage: `url(${auth_background})` }}
+          className="outsite"
+          onClick={closeLogin}
+          style={{ cursor: `url(${Cursor}), pointer` }}
         >
-          <img src="./images/logo1.png" alt="" />
+          {" "}
         </div>
-        <div className="form__login">
-          <div className="form__header">
-            <img src={logo} alt="" onClick={closeLogin} />
-          </div>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={LoginSchema}
-            onSubmit={onAdd}
+        <div className="form">
+          <div
+            className="intro"
+            style={{ backgroundImage: `url(${auth_background})` }}
           >
-            {({ errors, touched }) => (
-              <Form className="form_fields">
-                <div className="field" onChange= {(e)=>setEmail(e.target.value)} >
-                  <FastField
-                    name="username"
-                    placeholder="Email hoặc SĐT"
-                    className="input"
-                    type="text"
-                  />
-                  {errors.username && touched.username ? (
-                    <div className="formError">{errors.username}</div>
-                  ) : null}
-                </div>
-                <div className="field" onChange= {(e)=>setPassword(e.target.value)}>
-                  <FastField
-                    name="password"
-                    placeholder="Mật khẩu"
-                    className="input"
-                    type="password"
-                  />
-                  {errors.password && touched.password ? (
-                    <div className="formError">{errors.password}</div>
-                  ) : null}
-                </div>
-                <div className="field">
-                  <button onClick={onLogin} type="submit" className="btn_login" >
-                    Đăng nhập
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-          <div className="sign-in-social-text">
-            <span>Đăng nhập với tài khoản khác</span>
-            <div className="logo">
-              <img src={logo1} alt="" className="logo" />
-              <img src={logo2} alt="" className="logo" />
-              <img src={logo3} alt="" className="logo" />
-              <img src={logo4} alt="" className="logo" />
+            <img src="./images/logo1.png" alt="" />
+          </div>
+          <div className="form__login">
+            <div className="form__header">
+              <img src={logo} alt="" onClick={closeLogin} />
             </div>
-            <b>Quên mật khẩu</b>
-            <div className="register">
-              <span>Không có tài khoản? </span>{" "}
-              <p onClick={openRegister}> Đăng ký </p>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={LoginSchema}
+              onSubmit={onAdd}
+            >
+              {({ errors, touched }) => (
+                <Form className="form_fields">
+                  <div className="field" onChange={(e) => setEmail(e.target.value)} >
+                    <FastField
+                      name="username"
+                      placeholder="Email hoặc SĐT"
+                      className="input"
+                      type="text"
+                    />
+                    {errors.username && touched.username ? (
+                      <div className="formError">{errors.username}</div>
+                    ) : null}
+                  </div>
+                  <div className="field" onChange={(e) => setPassword(e.target.value)}>
+                    <FastField
+                      name="password"
+                      placeholder="Mật khẩu"
+                      className="input"
+                      type="password"
+                    />
+                    {errors.password && touched.password ? (
+                      <div className="formError">{errors.password}</div>
+                    ) : null}
+                  </div>
+                  <div className="field">
+                    <button onClick={onLogin} type="submit" className="btn_login" >
+                      Đăng nhập
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+            <div className="sign-in-social-text">
+              <span>Đăng nhập với tài khoản khác</span>
+              <div className="logo">
+                <img src={logo1} alt="" className="logo" />
+                <img src={logo2} alt="" className="logo" />
+                <img src={logo3} alt="" className="logo" />
+                <img src={logo4} alt="" className="logo" />
+              </div >
+              <a  onClick={() => setShowResetPasswordPopup(true)}>Quên mật khẩu</a>
+              {showResetPasswordPopup && (
+                <div className="popup-container">
+                  <div className="popup">
+                    <input
+                      type="email"
+                      placeholder="Địa chỉ email"
+                      value={resetPasswordEmail}
+                      onChange={(e) => setResetPasswordEmail(e.target.value)}
+                    />
+                    <button onClick={handleResetPassword}>Gửi</button>
+                    <button onClick={() => setShowResetPasswordPopup(false)}>Hủy</button>
+                  </div>
+                </div>
+              )}
+              <div className="register">
+                <span>Không có tài khoản? </span>{" "}
+                <p onClick={openRegister}> Đăng ký </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   )
 }

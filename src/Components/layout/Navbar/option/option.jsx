@@ -19,10 +19,6 @@ const Option=(prop)=> {
   
   const { data: usersData, loading } = useGetData("users");
   const mainUser = usersData.find(userData => userData.email == currentUser?.email);
-
-  console.log(mainUser?.seller);
-
-
   const navigate = useNavigate()
   
 

@@ -26,14 +26,13 @@ import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
 import History from "../Components/layout/Seller/History";
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
-  
-
   const {currentUser} = getAuth();
   const admin = currentUser?.email
 
   const checkLogin = (check) => {
     setCheckLogin(!checklogin);
   };
+
 
   return (
     <div>
@@ -48,7 +47,7 @@ export const Routerr = (prop) => {
           </Router>
         ) : (
           <Router>
-            <Navbar  checkLogin={checkLogin}/>
+            <Navbar  checkLogin={checkLogin} />
             <Routes>
               <Route path="/bidu-ecommerce" element={<Home />} />
               <Route

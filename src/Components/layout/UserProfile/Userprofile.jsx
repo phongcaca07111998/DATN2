@@ -1,10 +1,10 @@
 import React from 'react'
 import './userprofile.css'
-import { getAuth } from 'firebase/auth';
+import { getAuth, updatePassword } from 'firebase/auth';
 import useGetData from '../../../custom-hooks/useGetData';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { db } from '../../firebase/firebase';
+import {  db } from '../../firebase/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,8 @@ const Userprofile = () => {
   const [userfname, setUserfname] = useState("")
   const [usephone, setPhone] = useState("")
   const [setgender, setGender] = useState("")
+  const [setnewpass, setNewPass] = useState("")
+
 
   const mainUser = usersData.find(userData => userData.email === currentUser.email);
 
@@ -41,7 +43,9 @@ const Userprofile = () => {
         userfname: userfname,
         phoneNumber: usephone,
         gioitinh: setgender,
+        pass:setnewpass,
       });
+      handleUpdatepass()
       console.log("Cập nhật thành công trường userfname trong tài liệu của người dùng hiện tại");
     } catch (error) {
       console.log("Lỗi khi cập nhật trường userfname: ", error);
@@ -51,7 +55,21 @@ const Userprofile = () => {
 
 
 
+  const handleUpdatepass = async () => {
+    try {
+      await updatePassword(currentUser,setnewpass);
+     
+      console.log("okkkkkk");
+      
+      
+    } catch (error) {
+    
+      console.log(error);
+     
+    }
+      // updatePassword(user, newPassword)
 
+   }
 
 
 
@@ -70,9 +88,9 @@ const Userprofile = () => {
           <div className="sidebar">
             <div className="profile-section justify-content-between align-items-center d-flex flex-column">
               <div className="user-avatar">
-                <img src="https://d1l9t1uin73ojb.cloudfront.net/media/images/6794c3cb-bf94-4fff-9767-c5030b452f21.png" alt="user_avatar" />
+                <img src="https://www.shutterstock.com/image-vector/man-avatar-icon-vector-sign-260nw-1719745753.jpg" alt="user_avatar" />
                 <div className="edit-avatar border-0 d-flex align-items-center"><input type="file" />
-                  <img src="../userprofile/public/images/icon_photographic.svg" />
+                  <img src="https://www.shutterstock.com/image-vector/man-avatar-icon-vector-sign-260nw-1719745753.jpg" />
                 </div>
               </div>
               <div className="user-name">{currentUser.displayName}</div>
@@ -151,19 +169,15 @@ const Userprofile = () => {
                         <p className="expand-password cursor-pointer m-0">Thay đổi mật khẩu </p>
                       </div>
                       <div className="change-password">
-                        <div className="d-flex form-group mb-3"><label className="mb-0">Mật khẩu cũ</label>
-                          <div className="flex-1 input-and-error"><input name="currentPassword" type="password" placeholder="Mật khẩu cũ" className="form-control" defaultValue />
-                            <div className="ml-2 mt-2 error-auth-input " style={{ color: 'rgb(234, 84, 85)' }}></div>
-                          </div>
-                        </div>
+                       
                         <div className="d-flex flex-row justify-content-between mb-3"><label className="mb-0">Mật khẩu mới</label>
-                          <div className="flex-1"><input name="newPassword" type="password" placeholder="Mật khẩu mới" className="form-control" defaultValue />
-                            <div className="ml-2 mt-2 error-auth-input " style={{ color: 'rgb(234, 84, 85)' }}>Bắt buộc</div>
+                          <div onChange={(e) => setNewPass(e.target.value)} className="flex-1"><input name="newPassword" type="password" placeholder="Mật khẩu mới" className="form-control"  />
+                            
                           </div>
                         </div>
                         <div className="d-flex flex-row justify-content-between mb-3"><label className="mb-0">Nhập lại mật khẩu</label>
-                          <div className="flex-1"><input name="passwordRetype" type="password" placeholder="Nhập lại mật khẩu" className="form-control" defaultValue />
-                            <div className="ml-2 mt-2 error-auth-input " style={{ color: 'rgb(234, 84, 85)' }}>Bắt buộc</div>
+                          <div  className="flex-1"><input name="passwordRetype" type="password" placeholder="Nhập lại mật khẩu" className="form-control"  />
+                           
                           </div>
                         </div>
                       </div>

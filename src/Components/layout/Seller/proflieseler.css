@@ -145,6 +145,7 @@ i{
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
+    z-index: -1!important;
     margin-top:-60px;
     margin-left: -200px;
     width: 1104px;
