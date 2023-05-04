@@ -1,6 +1,6 @@
 import React from 'react'
 import { db } from "../../../Components/firebase/firebase"
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import useGetData from "../../../custom-hooks/useGetData";
 import { toast } from "react-toastify";
 import { getAuth} from 'firebase/auth';
@@ -11,10 +11,39 @@ const History = () => {
  const { data: oderData,loading } = useGetData("Oders");
  const {currentUser} = getAuth();
  const maindataproduct = oderData.filter(oderData => oderData.email == currentUser?.email );
-  const deleteProduct = async id => {
+  // const deleteProduct = async id => {
+  //   await deleteDoc(doc(db, "Oders", id));
+  //   toast.success("Deleted!");
+  // };
+  //
+  const cartItems = maindataproduct.flatMap(orderData => orderData.cartItems);
+
+console.log(cartItems);
+  console.log(maindataproduct);
+  const deleteProduct = async (id, cartItems) => {
+    // Xóa đơn hàng khỏi cơ sở dữ liệu
     await deleteDoc(doc(db, "Oders", id));
+  
+    // Cập nhật trường quantity của sản phẩm trong cơ sở dữ liệu
+    cartItems.forEach(async (cartItem) => {
+      const productRef = doc(db, "product", cartItem.id);
+      const productDoc = await getDoc(productRef);
+  
+      if (productDoc.exists()) {
+        const productData = productDoc.data();
+        const newQuantity = productData.sl + cartItem.quantity;
+        await updateDoc(productRef, { sl: newQuantity });
+      }
+    });
+    console.log("xoa xong r");
     toast.success("Deleted!");
   };
+
+  //
+
+
+
+
   console.log(maindataproduct.length);
   return (
     <section >
@@ -53,7 +82,7 @@ const History = () => {
                     <td>
                     <button
                         onClick={() => {
-                          deleteProduct(item.id);
+                          deleteProduct(item.id,cartItems);
                         }}
                         className="btn btn-danger"
                       >

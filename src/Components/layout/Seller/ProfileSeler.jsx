@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { cartActions } from '../../redux/slices/cartSlice';
 import useGetData from '../../../custom-hooks/useGetData';
 import { getAuth } from 'firebase/auth';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
 import { toast } from 'react-toastify';
 
@@ -25,19 +25,41 @@ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
     const cartItems = order.cartItems.filter(item => item.usersell === currentUser.displayName);
     return acc.concat(cartItems);
   }, []);
-  
+
   console.log(cartItemsWithUserSell);
+
   
-
-
-
-
-
-
   const deleteProduct = async id => {
-     await deleteDoc(doc(db, "Oders", id));
-     toast.success("Deleted!");
+    console.log(id);
    };
+
+
+
+
+
+  
+  
+//
+
+// const deleteProduct = async (id, orderId) => {
+//     console.log(id);
+//     try {
+//         const orderRef= doc(db, "Oder", orderId);
+//       const orderDoc = await orderRef.get();
+//       if (!orderDoc.exists) {
+//         console.log('No such document!');
+//         return;
+//       }
+//       const cartItems = orderDoc.data().cartItems.filter(item => item.id !== id);
+//       await orderRef.update({ cartItems });
+//       console.log('Document successfully updated!');
+//     } catch (error) {
+//       console.error('Error updating document: ', error);
+//     }
+//   }
+  
+//
+
   return (
     <div>
     <div className="sidebar-container">
