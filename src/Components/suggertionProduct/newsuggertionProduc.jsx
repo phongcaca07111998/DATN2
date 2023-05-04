@@ -25,12 +25,12 @@ export const NewsuggestionProduct = ({ tieude  }) => {
     // Lưu danh sách sản phẩm mới nhất vào state
     setLatestProducts(filteredProducts);
   }, [productsData]);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(6);
   const [loading, setLoading] = useState(false);
 
   const handleSeeMore = () => {
     setLoading(true);
-    setLimit(prevLimit => prevLimit + 5);
+    setLimit(prevLimit => prevLimit + 6);
     setLoading(false);
   };
   return (

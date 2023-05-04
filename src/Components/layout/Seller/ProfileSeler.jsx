@@ -32,7 +32,9 @@ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
   const deleteProduct = async id => {
     console.log(id);
    };
-
+   const total = cartItemsWithUserSell.reduce((acc, item) => {
+    return acc + (item.price * item.quantity);
+  }, 0);
 
 
 
@@ -168,20 +170,12 @@ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
             <div className="order-search-panel">
                 <div className="order-export">
                     <div className="signal-picker-wrapper">
-                        <span className="col">Ngày đặt hàng</span>
+                        <span className="col total">Tổng Tiền : </span>
                         <div className="date-picker">
-                            <div className="date-picker-input">
-                                <input type="date" id="react-datepicker-wrapper" placeholder="DD/MM/YY" defaultValue="11/01/2001" />
-                            </div>
+                        <span className="total1">{total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ </span>
                         </div>
                     </div>
-                    <div className="export-button">
-                        <div className="latest">
-                            <button type="button" className="export sp-button">
-                                <span>Xuất</span>
-                            </button>
-                        </div>
-                    </div>
+                   
                 </div>
               
                

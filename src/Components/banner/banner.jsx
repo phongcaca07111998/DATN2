@@ -20,19 +20,19 @@ export const Banner = () => {
     return (
       <Slider {...settings}>
         <div className="slide-banner">
-          <img src={banner1} alt="" />
+          <img className="anhbaner" src={banner1} alt="" />
         </div>
         <div className="slide-banner">
-          <img src={banner2} alt="" />
+          <img className="anhbaner" src={banner2} alt="" />
         </div>
         <div className="slide-banner">
-          <img src={banner3} alt="" />
+          <img className="anhbaner" src={banner3} alt="" />
         </div>
         <div className="slide-banner">
-          <img src={banner4} alt="" />
+          <img className="anhbaner" src={banner4} alt="" />
         </div>
         <div className="slide-banner">
-          <img src={banner5} alt="" />
+          <img className="anhbaner" src={banner5} alt="" />
         </div>
         {/* <div className="slide-banner">
           <img src="https://via.placeholder.com/875x420" alt="" />

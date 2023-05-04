@@ -5,8 +5,9 @@
 }
 
 .cartall .col-9 {
-  width: 90%;
+  width: 150%;
   padding-right: 30px;
+  margin-left: -150px;
 }
 
 .cartall .col-9 .table {
@@ -37,19 +38,23 @@
 }
 
 .cartall .col-9 .table td:nth-child(2) {
-  text-align: left;
+  text-align: center;
+  transform: translateY(30px);
 }
 
 .cartall .col-9 .table td:nth-child(3) {
   font-weight: bold;
+  transform: translateY(30px);
 }
 
 .cartall .col-9 .table td:nth-child(4) {
   font-weight: bold;
+  transform: translateY(30px);
 }
 
 .cartall .col-9 .table td:nth-child(5) {
   font-weight: bold;
+ 
 }
 
 .cartall .col-9 .table td:last-child {
@@ -68,6 +73,7 @@
 
 .cartall .col-3 {
   width: 20%;
+  margin-left:40px;
 }
 
 .cartall .col-3 h6 {

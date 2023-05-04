@@ -105,7 +105,7 @@ const Tr = ({ item }) => {
       <td>{item.quantity }sp</td>
       <td>
         
-        <button className="" onClick={deleteProduct}>Xóa</button>
+        <button className="btn-danger" onClick={deleteProduct}>Xóa</button>
        
       </td>
     </tr>

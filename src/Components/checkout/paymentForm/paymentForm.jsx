@@ -15,7 +15,7 @@ import Select from "@mui/material/Select";
 import { PaymentSchema } from "./validate";
 import { UseStore, action } from "../../../store";
 import { useNavigate } from "react-router-dom";
-import { getFirestore, collection, doc, updateDoc, addDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, updateDoc, addDoc, getDoc,setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { Checkout } from "../../../pages/checkout/checkout";
 import { useDispatch, useSelector } from "react-redux";
@@ -111,32 +111,36 @@ export const PaymentForm = (prop) => {
   const onAddOrder = async (values) => {
     console.log('onAddOrder called with values:', values);
     try {
-      const docRef = await collection(db, "Oders");
-      await addDoc(docRef, {
+      const docRef = doc(collection(db, "Oders"));
+      await setDoc(docRef, {
         name: values.name,
         email: values.email,
         phone: values.phone,
         address: values.address,
         province: province,
         cartItems: cartItems,
-        totalPayment:totalPayment,
-        email:currentUser?.email,
+        totalPayment: totalPayment,
+        email: currentUser?.email
       });
-      
+
+      // lấy id vừa được tạo và gán vào trường id của document
+      const docId = docRef.id;
+      await updateDoc(docRef, { uid: docId });
+
       handleCheckout(cartItems);
-      
+
       dispatch(cartActions.resetCart());
-      
+
       setLoading(true);
       setMessage("Đặt hàng thành công");
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
       }, 3000);
-  
+
       navigate("/bidu-ecommerce");
     } catch (err) {
-      
+
       setLoading(false);
       setMessage("Đặt hàng thất bại . Vui lòng thao tác lại");
       setAlert(true);

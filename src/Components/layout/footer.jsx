@@ -59,7 +59,7 @@ export const Footer = () => {
       </div>
       <div className="footer-info">
         <div>
-          <h1 className="infor-company">Công ty TNHH MJ ART GROUP</h1>
+          <h1 className="infor-company">Công Ty Sinh Học</h1>
           <a href="" className="mx-2">
             <img src={logo_CCDV} alt="" />
           </a>
@@ -67,17 +67,13 @@ export const Footer = () => {
             <img src={logo_CCDV} alt="" />
           </a>
           <h1 className="infor-contact">
-            Địa chỉ: Tầng 7, số 50 Bạch Đằng, Phường Hải Châu I, Quận Hải Châu,
-            Thành phố Đà Nẵng, Việt Nam. Số điện thoại: 02363.933.340 - Email:
-            info@mjartgroup.com
+            Địa chỉ: 96 Ngô Tất Tố
           </h1>
           <h1 className="infor-enterprise">
-            Người đại diện pháp luật: Kim Moo Joong. Mã số doanh nghiệp:
-            0401908254 do Sở Kế hoạch & Đầu tư TP Đà Nẵng cấp lần đầu ngày
-            26/06/2018
+            Người đại diện pháp luật: Hái Hoàng Hửa , Trong Vũ Phương
           </h1>
           <h1 className="infor-license">
-            © 2020 - Bản quyền thuộc về Công ty TNHH MJ ART GROUP
+            © 2023 - Bản quyền thuộc về Công ty Sinh Học
           </h1>
         </div>
       </div>

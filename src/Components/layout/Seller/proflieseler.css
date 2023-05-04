@@ -548,3 +548,11 @@ i{
         margin-left: 50px!important;
         font-size: 14px;
 }
+.total{
+    font-size:25px;
+    font-weight: bold;  
+}
+.total1{
+    font-size:25px;
+    font-weight: 500;
+}

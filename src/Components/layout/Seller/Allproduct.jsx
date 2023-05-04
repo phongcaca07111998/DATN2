@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 const AllProducts = () => {
   const {currentUser} = getAuth();
   const { data: productsData, loading } = useGetData("product");
+ 
   const maindataproduct = productsData.filter(productsData => productsData.username == currentUser?.displayName);
   console.log(maindataproduct);
   const deleteProduct = async id => {

@@ -17,7 +17,7 @@ const UserAdmin = () => {
     toast.success("Deleted!");
   };
   const [ItemDetail, setItemDetail] = useState({});
-  const { data: userData } = useGetData("users");
+  const { data: productsDatas } = useGetData("product");
   const { data: oderData } = useGetData("Oders");
   const [checkFormDetail, setCheckFormDetail] = useState(false);
   //
@@ -33,7 +33,7 @@ const UserAdmin = () => {
     },
     {
       text: "TỔNG SỐ SẢN PHẨM",
-      count: productsData?.length,
+      count: productsDatas?.length,
     },
     {
       text: "TỔNG SỐ ĐƠN HÀNG",
@@ -41,7 +41,7 @@ const UserAdmin = () => {
     },
     {
       text: "TỔNG SỐ USER",
-      count: userData?.length,
+      count: productsData?.length,
     },
   ];
 

@@ -1,5 +1,4 @@
-
-    .container12 {
+.container12 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -68,7 +67,7 @@
     .form__group input,
     .form__group select {
     display: block;
-    width: 150%;
+    width: 120%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -90,7 +89,7 @@
     
     .form__group input[type='file'] {
         display: block;
-        width: 150%;
+        width: 120%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -119,3 +118,20 @@
     .buy__btn:hover {
     background-color: #0069d9;
     }
+    .alert {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 80;
+        animation: upToDown ease 3000ms;
+      }
+     @keyframes upToDown {
+        from {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }

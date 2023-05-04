@@ -7,19 +7,19 @@ import useGetData from "../../custom-hooks/useGetData";
 
 export const Likesuggetion = ({ tieude }) => {
   const { data: productsData, loading: firstLoading } = useGetData("product");
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(6);
   const [loading, setLoading] = useState(false);
   const [sortedProducts, setSortedProducts] = useState([]);
 
   const handleSeeMore = () => {
     setLoading(true);
-    setLimit(prevLimit => prevLimit + 5);
+    setLimit(prevLimit => prevLimit + 6);
     setLoading(false);
   };
 
   useEffect(() => {
     const sorted = [...productsData].sort((a, b) => b.rating - a.rating);
-    setSortedProducts(sorted.slice(0, 5));
+    setSortedProducts(sorted.slice(0, 6));
   }, [productsData]);
   console.log(sortedProducts);
   return (

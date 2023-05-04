@@ -90,11 +90,7 @@ const Categories = ({prop,item}) => {
     }
   return (
     <>
-     <div className='catgrories3 d_flex'>
-            <span className='fa-solid fa-border-all icon'></span>
-            <h4>
-              Categories <i className='fa fa-chevron-down icon1'></i>
-            </h4>
+     <div className='catgrories3 d_flex'>    
 </div>
       <div className='category1'>
         {data.map((value, index) => {

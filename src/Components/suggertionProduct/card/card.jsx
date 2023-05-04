@@ -35,7 +35,9 @@ export const Card = ({ item }) => {
           
         <div className="rating-wrapper">
           <Rating rating={item.rating} />
-          <div className="rating-value">({item.rating?.toFixed(1)})</div>
+          <div className="rating-value">
+          {item.rating?.toFixed(1)}
+            </div>
         </div>
       </div>
     </div>
