@@ -101,7 +101,6 @@ const AddProducts = () => {
     } catch (err) {
       setLoading(false);
       setAlert(true);
-      console.log(error);
       setMessage("Đã xảy ra lỗi. Vui lòng thử lại sau.");
       setTimeout(() => {
         setAlert(false);
