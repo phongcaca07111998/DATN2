@@ -16,16 +16,17 @@ import { PaymentSchema } from "./validate";
 import { UseStore, action } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, doc, updateDoc, addDoc, getDoc,setDoc } from "firebase/firestore";
+
 import { db } from "../../firebase/firebase";
 import { Checkout } from "../../../pages/checkout/checkout";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions  } from "./../../redux/slices/cartSlice";
+import { cartActions } from "./../../redux/slices/cartSlice";
 import { getAuth } from "firebase/auth";
 
 
 export const PaymentForm = (prop) => {
   const navigate = useNavigate();
-  const {currentUser}=getAuth()
+  const { currentUser } = getAuth()
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPayment = prop.totalPayment + 32000;
   const [listCountries, setListCountries] = useState([]);
@@ -34,55 +35,56 @@ export const PaymentForm = (prop) => {
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
   // const { data: productsData, firstLoading } = useGetData("product");
-  const paymentType1=prop.paymentType
+  const paymentType1 = prop.paymentType
   const dispatch = useDispatch();
   //
   console.log(currentUser.email);
   async function updateProductQuantity(productId, newQuantity) {
-  
+
     try {
       // Lấy một tham chiếu đến sản phẩm cần cập nhật
-      const productDocRef=doc(db, "product", productId)
+      const productDocRef = doc(db, "product", productId)
       // const productRef = updateDoc(doc(db, "product"), productId);
       const productDocSnapshot = await getDoc(productDocRef);
       const productData = productDocSnapshot.data();
       const quantitysl = productData.sl;
-      
+
       const quantity = String(newQuantity);
       //
-      
+
       //
-      
+
       // Thực hiện cập nhật số lượng sản phẩm
       // await productRef.update({sl: quantity ,});
       await updateDoc(productDocRef, {
-        sl:quantitysl- quantity, });
+        sl: quantitysl - quantity,
+      });
 
-  
+
       console.log(`Đã cập nhật số lượng sản phẩm ${productId} thành công.`);
     } catch (error) {
       console.error(`Lỗi khi cập nhật số lượng sản phẩm ${productId}:`, error);
     }
   }
- 
+
   // Hàm xử lý khi người dùng click vào thanh toán
   async function handleCheckout(cartItems) {
     // Duyệt qua từng item trong cartItems và cập nhật lại số lượng sản phẩm trong Firestore
     for (const cartItem of cartItems) {
       const productId = cartItem.id;
       const newQuantity = cartItem.quantity;
-     
+
       console.log(cartItem.id);
       await updateProductQuantity(productId, newQuantity);
     }
-  
+
     // Thông báo cho người dùng rằng thanh toán thành công
     console.log('Thanh toán thành công.');
   }
-  
+
   // Sử dụng hàm handleCheckout khi người dùng click vào thanh toán
 
-  
+
   // const [listIdCountries, setListIdCountries] = useState([]);
 
 
@@ -91,7 +93,7 @@ export const PaymentForm = (prop) => {
       const array = Object.values(response.subdivisions);
       setListCountries(array);
     });
-    
+
   }, []);
 
   const handleChange = (event) => {
@@ -162,10 +164,10 @@ export const PaymentForm = (prop) => {
         </div>
       )}
       <div
-          className="outsite"
-          onClick={turnOffForm}
-          style={{ cursor: `url(${Cursor}), pointer` }}
-        ></div>
+        className="outsite"
+        onClick={turnOffForm}
+        style={{ cursor: `url(${Cursor}), pointer` }}
+      ></div>
       <div className="payment">
         <div className="right">
           <div className="image"></div>
@@ -196,7 +198,7 @@ export const PaymentForm = (prop) => {
                           <div className="formError">{errors.name}</div>
                         ) : null}
                       </div>
-                    
+
                     </div>
                     <div className="fields">
                       <div className="field">
@@ -263,7 +265,7 @@ export const PaymentForm = (prop) => {
             </div>
             <div className="total_price">
               <div className="left">
-           <p>Hình thức thanh toán: {paymentType1==="online"? 'trực tuyến':'trực tiếp'}</p>
+                <p>Hình thức thanh toán: {paymentType1 === "online" ? 'trực tuyến' : 'trực tiếp'}</p>
               </div>
               <div className="right">
                 <div className="general-info-item">

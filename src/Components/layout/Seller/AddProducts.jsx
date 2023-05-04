@@ -34,7 +34,7 @@ const AddProducts = () => {
   const addProduct = async e => {
     e.preventDefault();
     setLoading(true);
-
+  
     // Upload product images to Firebase Storage and get download URLs
     let imgUrls = [];
     for (let i = 0; i < enterProductImgs.length; i++) {
@@ -44,7 +44,7 @@ const AddProducts = () => {
         `productImages/${Date.now() + img.name}`
       );
       const uploadTask = uploadBytesResumable(storageRef, img);
-
+  
       try {
         await uploadTask;
         const imgUrl = await getDownloadURL(uploadTask.snapshot.ref);
@@ -55,24 +55,31 @@ const AddProducts = () => {
         return;
       }
     }
-
+  
+    // Check if the entered value for sl is positive
+    if (enterSl<0  || enterPrice < 0) {
+      setLoading(false);
+      toast.error("Please enter a positive value for the 'sl' field!");
+      return;
+    }
+  
     // Add product to Firebase Firestore
     try {
       const docRef = await collection(db, "product");
-
+  
       await addDoc(docRef, {
         productName: enterTitle,
         shortDesc: enterShortDesc,
         description: enterDescription,
         category: enterCategory,
-        nameseller:mainUser?.userfname,
+        nameseller: mainUser?.userfname,
         price: enterPrice,
         username: mainUser?.displayName,
         imgUrls: imgUrls,
         sl: enterSl,
-        date:enterDate,
+        date: enterDate,
       });
-
+  
       setLoading(false);
       setAlert(true);
       setMessage("Thêm sản phẩm thành công");
@@ -90,6 +97,7 @@ const AddProducts = () => {
       }, 4000);
       
       // navigate("/addproduct");
+
     } catch (err) {
       setLoading(false);
       setAlert(true);

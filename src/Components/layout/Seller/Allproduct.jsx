@@ -103,7 +103,7 @@ const AllProducts = () => {
                         )}
                       </td>
                       <td>{item.productName}</td>
-                      <td >{item.rating}</td>
+                      <td >{item.category}</td>
                       <td style={{textAlign: 'center'}}>{item.sl}</td>
                       <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</td>
                       <td>{item.date}</td>

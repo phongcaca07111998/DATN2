@@ -83,7 +83,8 @@ const UserAdmin = () => {
                   <th>Password</th>
                   <th>Phone</th>
                   <th>Phân Quyền</th>
-                  <th>ID</th>
+                  <th>Hành Đ</th>
+                  
                     
                 </tr>
               </thead>
@@ -99,7 +100,7 @@ const UserAdmin = () => {
                       <td >{item.pass}</td>
                       <td>{item.phoneNumber} </td>
                       <td>{item.seller==="Nhà bán hàng"?"Nhà bán hàng":"Người dùng"} </td>
-                      <td>{item.uid} </td>
+                      
                       <td>
                         <button
                           onClick={() => {
