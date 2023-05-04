@@ -24,7 +24,11 @@ import AddProducts from "../Components/layout/Seller/AddProducts";
 import AllProducts from "../Components/layout/Seller/Allproduct";
 import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
 import History from "../Components/layout/Seller/History";
+
 import { Tongquan } from "../pages/admin/tongquan";
+
+
+
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   const {currentUser} = getAuth();
@@ -72,6 +76,7 @@ export const Routerr = (prop) => {
 
               <Route path="/allproduct" element={<AllProducts/>}/>
               <Route path="/lichsu" element={<History/>}/>
+      
               <Route path="/gio-hang" element={<Cart1 />} />
               {/* <Route path="/gio-hang" element={<Cart />} /> */}
               <Route  path="/thanh-toan" element={<Checkout />} />           

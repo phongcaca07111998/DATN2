@@ -57,6 +57,9 @@ const Option=(prop)=> {
   const historycart = () => {
     navigate('/lichsu'); // chuyển hướng đến trang Userprofile
   };
+  const chatbot = () => {
+    navigate('/chatbot'); // chuyển hướng đến trang chatbot
+  };
 
   const profile = () => {
     navigate('/userprofile'); // chuyển hướng đến trang Userprofile
@@ -81,7 +84,7 @@ const Option=(prop)=> {
               >
                 {mainUser?.seller=="Nhà bán hàng" ? <a  onClick={profileseler}>Trang người bán</a> :<a onClick={register}>Đăng kí trang người bán</a>}</p>
                 <p onClick={historycart}>Lịch sử đơn hàng</p>
-              <p>Tư vấn hướng dẫn</p>       
+              <p  onClick={chatbot}>Tư vấn hướng dẫn</p>       
               <p onClick={logOut}>Đăng xuất</p>       
           </div>
 
