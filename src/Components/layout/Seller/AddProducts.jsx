@@ -51,7 +51,8 @@ const AddProducts = () => {
         imgUrls.push(imgUrl);
       } catch (error) {
         setLoading(false);
-        toast.error("Failed to upload product images!");
+        setAlert(true);
+      setMessage("Đã xảy ra lỗi. Vui lòng thử lại sau.");
         return;
       }
     }
@@ -59,7 +60,11 @@ const AddProducts = () => {
     // Check if the entered value for sl is positive
     if (enterSl<0  || enterPrice < 0) {
       setLoading(false);
-      toast.error("Please enter a positive value for the 'sl' field!");
+      setAlert(true);
+      setMessage("Đã xảy ra lỗi. Vui lòng thử lại.");
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000); 
       return;
     }
   
@@ -80,7 +85,7 @@ const AddProducts = () => {
         date: enterDate,
       });
   
-      setLoading(false);
+    
       setAlert(true);
       setMessage("Thêm sản phẩm thành công");
       setTimeout(() => {
@@ -99,10 +104,10 @@ const AddProducts = () => {
       // navigate("/addproduct");
 
     } catch (err) {
-      setLoading(false);
       setAlert(true);
-      console.log(error);
       setMessage("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+      setLoading(false);
+      
       setTimeout(() => {
         setAlert(false);
       }, 4000); 
@@ -115,17 +120,18 @@ const AddProducts = () => {
         <div className="container12">
           <Row>
             <Col lg="12">
+            {alert && (
+                    <div className="alert">
+                      <Alert severity="info">{message}</Alert>
+                    </div>
+                  )}
               {loading ? (
                 <h4 className="py-5 ">Loading.......</h4>
               ) : (
                 <>
                   <h4 className="titlel mb-5">Add Product</h4>
                   <Form onSubmit={addProduct}>
-                  {alert && (
-                    <div className="alert">
-                      <Alert severity="info">{message}</Alert>
-                    </div>
-                  )}
+                  
                     <FormGroup className="form__group">
                       <span>Tên sản phẩm</span>
                       <input

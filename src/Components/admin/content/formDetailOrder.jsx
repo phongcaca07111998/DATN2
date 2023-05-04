@@ -1,11 +1,16 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../../firebase/firebase";
+import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const FormDetailOrder = (prop) => {
   // const [orderxStatus, setOrderStatus] = useState(0);
   const [orderStatus, setOrderStatus] = useState(prop.ItemDetail.orderStatus);
   const [cartItems, setCartItems] = useState(prop.ItemDetail.cartItems);
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate =useNavigate()
 
   const statusMap = {
     1: "Vừa đặt",
@@ -29,17 +34,32 @@ export const FormDetailOrder = (prop) => {
     const updatedData = {
       cartItems: cartItems,
       // orderStatus: orderStatus,
+      
     };
+    
+    
     await updateDoc(orderRef, updatedData);
+    setAlert(true)
+    setMessage("Cập nhật thành công")
+    closeFormDetail()
+    navigate("/Donhang")
+    
   };
   //
   const data = prop.ItemDetail;
 
   const closeFormDetail = () => {
+    setTimeout(() => {
     prop.closeForm(false)
+  }, 1000);
   }
   return (
     <div className="formDetail-container">
+      {alert && (
+          <div className="alert">
+            <Alert severity="info">{message}</Alert>
+          </div>
+        )}
       <div className="formDetai">
         <div className="header">
           <h3>Thông tin chi tiết đơn hàng</h3>
@@ -72,8 +92,9 @@ export const FormDetailOrder = (prop) => {
 
                   </div>
                   <div className="row">
-                    Trạng thái đơn hàng:
+                    Trạng thái đơn hàng:{item.orderStatus}  || Chỉnh sửa
                     <select
+                    
                       // value={item.orxderStatus}
                       onChange={(e) => handleSelectChange(index, e)}
                       className="select-status"

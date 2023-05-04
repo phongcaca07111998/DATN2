@@ -46,9 +46,7 @@ export const TableOrder = (prop) => {
                 </TableCell>
                 <TableCell align="left">{item.email}</TableCell>
                 <TableCell align="left" className="action">
-                  <div className="icon-action">
-                    <HighlightOffIcon />
-                  </div>
+                  
                   <div
                     className="icon-action"
                     onClick={(e) => showInfOrder(item)}
