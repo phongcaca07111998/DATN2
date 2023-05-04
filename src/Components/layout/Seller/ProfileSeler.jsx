@@ -21,19 +21,50 @@ const ProfileSeler = () => {
  //Ở đây, chúng ta sử dụng phương thức reduce để duyệt qua tất cả các đơn đặt hàng trong oderData. Với mỗi đơn đặt hàng, chúng ta lọc ra tất cả các cartItems có trường usersell giống với email của user hiện tại (currentUser.user), sau đó gom tất cả các cartItems này vào mảng acc. Cuối cùng, phương thức reduce sẽ trả về mảng cartItemsWithUserSell chứa tất cả các cartItems có trường usersell giống với user của user hiện tại
 
     
-const cartItemsWithUserSell = oderData.reduce((acc, order) => {
-    const cartItems = order.cartItems.filter(item => item.usersell === currentUser.displayName);
+ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
+    const cartItems = order.cartItems.filter(item => item.usersell === currentUser.displayName).map(item => {
+      return {
+        ...item,
+        orderId: order.id
+      }
+    });
     return acc.concat(cartItems);
   }, []);
-
+  
   console.log(cartItemsWithUserSell);
 
   
-  const deleteProduct = async id => {
-    console.log(id);
-   };
-
-
+  const deleteProduct = async (orderId, id) => {
+    try {
+      const docRef = doc(db, "Oders", orderId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const order = docSnap.data();
+        const updatedCartItems = order.cartItems.filter(item => item.id !== id);
+        const cartItem = order.cartItems.find(item => item.id === id);
+        if (cartItem) {
+          const productRef = doc(db, "product", cartItem.id);
+          const productSnap = await getDoc(productRef);
+          if (productSnap.exists()) {
+            const product = productSnap.data();
+            await updateDoc(productRef, { sl: product.sl + cartItem.quantity });
+            console.log(`Successfully updated product quantity for product with ID ${cartItem.id}.`);
+          } else {
+            console.log(`No product found with ID ${cartItem.id}.`);
+          }
+        }
+        await updateDoc(docRef, { cartItems: updatedCartItems });
+        console.log(`Successfully updated cartItems for order with ID ${id}.`);
+      } else {
+        console.log(`No order found with ID ${id}.`);
+      }
+    } catch (err) {
+      console.error(`Error updating cartItems for order with ID ${id}.`, err);
+    }
+  };
+  
+  
+  
 
 
 
@@ -168,7 +199,7 @@ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
             <div className="order-search-panel">
                 <div className="order-export">
                     <div className="signal-picker-wrapper">
-                        <span className="col">Ngày đặt hàng</span>
+                        <span className="col">Ngày đặt hàng :</span>
                         <div className="date-picker">
                             <div className="date-picker-input">
                                 <input type="date" id="react-datepicker-wrapper" placeholder="DD/MM/YY" defaultValue="11/01/2001" />
@@ -224,7 +255,7 @@ const cartItemsWithUserSell = oderData.reduce((acc, order) => {
                     <td>
                     <button
                         onClick={() => {
-                          deleteProduct(item.id);
+                          deleteProduct(item.orderId,item.id);
                         }}
                         className="btn btn-danger"
                       >

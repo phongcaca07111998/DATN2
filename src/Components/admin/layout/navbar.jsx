@@ -27,15 +27,14 @@ export const NavbarAdmin = () => {
       img: home,
       
     },
-    
     {
-      name: "Shop",
-      img: shop,
+      name: "Đơn hàng",
+      img: order,
     },
     {
       name: "User",
       img: shop,
-    },
+    }, 
     {
       name: "Danh mục",
       img: category,
@@ -44,10 +43,7 @@ export const NavbarAdmin = () => {
       name: "Sản phẩm",
       img: product,
     },
-    {
-      name: "Đơn hàng",
-      img: order,
-    },
+   
     {
       name: "Banner",
       img: banner,
