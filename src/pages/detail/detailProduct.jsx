@@ -77,6 +77,13 @@ const {currentUser} = useAuth()
   } = product;
 
   const addToCart = () => {
+    if (currentUser === null) {
+      setMessage("Đăng nhập để tiếp tục")
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    } else {
     dispatch(
       cartActions.addItem({
         id,
@@ -87,25 +94,38 @@ const {currentUser} = useAuth()
         username,
       })
       
+      
     );
-
     setMessage("Thêm sản phẩm thành công");
     setAlert(true)
     setTimeout(() => {
       setAlert(false);
     }, 3000);
+    
   };
+
+}
  
   const handleCount = (type, limit) => {
     if (type === "plus") {
-      if (count < limit) {
+      if (count < 10) {
         setCount(count + 1);
       }
-    } else {
+      else{
+        setMessage("Vui lòng liên hệ shop để mua số lượng lớn");
+        setAlert(true)
+        setTimeout(() => {
+          setAlert(false);
+        }, 5000);
+
+      }
+    } 
+    else {
       if (count > 1) {
         setCount(count - 1);
       }
     }
+    
   };
   const handleItemImage = (imgUrl, index) => {
     setCurrentIndex(index);
@@ -114,14 +134,6 @@ const {currentUser} = useAuth()
   };
 
   //
-
-
-
-
-
-
-
-
   const handleBuyNow = () => {
     if (currentUser === null) {
       setMessage("Đăng nhập để tiếp tục")
@@ -146,7 +158,7 @@ const {currentUser} = useAuth()
         setTimeout(() => {
           setAlert(false);
         }, 3000);
-    navigate("/thanh-toan");
+    navigate("/gio-hang");
   }
 };
   return (

@@ -76,7 +76,7 @@ const Option=(prop)=> {
                 
 
 
-              <p>{currentUser ? <a >Hello dit me may:{currentUser.displayName}</a> : <p></p>}</p>
+              <p>{currentUser ? <a >User: {currentUser.displayName}</a> : <p></p>}</p>
               
                  
               <p onClick={profile}>Trang cá nhân</p> 
@@ -90,8 +90,8 @@ const Option=(prop)=> {
 
             ) : (
               <div className="bottom">
-                <p onClick={login} >Không đăng nhập thì cút</p> 
-                <p onClick={register}>Đăng kí ở đây</p>       
+                <p onClick={login} >Đăng nhập</p> 
+                <p onClick={register}>Đăng kí ở đây </p>       
             </div>
 
             )

@@ -71,8 +71,8 @@ return (
         <div className="bn1"><Banner/></div>
       </div>
       <div className="Content Content_2">
-        <SuggestionProduct tieude="Gợi Ý CHO BẠN"/>
-      </div>
+        <Likesuggetion tieude="SẢN PHẨM YÊU THÍCH"/>
+        </div>
       <div className="Content Content_2">
         <NewsuggestionProduct tieude="MẶC HÀNG MỚI NHẤT" />
       </div>
@@ -80,8 +80,9 @@ return (
         <SuggestionProduct tieude="MẶC HÀNG GIẢM GIÁ"/>
       </div>
       <div className="Content Content_2">
-        <Likesuggetion tieude="SẢN PHẨM YÊU THÍCH"/>
-        </div>
+        <SuggestionProduct tieude="TẤT CẢ SẢN PHẨM"/>
+      </div>
+      
             {/* chatbox */}
             <div className="chatbox-container">
       {!showChatbox && (
