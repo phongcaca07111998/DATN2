@@ -25,6 +25,11 @@ import AllProducts from "../Components/layout/Seller/Allproduct";
 import UserAdmin from "../Components/admin/UserAdmin/UserAdmin";
 import History from "../Components/layout/Seller/History";
 
+import { Tongquan } from "../pages/admin/tongquan";
+import SanPham from "../pages/admin/sanpham";
+
+
+
 export const Routerr = (prop) => {
   const [checklogin, setCheckLogin] = useState(false);
   const {currentUser} = getAuth();
@@ -44,6 +49,8 @@ export const Routerr = (prop) => {
                 <Route  path="/bidu-ecommerce" element={<Admin />} />
                 <Route path="/Donhang" element={<Donhang />} />
                 <Route path="/User" element={<UserAdmin/>}/>
+                <Route path="/Tongquan" element={<Tongquan/>}/>
+                <Route path="/Sanpham" element={<SanPham/>}/>
               </Routes>
           </Router>
         ) : (

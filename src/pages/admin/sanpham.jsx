@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { db } from "../../../Components/firebase/firebase"
 import { doc, deleteDoc } from "firebase/firestore";
-import useGetData from "../../../custom-hooks/useGetData";
-import { toast } from "react-toastify";
-import './useradmin.css';
-import { NavbarAdmin } from "../layout/navbar";
-import { FormDetailOrder } from "../content/formDetailOrder";
-import { Card } from "../content/card";
-import { Navbar } from "../content/navbar";
-const UserAdmin = () => {
+import './sanpham.css';
+import { NavbarAdmin } from "../../Components/admin/layout/navbar";
+import { FormDetailOrder } from "../../Components/admin/content/formDetailOrder";
+import { Card } from "../../Components/admin/content/card";
+import { Navbar } from "../../Components/admin/content/navbar";
+import { db } from "../../Components/firebase/firebase";
+import useGetData from "../../custom-hooks/useGetData";
+const SanPham = () => {
   const { data: productsData, loading } = useGetData("users");
 
   const deleteProduct = async id => {
-    await deleteDoc(doc(db, "users", id));
-    toast.success("Deleted!");
+    await deleteDoc(doc(db, "product", id));
   };
   const [ItemDetail, setItemDetail] = useState({});
   const { data: productsDatas } = useGetData("product");
@@ -45,19 +43,9 @@ const UserAdmin = () => {
     },
   ];
 
-  const sendItemDetailOrder = (item) => {
-    setItemDetail(item);
-    setCheckFormDetail(false);
-  };
-
-  const closeForm = (check) => {
-    setCheckFormDetail(check)
-  }
-
   return (
     <div className="_loading_overlay_wrapper css-79elbk">
-      
-    {checkFormDetail && <FormDetailOrder ItemDetail={ItemDetail} closeForm={closeForm} />}
+
     <NavbarAdmin />
     <div className="main-content">
       <Navbar />
@@ -74,16 +62,19 @@ const UserAdmin = () => {
         <div className="content1">
      
      
-          <div className="col-12 userad">
+          <div sx={{ minWidth: 650 }} className="col-12 userad">
           <table className="table">
               <thead>
                 <tr>
-                  <th>Tên người dùng</th>
-                  <th>Email</th>
-                  <th>Password</th>
-                  <th>Phone</th>
-                  <th>Phân Quyền</th>
-                  <th>Hành Động</th>
+                <th>Image</th>
+                  <th className="sp1">Tên sản phẩm</th>
+                  <th className="sp1">Danh mục</th>
+                  <th className="sp1">Số lượng</th>
+                  <th style={{textAlign:"center"}}>Giá</th>
+                  <th className="sp1">Ngày</th>
+                  <th >Action</th>
+
+                 
                   
                     
                 </tr>
@@ -92,19 +83,23 @@ const UserAdmin = () => {
                 {loading ? (
                   <h4 className="py-5 text-center fw-bold ">Loading.....</h4>
                 ) : (
-                  productsData.map(item => (
-                    <tr key={item.uid}>
+                    productsDatas.map(item => (
+                    <tr key={item.id}>
 
-                      <td>{item.displayName}</td>
-                      <td >{item.email}</td>
-                      <td >{item.pass}</td>
-                      <td>{item.phoneNumber} </td>
-                      <td>{item.seller==="Nhà bán hàng"?"Nhà bán hàng":"Người dùng"} </td>
-                      
+                      <td className="sp1">{item.imgUrls && item.imgUrls.length > 0 ? (
+                          <img className="anh" src={item.imgUrls[1]} alt="" />
+                        ) : (
+                          <span>No image available</span>
+                        )}</td>
+                      <td >{item.productName}</td>
+                      <td >{item.category}</td>
+                      <td >{item.sl}</td>
+                      <td >{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VNĐ</td>
+                      <td>{item.date} </td>
                       <td>
                         <button
                           onClick={() => {
-                            deleteProduct(item.uid);
+                            deleteProduct(item.id);
                           }}
                           className="btn btn-danger"
                         >
@@ -125,4 +120,4 @@ const UserAdmin = () => {
   );
 };
 
-export default UserAdmin;
+export default SanPham;

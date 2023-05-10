@@ -28,7 +28,7 @@ export const TableOrder = (prop) => {
               <TableCell>Mã đơn hàng</TableCell>
               <TableCell align="left">Tên người mua</TableCell>
               <TableCell align="left">Số điện thoại</TableCell>
-              <TableCell align="left">Địa chỉ</TableCell>
+              <TableCell align="center">Địa chỉ</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Hành động</TableCell>
             </TableRow>
@@ -46,9 +46,7 @@ export const TableOrder = (prop) => {
                 </TableCell>
                 <TableCell align="left">{item.email}</TableCell>
                 <TableCell align="left" className="action">
-                  <div className="icon-action">
-                    <HighlightOffIcon />
-                  </div>
+                  
                   <div
                     className="icon-action"
                     onClick={(e) => showInfOrder(item)}

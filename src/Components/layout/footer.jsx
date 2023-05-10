@@ -23,7 +23,7 @@ export const Footer = () => {
           </a>
         </div>
         <div className="instruction-one">
-          <h1 className="text-header-footer">Về XXX</h1>
+          <h1 className="text-header-footer">Về Chúng Tôi</h1>
           <a href="#" className="d-block my-3">
             Giới thiệu
           </a>
@@ -39,7 +39,6 @@ export const Footer = () => {
           <a href="#" className="d-block my-3">
             Chính sách bảo mật
           </a>
-          s{" "}
         </div>
         <div className="instruction-one">
           <h1 className="text-header-footer">Thanh toán</h1>
