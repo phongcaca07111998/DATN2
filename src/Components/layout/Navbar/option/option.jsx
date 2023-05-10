@@ -102,13 +102,11 @@ const Option=(prop)=> {
         <div className="option_icon">
           <img src={icon_bell} alt="" />
         </div>
-        <div className="option_icon cart">
-          <div className="menuCart">
-          
-          </div>
+        <div className="option_icon">
+
           
           {currentUser?(
-            <div>
+            <div className='cart'> 
             <img onClick={moveToCart}  src={icon_cart} alt="" />
           
             <span className="badge">{totalQuantity}</span>

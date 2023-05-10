@@ -20,7 +20,7 @@ export const Card = ({ item }) => {
     <div className="cardProduct" onClick={moveToDetail}>
       <div
         className="image"
-        style={{ backgroundImage: `url(${item.imgUrls})` }}
+        style={{ backgroundImage: `url(${item.imgUrls})` }} 
       ></div>
       <div className="company">
         <span>{item.nameseller}</span>
@@ -32,7 +32,7 @@ export const Card = ({ item }) => {
         <div className="address">
         <a>{item.shortDesc}</a>
         </div>
-          
+        <div className="discount-tag">10%</div>
         <div className="rating-wrapper">
           <Rating rating={item.rating} />
           <div className="rating-value">

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { db } from "../../Components/firebase/firebase";
 
-import { collection, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, onSnapshot, updateDoc } from "firebase/firestore";
 
 import "./comments.scss";
 
@@ -23,12 +23,12 @@ const CommentSection = () => {
 
     const productId = location.pathname.split("/")[2];
     const { data: productsData, firstLoading } = useGetData("product");
-    const mainData = productsData.find((productsData) => productsData.id === productId);
+    
     
     const mainComment = useMemo(() => {
         return commentsData.filter(commentData => commentData.idcomment === productId);
       }, [commentsData, productId]);
-      
+     
       const [comment, setComment] = useState([]);
       const [comments, setComments] = useState([]);
       const [rating, setRating] = useState(0);
@@ -117,6 +117,11 @@ const CommentSection = () => {
 
     };
     updateRatingToFirestore(productId,productAverageRating)
+    const handleDeleteComment =  async id => {
+        await deleteDoc(doc(db, "comments",id));
+      };
+      
+      
 
     return (
 
@@ -185,7 +190,9 @@ const CommentSection = () => {
                         </div>
 
                         <div className="comment-content">{comment.content}</div>
-
+                        {comment.name === currentUser.displayName && (
+                            <button className="delete-button" onClick={() => handleDeleteComment(comment.id)}>X</button>
+                            )}
                     </div>
 
                 ))}

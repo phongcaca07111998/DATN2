@@ -101,7 +101,24 @@
         border-radius: 4px;
 
         margin-bottom: 16px;
-
+        position: relative;
+        .delete-button {
+            position: absolute;
+            top: 0;
+            background: red;
+            border-radius: 5px;
+            border: #f7fafc;
+            height: 25px;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            right: 0;
+            &:hover {
+                color: rgb(102, 4, 4);
+              }
+          
+          }
         .comment-header {
 
             display: flex;

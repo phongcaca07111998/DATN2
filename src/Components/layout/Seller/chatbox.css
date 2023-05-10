@@ -62,7 +62,7 @@
   }
   .chatbox-button {
     border: none;
-    background-color:white;
+    background-color:transparent;
     width: 60px;
     font-size: 60px;
     position: fixed;

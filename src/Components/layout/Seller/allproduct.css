@@ -11,9 +11,9 @@
     margin-top: 200px;
   }
   .his{
-    z-index: 50;
+   
     margin-top: -18%;
-    height: auto;
+    height: 30px;
     width: 100%;
   }
   .row1{
@@ -100,4 +100,6 @@
   .fw-bold {
     font-weight: 700 !important;
   }
-  
+  .khongcart1{
+    margin-top: 20%;
+  }

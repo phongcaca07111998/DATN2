@@ -213,13 +213,14 @@ export const Login = (prop) => {
                 <div className="popup-container">
                   <div className="popup">
                     <input
+                      
                       type="email"
                       placeholder="Địa chỉ email"
                       value={resetPasswordEmail}
                       onChange={(e) => setResetPasswordEmail(e.target.value)}
                     />
-                    <button onClick={handleResetPassword}>Gửi</button>
-                    <button onClick={() => setShowResetPasswordPopup(false)}>Hủy</button>
+                    <button className="btn_fogot" onClick={handleResetPassword}>Gửi</button>
+                    <button className="btn_fogot" onClick={() => setShowResetPasswordPopup(false)}>Hủy</button>
                   </div>
                 </div>
               )}
