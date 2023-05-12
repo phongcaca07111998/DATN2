@@ -42,7 +42,7 @@ const Option=(prop)=> {
 
       .then(() => {
         // toast.success("Logged out");
-        navigate("/bidu-ecommerce");
+        navigate("/365House-ecommerce");
         prop.passCheckLogout(true)
         
       })

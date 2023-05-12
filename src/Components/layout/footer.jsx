@@ -16,10 +16,10 @@ export const Footer = () => {
         <div className="instruction-one">
           <h1 className="text-header-footer">CHĂM SÓC KHÁCH HÀNG</h1>
           <a href="#" className="d-block my-3">
-            Hướng dẫn mua hàng
+            Liên hệ : 0386541254
           </a>
           <a href="#" className="d-block my-3">
-            Hướng dẫn đổi trả hàng
+            Hoặc : 0999999999
           </a>
         </div>
         <div className="instruction-one">
@@ -42,15 +42,16 @@ export const Footer = () => {
         </div>
         <div className="instruction-one">
           <h1 className="text-header-footer">Thanh toán</h1>
+          
           <img className="pr-3" src={vnpay} alt="" />
           <img className="pr-3" src={momo} alt="" />
           <img className="pr-3" src={cash} alt="" />
         </div>
         <div className="instruction-one">
           <h1 className="text-header-footer">Kết nối với chung tôi</h1>
-          <img className="px-3" src={fb} alt="" />
-          <img className="px-3" src={ig} alt="" />
-          <img className="px-3" src={tw} alt="" />
+          <img className="px-3"  src={fb} alt="" />
+          <img className="px-3"  src={ig} alt="" />
+          <img className="px-3"  src={tw} alt="" />
           <h1 className="text-header-footer">TẢI ỨNG DỤNG TRÊN ĐIỆN THOẠI</h1>
           <img className="max-h-120 pr-3" src={appstore} alt="" />
           <img className="max-h-120 pr-3" src={ggplay} alt="" />

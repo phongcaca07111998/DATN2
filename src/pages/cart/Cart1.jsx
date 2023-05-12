@@ -73,7 +73,7 @@ const Cart = () => {
                 </button>
                 
                 <button className="buy__btn w-100 mt-3">
-                  <Link to="/bidu-ecommerce">Shopping</Link>
+                  <Link to="/365House-ecommerce">Shopping</Link>
                 </button>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
-import { toast } from "react-toastify";
 import './addproduct.css';
 import { db, storage } from "../../../Components/firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -216,7 +215,6 @@ const AddProducts = () => {
                           <option value="mevabe">Mẹ và bé</option>
                           <option value="phukienoto">Phụ kiện ô tô, xe hơi</option>
                           <option value="thoitrangdulich">Thời trang & Du lịch</option>
-                          <option value="bachhoatonghop">Bách hoá tổng hợp</option>
                         </select>
                       </FormGroup>
                     </div>

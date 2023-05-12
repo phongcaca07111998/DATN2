@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from '../../../assets/imgs/desktop-computer.png'
-import HeaderNavbar from './header_navbar/header_navbar';
+
 import { Search } from './search/search';
 import Option from './option/option';
 import "../layout.scss"
@@ -65,7 +65,7 @@ export const Navbar = (prop) => {
   
   
   const moveToHome = () => {
-    navigate("/bidu-ecommerce");
+    navigate("/365House-ecommerce");
   };
   const checkLogout = (check) => {
     prop.checkLogin(false);

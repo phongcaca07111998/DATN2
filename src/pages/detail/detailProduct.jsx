@@ -108,7 +108,7 @@ const {currentUser} = useAuth()
  
   const handleCount = (type, limit) => {
     if (type === "plus") {
-      if (count < 10) {
+      if (count < limit) {
         setCount(count + 1);
       }
       else{

@@ -34,10 +34,15 @@
     white-space: nowrap!important;
     overflow: hidden!important;
     max-width:  400px!important;
+    text-align: center;
+    transform: translateY(10px)!important;
 
    
   }
-  
+  .btn{
+    transform: translateY(-20px)!important;
+    
+  }
   .table th {
     text-align: inherit;
     border-bottom: 2px solid #dee2e6;

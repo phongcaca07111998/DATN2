@@ -108,7 +108,9 @@ export const PaymentForm = (prop) => {
   };
 
   const turnOffForm = () => {
+    setTimeout(() => {
     prop.turnOff(false);
+    },2000 )
   };
   const onAddOrder = async (values) => {
     console.log('onAddOrder called with values:', values);
@@ -124,6 +126,11 @@ export const PaymentForm = (prop) => {
         totalPayment: totalPayment,
         email: currentUser?.email
       });
+      setMessage("Đặt hàng thành công");
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
 
       // lấy id vừa được tạo và gán vào trường id của document
       const docId = docRef.id;
@@ -134,13 +141,9 @@ export const PaymentForm = (prop) => {
       dispatch(cartActions.resetCart());
 
       setLoading(true);
-      setMessage("Đặt hàng thành công");
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 3000);
+      
 
-      navigate("/bidu-ecommerce");
+      navigate("/365House-ecommerce");
     } catch (err) {
 
       setLoading(false);

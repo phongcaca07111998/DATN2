@@ -19,9 +19,9 @@ export const Banner = () => {
   };
     return (
       <Slider {...settings}>
-        <div className="slide-banner">
+        {/* <div className="slide-banner">
           <img className="anhbaner" src={banner1} alt="" />
-        </div>
+        </div> */}
         <div className="slide-banner">
           <img className="anhbaner" src={banner2} alt="" />
         </div>
@@ -34,9 +34,15 @@ export const Banner = () => {
         <div className="slide-banner">
           <img className="anhbaner" src={banner5} alt="" />
         </div>
-        {/* <div className="slide-banner">
-          <img src="https://via.placeholder.com/875x420" alt="" />
-        </div> */}
+        <div className="slide-banner">
+          <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/0x0x95/Data/image/2023/04/20/Banner-tv-samsung-970x270.png" alt="" />
+        </div>
+        <div className="slide-banner">
+          <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/0x0x95/Data/image/2023/04/20/Banner-tv-samsung-970x270.png" alt="" />
+        </div>
+        <div className="slide-banner">
+          <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/0x0x95/Data/image/2023/05/05/Banner-chao-he-970x270.png" alt="" />
+        </div>
         
         
       </Slider>

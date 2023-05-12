@@ -62,7 +62,7 @@ export const Navbar = () => {
             </div>
             <div className="dropdown-divider"></div>
             <a
-              href="/bidu-ecommerce"
+              href="/365House-ecommerce"
               onClick={(e) => {
                 // e.preventDefault();
                 logout();

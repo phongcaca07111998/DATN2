@@ -13,7 +13,7 @@ export const FormDetailOrder = (prop) => {
   const navigate =useNavigate()
 
   const statusMap = {
-    1: "Vừa đặt",
+    1: "Đang xử lý",
     2: "Đang giao",
     3: "Đã nhận",
     4: "Gửi trả"
@@ -99,7 +99,7 @@ export const FormDetailOrder = (prop) => {
                       onChange={(e) => handleSelectChange(index, e)}
                       className="select-status"
                     >
-                      <option value="1">Vừa đặt</option>
+                      <option value="1">Đang xử lý</option>
                       <option value="2">Đang giao</option>
                       <option value="3">Đã nhận</option>
                       <option value="4">Gửi trả</option>

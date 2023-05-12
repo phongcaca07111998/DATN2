@@ -46,7 +46,7 @@ export const Routerr = (prop) => {
         {admin ==='phongcaca07111998@gmail.com' ? (
           <Router >
               <Routes>
-                <Route  path="/bidu-ecommerce" element={<Admin />} />
+                <Route  path="/365House-ecommerce" element={<Admin />} />
                 <Route path="/Donhang" element={<Donhang />} />
                 <Route path="/User" element={<UserAdmin/>}/>
                 <Route path="/Tongquan" element={<Tongquan/>}/>
@@ -57,7 +57,7 @@ export const Routerr = (prop) => {
           <Router>
             <Navbar  checkLogin={checkLogin} />
             <Routes>
-              <Route path="/bidu-ecommerce" element={<Home />} />
+              <Route path="/365House-ecommerce" element={<Home />} />
               <Route
                 path="/tim-kiem/keyword=:search"
                 element={<HomeSearch />}
@@ -93,7 +93,7 @@ export const Routerr = (prop) => {
         <Router>
           <Navbar checkLogin={checkLogin} />
           <Routes>
-            <Route path="/bidu-ecommerce" element={<Home />} />
+            <Route path="/365House-ecommerce" element={<Home />} />
             <Route path="/tim-kiem/keyword=:search" element={<HomeSearch />} />
             <Route
               path="/san-pham/:id"

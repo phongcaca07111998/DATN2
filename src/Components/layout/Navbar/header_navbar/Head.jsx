@@ -24,6 +24,12 @@ export const Head = () => {
         <div className="slide-banner1">
           <img src={banner2}  style={{width: "100%", height: "100"}} alt="" />
         </div>
+        <div className="slide-banner1">
+          <img src="https://s.meta.com.vn/img/thumb.ashx/Data/2023/Thang05/ngay-cua-me/Banner-ngay-cua-me-1236x60.png"  style={{width: "100%", height: "100"}} alt="" />
+        </div>
+        <div className="slide-banner1">
+          <img src="https://s.meta.com.vn/img/thumb.ashx/Data/2023/Thang05/sea-games/Banner-sea-games-1236x60.png"  style={{width: "100%", height: "100"}} alt="" />
+        </div>
         
       </Slider>
     );
