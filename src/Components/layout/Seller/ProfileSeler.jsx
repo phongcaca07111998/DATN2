@@ -104,7 +104,7 @@ const ProfileSeler = () => {
     <div className="sidebar-container">
         <div className="sidebar">
             <ul className="sidebar-menu">
-                <li className="sidebar-menu-box">
+                {/* <li className="sidebar-menu-box">
                     <div className="sidebar-menu-item">
                         <i className="bx bx-package" />
                         <span className="sidebar-menu-item-text">Vận Chuyển</span>
@@ -114,7 +114,7 @@ const ProfileSeler = () => {
                             <a href="#">Quản Lý Vận Chuyển</a>
                         </li>
                     </ul>
-                </li>
+                </li> */}
                 <li className="sidebar-menu-box">
                     <div className="sidebar-menu-item">
                         <i className="bx bx-notepad" />
@@ -122,7 +122,7 @@ const ProfileSeler = () => {
                     </div>
                     <ul className="sidebar-submenu">
                         <li className="sidebar-submenu-item">
-                            <a href="#">Tất Cả</a>
+                            <a href="selerprofile">Tất Cả</a>
                         </li>
                         <li className="sidebar-submenu-item">
                             <a href="#">Đơn Hủy</a>

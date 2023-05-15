@@ -190,7 +190,7 @@ const CommentSection = () => {
                         </div>
 
                         <div className="comment-content">{comment.content}</div>
-                        {comment.name === currentUser.displayName && (
+                        {comment.name === currentUser?.displayName && (
                             <button className="delete-button" onClick={() => handleDeleteComment(comment.id)}>X</button>
                             )}
                     </div>

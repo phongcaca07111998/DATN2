@@ -87,8 +87,7 @@ const AddProducts = () => {
     
       setAlert(true);
       setMessage("Thêm sản phẩm thành công");
-      setTimeout(() => {
-        setEnterTitle("");
+      setEnterTitle("");
       setEnterShortDesc("");
       setEnterDescription("");
       setEnterCategory("");
@@ -97,10 +96,14 @@ const AddProducts = () => {
       setSl("");
       setDate("");
       setEnterProductImgs([]);
+      setTimeout(() => {
+        
+      
         setAlert(false);
       }, 4000);
+      setLoading(false)
       
-      // navigate("/addproduct");
+      navigate("/addproduct");
 
     } catch (err) {
       setAlert(true);

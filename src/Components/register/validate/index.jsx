@@ -10,8 +10,8 @@ export const RegisterSchema = Yup.object().shape({
   //   .required("Bắt buộc")
   //   .min(6, "Tối thiểu 6 ký tự")
   //   .max(30, "Quá dài"),
-  hovaten: Yup.string().required("Bắt buộc").min(6, "Tối thiểu 6 ký tự"),
-  username: Yup.string().required("Bắt buộc").min(6, "Tối thiểu 6 ký tự").matches(/^[a-zA-Z0-9._-]+$/, 'Username không hợp lệ'),
+  hovaten: Yup.string().min(6, "Tối thiểu 6 ký tự"),
+  username: Yup.string().min(6, "Tối thiểu 6 ký tự").matches(/^[a-zA-Z0-9._-]+$/, 'Username không hợp lệ'),
   email: Yup.string().email("Sai định dạng").required("Bắt buộc"),
   password: Yup.string().required("Bắt buộc").min(6, "Mật Khẩu phải từ 8-16 kí tự"),
   // .matches(
@@ -28,5 +28,5 @@ export const RegisterSchema = Yup.object().shape({
   // birthday: Yup.string().nullable(),
   phone: Yup.string()
     .matches(phoneRegExp, "Phone không hợp lệ")
-    .required("Bắt buộc"),
+    
 });

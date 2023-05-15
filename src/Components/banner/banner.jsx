@@ -35,7 +35,7 @@ export const Banner = () => {
           <img className="anhbaner" src={banner5} alt="" />
         </div>
         <div className="slide-banner">
-          <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/0x0x95/Data/image/2023/04/20/Banner-tv-samsung-970x270.png" alt="" />
+          <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/Data/2022/Thang03/Banner-may-hut-bui-720x445.png" alt="" />
         </div>
         <div className="slide-banner">
           <img className="anhbaner" src="https://s.meta.com.vn/img/thumb.ashx/0x0x95/Data/image/2023/04/20/Banner-tv-samsung-970x270.png" alt="" />

@@ -37,7 +37,7 @@ export const TableOrder = (prop) => {
             {oderData?.map((item, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {index}
+                  {item.uid}
                 </TableCell>
                 <TableCell align="left">{item.name}</TableCell>
                 <TableCell align="left">{item.phone}</TableCell>
