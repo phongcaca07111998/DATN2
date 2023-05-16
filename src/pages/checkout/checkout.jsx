@@ -153,10 +153,10 @@ export const Checkout = (prop) => {
         onChange={handlePaymentTypeChange}
       />
       <div className="payer">Thanh toán trực tuyến</div>
-      <label className="option" htmlFor="online">
-       <a href="https://vivnpay.vn/thanh-toan-mua-sam"><img className="pr-3" src={vnpay} alt="" /></a> 
-        <a href="https://momo.vn/thanh-toan-hoa-don"><img className="pr-3" src={momo} alt="" /> </a>
-      </label>
+        <label className="option" htmlFor="online">
+        <a href="https://vivnpay.vn/thanh-toan-mua-sam"><img className="pr-3" src={vnpay} alt="" /></a> 
+          <a href="https://momo.vn/thanh-toan-hoa-don"><img className="pr-3" src={momo} alt="" /> </a>
+        </label>
       <input
         type="radio"
         name="payment-type"

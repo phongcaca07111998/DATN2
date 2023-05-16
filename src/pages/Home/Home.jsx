@@ -83,40 +83,7 @@ return (
         <SuggestionProduct tieude="TẤT CẢ SẢN PHẨM"/>
       </div>
       
-            {/* chatbox */}
-            <div className="chatbox-container">
-      {!showChatbox && (
-        <button className="chatbox-button" onClick={toggleChatbox}>
-          <i class='bx bx-message-rounded-dots'></i>
-        </button>
-      )}
-      {showChatbox && (
-        <div className="chat-box">
-          <div className="chat-box-header">
-            <button className="chat-box-exit-button" onClick={handleExitChatbox}>
-              X
-            </button>
-          </div>
-          <div className="chat-box-messages">
-            {messages.map((message, index) => (
-              <div key={index} className="chat-box-message">
-                {message}
-              </div>
-            ))}
-          </div>
-          <div className="chat-box-input">
-            <input
-              type="text"
-              placeholder="Type your message here..."
-              value={inputText}
-              onChange={handleInputTextChange}
-              onKeyDown={handleKeyDown}
-            />
-            <button onClick={handleSendMessage}>Send</button>
-          </div>
-        </div>
-      )}
-    </div>
+         
             {/* {showButton && (
             <button className="chatbox-button" onClick={toggleChatbox}>Mở chatbox</button>
             )}

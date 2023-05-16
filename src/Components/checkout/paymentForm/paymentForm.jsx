@@ -68,15 +68,15 @@ export const PaymentForm = (prop) => {
   }
 
   // Hàm xử lý khi người dùng click vào thanh toán
-  async function handleCheckout(cartItems) {
-    // Duyệt qua từng item trong cartItems và cập nhật lại số lượng sản phẩm trong Firestore
-    for (const cartItem of cartItems) {
-      const productId = cartItem.id;
-      const newQuantity = cartItem.quantity;
+    async function handleCheckout(cartItems) {
+      // Duyệt qua từng item trong cartItems và cập nhật lại số lượng sản phẩm trong Firestore
+      for (const cartItem of cartItems) {
+        const productId = cartItem.id;
+        const newQuantity = cartItem.quantity;
 
-      console.log(cartItem.id);
-      await updateProductQuantity(productId, newQuantity);
-    }
+        console.log(cartItem.id);
+        await updateProductQuantity(productId, newQuantity);
+      }
 
     // Thông báo cho người dùng rằng thanh toán thành công
     console.log('Thanh toán thành công.');
