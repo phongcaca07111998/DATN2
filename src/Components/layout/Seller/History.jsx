@@ -86,7 +86,7 @@ console.log(cartItems);
                         }}
                         className="btn btn-danger"
                       >
-                        Delete
+                        Hủy Đơn Hàng
                       </button>
                     </td>
                   </tr>

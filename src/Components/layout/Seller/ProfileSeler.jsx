@@ -124,12 +124,12 @@ const ProfileSeler = () => {
                         <li className="sidebar-submenu-item">
                             <a href="selerprofile">Tất Cả</a>
                         </li>
-                        <li className="sidebar-submenu-item">
+                        {/* <li className="sidebar-submenu-item">
                             <a href="#">Đơn Hủy</a>
                         </li>
                         <li className="sidebar-submenu-item">
                             <a href="#">Trả Hàng/ Hoàn tiền</a>
-                        </li>
+                        </li> */}
                     </ul>
                 </li>
                 <li className="sidebar-menu-box">

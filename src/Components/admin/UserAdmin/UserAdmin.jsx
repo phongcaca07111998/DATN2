@@ -82,7 +82,7 @@ const UserAdmin = () => {
                   <th>Email</th>
                   <th>Password</th>
                   <th>Phone</th>
-                  <th>Phân Quyền</th>
+                  <th>Quyền</th>
                   <th>Hành Động</th>
                   
                     

@@ -27,13 +27,13 @@ export const Navbar = () => {
     <div className="navbar-header">
       <div className="container-fluid">
         <div>
-          <div className="sidenav-toggler">
+          {/* <div className="sidenav-toggler">
             <div className="sidenav-toggler-inner">
               <i className="sidenav-toggler-line"></i>
               <i className="sidenav-toggler-line"></i>
               <i className="sidenav-toggler-line"></i>
             </div>
-          </div>
+          </div> */}
         </div>
         <div style={{ position: "relative" }}>
           <div

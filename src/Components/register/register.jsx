@@ -11,7 +11,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase/firebase";
 
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 export const Register=(prop) => {
   
 
@@ -28,6 +28,85 @@ export const Register=(prop) => {
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
   };
+  //dự phòng 
+  // const signUp = async(e)=>{
+  //   e.preventDefault()
+  //   setLoading(true)
+    
+
+  // try {
+  //   const userCredential= await createUserWithEmailAndPassword(auth,email,password);
+  //   const user = userCredential.user;
+  //   // const userphone = user.phoneNumber;
+  //   const storageRef= ref(storage,`{username}`)
+  //   const uploadTask =uploadBytesResumable(storageRef)
+
+  //   uploadTask.on((error)=>{
+  //     const errorCode = error.code
+  //     setLoading(false);
+  //     setMessage("Đăng ký thất bại!")
+  //     setAlert(true);
+  //     // toast.error(error.message)
+  //   },()=>{
+  //     getDownloadURL(uploadTask.snapshot.ref).then(async()=>{
+  //       //update user profile
+  //       await updateProfile(
+  //         user,{
+  //         displayName:username,
+  //         phoneNumber:phoneNumber,
+          
+  //         // photoURL: downloadURL,
+  //       });
+        
+  //     //store user data firestore database
+
+  //     if (isChecked===true) {
+  //       await setDoc(doc(db,'users',user.uid),{
+  //         uid:user.uid,
+  //         userfname:userfname,
+  //         displayName:username,
+  //         email,
+  //         seller:"Nhà bán hàng",
+  //         pass :password,
+  //         phoneNumber:phoneNumber,
+  //         // photoURL:dowloadURL,
+  //       });
+  //     } else {
+  //       await setDoc(doc(db,'users',user.uid),{
+  //         uid:user.uid,
+  //         userfname:userfname,
+  //         displayName:username,
+  //         email,
+  //         pass :password,
+  //         phoneNumber:phoneNumber,
+  //         // photoURL:dowloadURL,
+  //       });
+  //     }
+  //     });
+  //   })
+    
+
+  //   setLoading(true)
+  //   // console.log(user)
+  //   setMessage("Đăng ký thành công!");
+  //   setAlert(true);
+  //   setTimeout(() => {
+          
+  //                 prop.closeRegister(false);
+  //               }, 3000);
+    
+    
+   
+  // }catch (error){
+  //   setLoading(false)
+  //   setMessage("Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đã nhập");
+  //   setAlert(true);
+    
+  //   }
+  // };
+
+  //
+
 
   const signUp = async(e)=>{
     e.preventDefault()
@@ -35,6 +114,21 @@ export const Register=(prop) => {
   
 
   try {
+
+    // Kiểm tra sự tồn tại của username
+    const usernameExists = await checkUsernameExists(username);
+
+    if (usernameExists) {
+      setLoading(false);
+      setMessage("Username đã tồn tại!");
+      setAlert(true);
+      setTimeout(() => {
+          
+        setAlert(false);
+      }, 3000);
+      return;
+    }
+
     const userCredential= await createUserWithEmailAndPassword(auth,email,password);
     const user = userCredential.user;
     // const userphone = user.phoneNumber;
@@ -99,9 +193,19 @@ export const Register=(prop) => {
    
   }catch (error){
     setLoading(false)
-    setMessage("Đăng ký thất bại!");
+    setMessage("Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đã nhập");
     setAlert(true);
     
+    }
+  };
+  const checkUsernameExists = async (username) => {
+    try {
+      const q = query(collection(db, "users"), where("displayName", "==", username));
+      const querySnapshot = await getDocs(q);
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.error("Lỗi kiểm tra sự tồn tại của username:", error);
+      return false;
     }
   };
 

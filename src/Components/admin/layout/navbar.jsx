@@ -39,28 +39,6 @@ export const NavbarAdmin = () => {
       name: "Sản phẩm",
       img: product,
     },
-    {
-      name: "Danh mục",
-      img: category,
-    },
-    
-   
-    {
-      name: "Banner",
-      img: banner,
-    },
-    {
-      name: "Mã giảm giá",
-      img: voucher,
-    },
-    {
-      name: "Streaming",
-      img: live,
-    },
-    {
-      name: "Thông báo",
-      img: bell,
-    },
   ];
 
   const hideCommerce = () => {
