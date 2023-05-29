@@ -7,6 +7,7 @@ import { useState } from 'react';
 import {  db } from '../../firebase/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { Alert, CircularProgress } from "@mui/material";
 
 
 const Userprofile = () => {
@@ -17,6 +18,8 @@ const Userprofile = () => {
   const [usephone, setPhone] = useState("")
   const [setgender, setGender] = useState("")
   const [setnewpass, setNewPass] = useState("")
+  const [message, setMessage] = useState("")
+ const [alert, setAlert] = useState(false);
 
 
   const mainUser = usersData.find(userData => userData.email === currentUser.email);
@@ -59,12 +62,26 @@ const Userprofile = () => {
     try {
       await updatePassword(currentUser,setnewpass);
      
-      console.log("okkkkkk");
+      setMessage("cập nhật thành công")
+      setAlert(true)
+      setTimeout(() => {
+        
+      
+        setAlert(false);
+      }, 3000);
+      
       
       
     } catch (error) {
     
-      console.log(error);
+      setMessage("cập nhật thất bại")
+      setAlert(true)
+      setTimeout(() => {
+        
+      
+        setAlert(false);
+      }, 3000);
+      
      
     }
       // updatePassword(user, newPassword)
@@ -83,6 +100,11 @@ const Userprofile = () => {
   // console.log(currentUser.uid);
   return (
     <div className="container">
+      {alert && (
+          <div className="alert">
+            <Alert severity="info">{message}</Alert>
+          </div>
+        )}
       <div className="row layout-profile">
         <div className="col-3-5">
           <div className="sidebar">

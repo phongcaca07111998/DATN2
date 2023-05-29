@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { db } from "../../../Components/firebase/firebase"
 import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 import useGetData from "../../../custom-hooks/useGetData";
 import { toast } from "react-toastify";
 import { getAuth} from 'firebase/auth';
 import './allproduct.css';
+
 import { useSelector } from 'react-redux';
 const History = () => {
    
  const { data: oderData,loading } = useGetData("Oders");
  const {currentUser} = getAuth();
+ 
  const maindataproduct = oderData.filter(oderData => oderData.email == currentUser?.email );
   // const deleteProduct = async id => {
   //   await deleteDoc(doc(db, "Oders", id));
@@ -48,6 +50,7 @@ console.log(cartItems);
   return (
     <section >
       <div className="container18">
+      
         <div className="row1">
           <div className="col-12 his">
           {maindataproduct?.length === 0 ? (
