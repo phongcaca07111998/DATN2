@@ -114,6 +114,15 @@ export const Register=(prop) => {
   
 
   try {
+    if (username === '') {
+      setLoading(false);
+      setMessage("Vui lòng nhập username!");
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+      return;
+    }
 
     // Kiểm tra sự tồn tại của username
     const usernameExists = await checkUsernameExists(username);
@@ -195,6 +204,10 @@ export const Register=(prop) => {
     setLoading(false)
     setMessage("Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đã nhập");
     setAlert(true);
+    setTimeout(() => {
+          
+      setAlert(false);
+    }, 3000);
     
     }
   };
